@@ -1,0 +1,21 @@
+.main_visual {
+    height: 455px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.slider1 {
+    background: #fadcdd url(../img/slider01.png) no-repeat 50% bottom;
+    padding-top: 50px;
+    height: 455px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.slider2 {
+    background: #fadcdd url(../img/slider01.png) no-repeat 50% bottom;
+    padding-top: 50px;
+    height: 455px;
+    box-sizing: border-box;
+    border: none;
+}

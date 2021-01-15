@@ -1,0 +1,21 @@
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.container .tit {
+    text-align: center;
+    height: 150px;
+    padding-top: 60px;
+    font-weight: bold;
+    cursor: default;
+}
+
+.container .formcenter {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+p {
+    cursor: default;
+}
