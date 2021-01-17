@@ -16,7 +16,7 @@
 		SELECT * FROM member WHERE id = #{id}
 	</select>
 	<!-- 삭제 -->
-	<delete id="delete" parameterType="id">
+	<delete id="delete" parameterType="String">
 		DELETE FROM member WHERE id=#{id}
 	</delete>
 	<!-- 수정 -->
