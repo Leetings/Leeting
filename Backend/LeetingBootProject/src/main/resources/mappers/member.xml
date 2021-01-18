@@ -11,6 +11,14 @@
 	<select id="login" parameterType="Map" resultType="int">
 		SELECT count(*) FROM member WHERE id=#{id} AND pw=#{pw}
 	</select>
+	<!-- 중복검사 -->
+	<select id="sameId" parameterType="String" resultType="int">
+		SELECT count(*) FROM member WHERE id=#{id}
+	</select>
+	<!-- 중복검사 -->
+	<select id="sameNick" parameterType="String" resultType="int">
+		SELECT count(*) FROM member WHERE nickname=#{nickname}
+	</select>
 	<!--mypage -->
 	<select id="userinfo" parameterType="String" resultType="member">
 		SELECT * FROM member WHERE id = #{id}

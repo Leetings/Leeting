@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 
 public interface MemberService {
 
-	MemberDto getMemberInfo(Long memberId);
-    void join(MemberDto member);
-    void delete(MemberDto member);
+	MemberDto getMemberInfo(String memberId);
+    boolean join(MemberDto member);
+    boolean login(MemberDto member);
+    boolean sameId(String memberId);
+    void delete(String memberId);
     void update(MemberDto member);
-    void login(MemberDto member);
-    void logout(Long memberId);
+//    void logout(Long memberId);
+	boolean sameNick(String memberNickname);
 }
+

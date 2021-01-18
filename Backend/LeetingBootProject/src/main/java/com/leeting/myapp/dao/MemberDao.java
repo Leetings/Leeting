@@ -9,5 +9,7 @@ public interface MemberDao {
 	public int login(String id, String pw) throws SQLException;
 	public MemberDto userinfo(String id) throws SQLException;
 	public void delete(String id) throws SQLException;
+	public int sameId(String id) throws SQLException;
 	public void modify(MemberDto member) throws SQLException;
+	int sameNick(String Nickname) throws SQLException;
 }
