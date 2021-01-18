@@ -14,21 +14,29 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leeting.myapp.dao.MemberDao;
 import com.leeting.myapp.dao.MemberDaoImpl;
+import com.leeting.myapp.model.MemberDto;
 import com.leeting.myapp.service.MemberService;
 
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/member")
 public class MemberController {
-	@Autowired
-	private MemberService service;
+
+  // service
+  private final MemberService memberService;
+
+  @Autowired
+  public MemberController(MemberService memberService) {
+    this.memberService = memberService;
+  }
   //회원정보
   @ApiOperation(value = "회원정보", notes = "회원정보", response = Map.class)
   @GetMapping("")
@@ -45,15 +53,54 @@ public class MemberController {
   //로그인
   @ApiOperation(value = "로그인", notes = "로그인", response = Map.class)
   @PostMapping("/login")
-  public ResponseEntity<Map<String, Object>> loginMember(HttpServletRequest req) throws SQLException {
+  public ResponseEntity<String> loginMember(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
     System.out.println(req);
-    Map<String, Object> resultMap = new HashMap<>();
+    String conclusion ="";
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("post to /member/login done");
     System.out.println("로그인");
-    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    if(memberService.login(memberbody)) {
+    	conclusion = "SUCESS";
+    }
+    else {
+    	conclusion = "FAIL";
+    }
+    return new ResponseEntity<String>(conclusion, status);
   }
-  
+  //중복검사
+  @ApiOperation(value = "중복검사", notes = "중복검사", response = Map.class)
+  @PostMapping("/same")
+  public ResponseEntity<String> sameMember(@RequestBody Map<String,String> memberbody, HttpServletRequest req) throws SQLException {
+    System.out.println(req);
+    String conclusion ="";
+    HttpStatus status = HttpStatus.ACCEPTED;
+    System.out.println("get to /member/same done");
+    System.out.println("중복검사");
+    if(memberService.sameId(memberbody.get("id"))) {
+    	conclusion = "SUCESS";
+    }
+    else {
+    	conclusion = "FAIL";
+    }
+    return new ResponseEntity<String>(conclusion, status);
+  }
+  //중복검사
+  @ApiOperation(value = "중복검사", notes = "중복검사", response = Map.class)
+  @PostMapping("/samenick")
+  public ResponseEntity<String> sameNick(@RequestBody Map<String,String> memberbody, HttpServletRequest req) throws SQLException {
+    System.out.println(req);
+    String conclusion ="";
+    HttpStatus status = HttpStatus.ACCEPTED;
+    System.out.println("get to /member/samenick done");
+    System.out.println("중복검사");
+    if(memberService.sameNick(memberbody.get("nickname"))) {
+    	conclusion = "SUCESS";
+    }
+    else {
+    	conclusion = "FAIL";
+    }
+    return new ResponseEntity<String>(conclusion, status);
+  }
   //로그아웃
   @ApiOperation(value = "로그아웃", notes = "로그아웃", response = Map.class)
   @PostMapping("/logout")
@@ -68,14 +115,21 @@ public class MemberController {
   
   //회원가입
   @ApiOperation(value = "회원가입", notes = "회원가입", response = Map.class)
-  @PostMapping("")
-  public ResponseEntity<Map<String, Object>> joinMember(HttpServletRequest req) {
+  @PostMapping("join")
+  public ResponseEntity<String> joinMember(@RequestBody MemberDto memberbody, HttpServletRequest req) {
     System.out.println(req);
     Map<String, Object> resultMap = new HashMap<>();
+    String conclusion = "";
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("post to /member done");
     System.out.println("회원가입");
-    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    if(memberService.join(memberbody)) {
+    	conclusion = "SUCESS";
+    }
+    else {
+    	conclusion = "FAIL";
+    }
+    return new ResponseEntity<String>(conclusion, status);
   }
   
   //회원탈퇴

@@ -6,40 +6,102 @@ import com.leeting.myapp.model.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+
 @Service
 public class MemberServiceImpl implements MemberService{
     
-	@Autowired
-	private MemberDao dao;
+	private final MemberDao memberDao;
+	public MemberServiceImpl(MemberDao memberDao){
+	    this.memberDao = memberDao;
+    }
+
     // DB 필요
-
     @Override
-    public MemberDto getMemberInfo(Long memberId) {
-        return null;
+    public MemberDto getMemberInfo(String memberId) {
+	    MemberDto memberDto = null;
+        try {
+            memberDto = memberDao.userinfo(memberId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return memberDto;
     }
 
     @Override
-    public void join(MemberDto member) {
-
+    public boolean join(MemberDto member) {
+        try {
+            memberDao.join(member);
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
     }
-
+    
     @Override
-    public void delete(MemberDto member) {
-
+    public boolean login(MemberDto member) {
+        try {
+            if(memberDao.login(member.getId(), member.getPw()) ==1) {
+            	return true;
+            }
+            else {
+            return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean sameId(String memberId) {
+        try {
+            if(memberDao.sameId(memberId)==1) {
+            	return false;
+            }
+            else {
+            return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+    @Override
+    public boolean sameNick(String memberNickname) {
+        try {
+            if(memberDao.sameNick(memberNickname)==1) {
+            	return false;
+            }
+            else {
+            return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+    @Override
+    public void delete(String memberId) {
+        try {
+            memberDao.delete(memberId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void update(MemberDto member) {
-
+        try {
+            memberDao.modify(member);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    @Override
-    public void login(MemberDto member) {
-    	
-    }
-
-    @Override
-    public void logout(Long memberId) {
-
-    }
+//    @Override
+//    public void logout(Long memberId) {
+//
+//    }
 }

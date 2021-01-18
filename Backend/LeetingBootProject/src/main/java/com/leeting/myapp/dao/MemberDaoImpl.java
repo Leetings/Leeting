@@ -36,6 +36,14 @@ public class MemberDaoImpl implements MemberDao{
 		 sqlSession.delete("member.delete",id);
 	}
 	@Override
+	public int sameId(String id)  throws SQLException{
+		return sqlSession.selectOne("member.sameId",id);
+	}
+	@Override
+	public int sameNick(String Nickname)  throws SQLException{
+		return sqlSession.selectOne("member.sameNick",Nickname);
+	}
+	@Override
 	public void modify(MemberDto member) throws SQLException {
 		sqlSession.update("member.modify",member);
 	}
