@@ -10,17 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Service
-public class MemberServiceImpl implements MemberService{
-    
-	private final MemberDao memberDao;
-	public MemberServiceImpl(MemberDao memberDao){
-	    this.memberDao = memberDao;
+public class MemberServiceImpl implements MemberService {
+
+    private final MemberDao memberDao;
+
+    public MemberServiceImpl(MemberDao memberDao) {
+        this.memberDao = memberDao;
     }
 
     // DB 필요
     @Override
     public MemberDto getMemberInfo(String memberId) {
-	    MemberDto memberDto = null;
+        MemberDto memberDto = null;
         try {
             memberDto = memberDao.userinfo(memberId);
         } catch (SQLException throwables) {
@@ -39,50 +40,49 @@ public class MemberServiceImpl implements MemberService{
             return false;
         }
     }
-    
+
     @Override
     public boolean login(MemberDto member) {
         try {
-            if(memberDao.login(member.getId(), member.getPw()) ==1) {
-            	return true;
-            }
-            else {
-            return false;
+            if (memberDao.login(member.getId(), member.getPw()) == 1) {
+                return true;
+            } else {
+                return false;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
     }
-    
+
     @Override
     public boolean sameId(String memberId) {
         try {
-            if(memberDao.sameId(memberId)==1) {
-            	return false;
-            }
-            else {
-            return true;
+            if (memberDao.sameId(memberId) == 1) {
+                return false;
+            } else {
+                return true;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
     }
+
     @Override
     public boolean sameNick(String memberNickname) {
         try {
-            if(memberDao.sameNick(memberNickname)==1) {
-            	return false;
-            }
-            else {
-            return true;
+            if (memberDao.sameNick(memberNickname) == 1) {
+                return false;
+            } else {
+                return true;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
     }
+
     @Override
     public void delete(String memberId) {
         try {
@@ -101,9 +101,8 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
-
-//    @Override
-//    public void logout(Long memberId) {
-//
-//    }
+    // @Override
+    // public void logout(Long memberId) {
+    //
+    // }
 }
