@@ -3,5 +3,6 @@
  <configuration>
  	<typeAliases>
  		<typeAlias type="com.leeting.myapp.model.MemberDto" alias="member"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.ExerciseDto" alias="exercise"></typeAlias>
  	</typeAliases>
  </configuration>

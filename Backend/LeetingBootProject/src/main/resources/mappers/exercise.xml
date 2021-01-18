@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="exercise">
+	<!-- 미팅 등록 -->
+	<insert id="enrollExercise" parameterType="map">
+		INSERT INTO exercise ( maintitle, subtitle, date)
+		VALUES ( #{maintitle},  #{subtitle}, now())
+	</insert>
+	<!-- 미팅 목록 -->
+	<select id="listExercise" resultType="exercise">
+		SELECT * FROM exercise ORDER BY no
+	</select>
+</mapper>
