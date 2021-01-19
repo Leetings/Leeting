@@ -75,11 +75,6 @@ public class MemberController {
       conclusion = "SUCESS";
     } else {
       conclusion = "FAIL";
-    if(memberService.login(memberbody)) {
-    	conclusion = "SUCESS";
-    }
-    else {
-    	conclusion = "FAIL";
     }
     String token = jwtService.create("id", memberbody.getId(), "id");
     System.out.println(token);
