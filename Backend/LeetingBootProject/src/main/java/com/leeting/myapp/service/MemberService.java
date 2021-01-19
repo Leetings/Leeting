@@ -13,5 +13,7 @@ public interface MemberService {
     void update(MemberDto member);
 //    void logout(Long memberId);
 	boolean sameNick(String memberNickname);
+	String findid(MemberDto member);
+	String findpw(MemberDto member);
 }
 

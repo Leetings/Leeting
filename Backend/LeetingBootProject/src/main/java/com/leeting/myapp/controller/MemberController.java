@@ -49,15 +49,15 @@ public class MemberController {
   public JavaMailSender javaMailSender;
   //회원정보
   @ApiOperation(value = "회원정보", notes = "회원정보", response = Map.class)
-  @GetMapping("")
-  public ResponseEntity<Map<String, Object>> getMemberInfo(HttpServletRequest req) throws SQLException {
+  @GetMapping("/{id}")
+  public ResponseEntity<MemberDto> getMemberInfo(@PathVariable(value="id") String memberid,HttpServletRequest req) throws SQLException {
+	  System.out.println(memberid);
     System.out.println(req);
-
-    Map<String, Object> resultMap = new HashMap<>();
+    MemberDto membertmp = memberService.getMemberInfo(memberid);
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("get to /member done");
     System.out.println("회원정보");
-    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    return new ResponseEntity<MemberDto>(membertmp, status);
   }
   
   //로그인
@@ -152,38 +152,38 @@ public class MemberController {
   
   //회원탈퇴
   @ApiOperation(value = "회원탈퇴", notes = "회원탈퇴", response = Map.class)
-  @DeleteMapping("")
-  public ResponseEntity<Map<String, Object>> deleteMember(HttpServletRequest req) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Map<String, Object>> deleteMember(@PathVariable(value="id") String memberid, HttpServletRequest req) {
     System.out.println(req);
     Map<String, Object> resultMap = new HashMap<>();
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("delete to /member done");
     System.out.println("회원탈퇴");
+    memberService.delete(memberid);
     return new ResponseEntity<Map<String, Object>>(resultMap, status);
   }
   
   //회원수정
   @ApiOperation(value = "회원수정", notes = "회원수정", response = Map.class)
   @PutMapping("")
-  public ResponseEntity<Map<String, Object>> updateMember(HttpServletRequest req) {
+  public ResponseEntity<String> updateMember(@RequestBody MemberDto memberbody, HttpServletRequest req) {
     System.out.println(req);
-    Map<String, Object> resultMap = new HashMap<>();
+    String conclusion = "SUCCESS";
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("put to /member done");
     System.out.println("회원수정");
-    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    memberService.update(memberbody);
+    return new ResponseEntity<String>(conclusion, status);
   }
   @ApiOperation(value = "이메일인증", notes = "이메일인증", response = Map.class)
-  @GetMapping("/email")
-  public ResponseEntity<String> email( HttpServletRequest req) throws SQLException {
+  @PostMapping("/email")
+  public ResponseEntity<String> email(@RequestBody Map<String,String> memberbody, HttpServletRequest req) throws SQLException {
     System.out.println(req);
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("post to /member/email done");
     System.out.println("이메일 인증");
     SimpleMailMessage message = new SimpleMailMessage();
-    String memberbody="";
-    memberbody = "stfantasy3324@gmail.com";
-    message.setTo(memberbody);
+    message.setTo(memberbody.get("email"));
     message.setFrom("Leeting@naver.com");
     message.setSubject("이메일인증입니다");
     StringBuilder sb = new StringBuilder();
@@ -206,12 +206,34 @@ public class MemberController {
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("get to /member/auth done");
     System.out.println("토큰인증");
-    if(!jwtService.get("id", memberbody.get("token")).equals("false")) {
-    	conclusion = "SUCESS";
+    if(jwtService.get("token", memberbody.get("token")).equals(memberbody.get("auth"))) {
+    	conclusion = "SUCCESS";
     }
     else {
     	conclusion = "FAIL";
     }
+    return new ResponseEntity<String>(conclusion, status);
+  }
+  @ApiOperation(value = "아이디찾기", notes = "아이디찾기", response = Map.class)
+  @PostMapping("/findid")
+  public ResponseEntity<String> findid(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
+    System.out.println(req);
+    String conclusion ="";
+    HttpStatus status = HttpStatus.ACCEPTED;
+    System.out.println("get to /member/findid done");
+    System.out.println("아이디찾기");
+    conclusion = memberService.findid(memberbody);
+    return new ResponseEntity<String>(conclusion, status);
+  }
+  @ApiOperation(value = "비밀번호찾기", notes = "비밀번호찾기", response = Map.class)
+  @PostMapping("/findpw")
+  public ResponseEntity<String> findpw(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
+    System.out.println(req);
+    String conclusion ="";
+    HttpStatus status = HttpStatus.ACCEPTED;
+    System.out.println("get to /member/findpw done");
+    System.out.println("비밀번호찾기");
+    conclusion = memberService.findpw(memberbody);
     return new ResponseEntity<String>(conclusion, status);
   }
   public String getTempAuth(){

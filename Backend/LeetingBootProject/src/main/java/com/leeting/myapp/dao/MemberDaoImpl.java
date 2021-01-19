@@ -47,4 +47,21 @@ public class MemberDaoImpl implements MemberDao{
 	public void modify(MemberDto member) throws SQLException {
 		sqlSession.update("member.modify",member);
 	}
+	@Override
+	public MemberDto findid(MemberDto member) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String,String> map = new HashMap<>();
+		map.put("name", member.getName());
+		map.put("email", member.getEmail());
+		return sqlSession.selectOne("member.findid", map);
+	}
+	@Override
+	public MemberDto findpw(MemberDto member) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String,String> map = new HashMap<>();
+		map.put("name", member.getName());
+		map.put("email", member.getEmail());
+		map.put("id", member.getId());
+		return sqlSession.selectOne("member.findpw", map);
+	}
 }
