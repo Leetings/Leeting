@@ -4,11 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
 class Join extends React.Component {
-  
   constructor(props) {
       super(props);
     this.state = {
-      value: 'kakao.com',
+      value: '선택하세요',
       checkId: false,
       checkPw: false,
       checkName: false,
@@ -25,6 +24,8 @@ class Join extends React.Component {
     email: "",
     domain: "",
     mobile: "",
+    token:"",
+    auth:"",
   }
   
   handleChange = (event) => {
@@ -198,19 +199,10 @@ class Join extends React.Component {
         checkEmail: false
       });
       // document.getElementById('joinbtn').disabled = true;
-      document.getElementById('validateDomain').textContent = "정확한 도메인을 입력해주세요";
-      document.getElementById('validateDomain').setAttribute('style', 'color: #ff3535');
+      // document.getElementById('validateDomain').textContent = "정확한 도메인을 입력해주세요";
+      // document.getElementById('validateDomain').setAttribute('style', 'color: #ff3535');
     }
     else {
-      // console.log('test1 : ' + this.state.checkEmail);
-      this.setState({
-        checkEmail: true
-      });
-      // console.log('test2 : ' + e.target.value);
-      // if (this.state.checkId === true && this.state.checkEmail === true && this.state.checkMobile === true && this.state.checkName === true && this.state.checkNickname === true && this.state.checkPw === true) {
-      //   document.getElementById('joinbtn').disabled = false;
-      // }
-      // console.log('test3 : ' + this.state.checkEmail);
       document.getElementById('validateDomain').textContent = "";
     }
   };
@@ -301,6 +293,60 @@ class Join extends React.Component {
       });
     }
   };
+
+  /*인증번호 전송*/
+  authCheck = (e) => {
+    e.preventDefault();
+    console.log(this.state.email + "@" + this.state.domain);
+    axios.post('http://127.0.0.1:8080/myapp/member/email', {
+        email: this.state.email + "@" + this.state.domain,
+      }).then(res => {
+        console.log(res);
+        console.log(res.data);
+        this.setState({
+          token: res.data
+        })
+        document.getElementById('auth').disabled = false;
+        // document.getElementById('sendtoken').setAttribute('style', 'display:none');
+        document.getElementById('checktoken').setAttribute('style', 'display:inline-block');
+      })
+  };
+
+  authChange = (e) => {
+    this.setState({
+      auth: e.target.value
+    });
+  }
+  emailtokenCheck = (e) => {
+    e.preventDefault();
+
+    console.log(this.state.auth);
+    console.log(this.state.token);
+
+    axios.post('http://127.0.0.1:8080/myapp/member/auth', {
+      token: this.state.token,
+      auth: this.state.auth,      
+      }).then(res => {
+        console.log(res);
+        console.log(res.data);
+        if (res.data === "SUCCESS") {
+          this.setState({
+            checkEmail: true
+          });
+          document.getElementById('auth').disabled = true;
+          document.getElementById('sendtoken').setAttribute('style', 'display:none');
+          document.getElementById('checktoken').setAttribute('style', 'display:none');
+        
+          document.getElementById('validateDomain').textContent = "인증번호가 확인되었습니다.";
+          document.getElementById('validateDomain').setAttribute('style', 'color: blue');
+        } else {
+          document.getElementById('sendtoken').setAttribute('style', 'display:inline-block');
+          document.getElementById('validateDomain').textContent = "인증번호를 재확인해주세요";
+          document.getElementById('validateDomain').setAttribute('style', 'color: #ff3535');
+        }
+      })
+  };
+
   handleClick = (e) => {
     e.preventDefault();
     // console.log(this.state);
@@ -383,14 +429,20 @@ class Join extends React.Component {
                   <label id="labelEmail" className="font-weight-bold foremail" htmlFor="email">이메일</label>
                   <input type="text" id="email" name="inputEmail" className="form-control col-4 margin-bottom-20" placeholder="이메일을 입력해주세요" onChange={this.emailChange}></input>
                   &nbsp;<label id="at">@</label>&nbsp;
-                  <input id="writedomain" name="inputdomain" className="form-control col-4 margin-bottom-20 inputdomain" placeholder="kakao.com" onChange={this.domainChange} readOnly></input>&nbsp;
+                  <input id="writedomain" name="inputdomain" className="form-control col-4 margin-bottom-20 inputdomain" placeholder="선택하세요" onChange={this.domainChange} readOnly></input>&nbsp;
                   <select id="domain" name="selectdomain" className="form-control col-3 margin-bottom-20" value={this.state.value} onChange={this.handleChange}>
-                          <option value="kakao.com" defaultValue>kakao.com</option>
+                          <option value="선택하세요" defaultValue>선택하세요</option>
+                          <option value="kakao.com" >kakao.com</option>
                           <option value="naver.com">naver.com</option>
                           <option value="daum.net">daum.net</option>
                           <option value="직접입력">직접입력</option>
                   </select>
-                </div>
+              </div>
+              <div className="col-12">
+                <input type="text" id="auth" className="form-control col-4 margin-bottom-20" onChange={this.authChange} disabled></input>
+                <button id="sendtoken" className="btn" onClick={this.authCheck}>인증번호 전송</button>
+                <button id="checktoken" className="btn" onClick={this.emailtokenCheck}>인증번호 확인</button>
+              </div>
                 <label id="validateDomain"></label>
               </div>
               <div className="form-group">

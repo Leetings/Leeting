@@ -48,14 +48,23 @@ input[type="radio"]:checked+label {
     border-bottom: 1px solid #ffffff;
 }
 
-.formcenter>#findids,
-.formcenter>#findpws {
+.formcenter>#findids {
     display: none;
     height: 450px;
     padding: 20px 0 0;
     border-top: 1px solid #ddd;
     padding-left: 100px;
     padding-top: 70px;
+}
+
+.formcenter>#findpws {
+    display: none;
+    height: 500px;
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+    padding-left: 100px;
+    padding-top: 70px;
+
 }
 
 #tab1:checked~#findids,
@@ -68,8 +77,9 @@ input[type="radio"]:checked+label {
     font-size: 18px;
 }
 
-#name,
-#id {
+#idname,
+#pwname,
+#pwid {
     margin-bottom: 10px;
 }
 
@@ -77,10 +87,47 @@ input[type="radio"]:checked+label {
     display: block;
 }
 
-#email,
-#writedomain,
-#domain {
+#idemail,
+#idwritedomain,
+#iddomain,
+#pwemail,
+#pwwritedomain,
+#pwdomain {
     display: inline-block;
+}
+
+
+#idauth,
+#pwauth {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#idsendtoken,
+#pwsendtoken {
+    margin-left: 20px;
+    width: 150px;
+    color: white;
+    background-color: #008ce8;
+}
+
+#idsendtoken:hover,
+#pwsendtoken:hover {
+    background-color: #0473bc;
+}
+
+#idchecktoken,
+#pwchecktoken {
+    display: none;
+    margin-left: 20px;
+    width: 150px;
+    color: white;
+    background-color: hsl(350, 100%, 63%);
+}
+
+#idchecktoken :hover,
+#pwchecktoken :hover {
+    background-color: rgb(255, 46, 81);
 }
 
 #findids>label#at,

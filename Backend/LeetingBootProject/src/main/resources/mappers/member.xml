@@ -19,10 +19,10 @@
 	<select id="sameNick" parameterType="String" resultType="int">
 		SELECT count(*) FROM member WHERE nickname=#{nickname}
 	</select>
-	<select id="findid" parameterType="Map" resultType="member">
+	<select id="findid" parameterType="Map" resultType="String">
 		SELECT id FROM member WHERE name=#{name} and email =#{email}
 	</select>
-	<select id="findpw" parameterType="Map" resultType="member">
+	<select id="findpw" parameterType="Map" resultType="String">
 		SELECT pw FROM member WHERE name=#{name} and email =#{email} and id =#{id}
 	</select>
 	<!--mypage -->

@@ -35,6 +35,34 @@
     background-color: #0473bc;
 }
 
+#auth {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#sendtoken {
+    margin-left: 20px;
+    width: 150px;
+    color: white;
+    background-color: #008ce8;
+}
+
+#sendtoken:hover {
+    background-color: #0473bc;
+}
+
+#checktoken {
+    display: none;
+    margin-left: 20px;
+    width: 150px;
+    color: white;
+    background-color: hsl(350, 100%, 63%);
+}
+
+#checktoken :hover {
+    background-color: rgb(255, 46, 81);
+}
+
 #labelId,
 #labelPw,
 #labelCPw,
