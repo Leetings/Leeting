@@ -21,7 +21,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service("jwtService")
 public class JwtServiceImpl implements JwtService{
 
-	private static final String SALT =  "luvookSecret";
+	private static final String SALT =  "leetingSecret";
 	
 	@Override
 	public <T> String create(String key, T data, String subject){
@@ -73,6 +73,7 @@ public class JwtServiceImpl implements JwtService{
 						 .setSigningKey(SALT.getBytes("UTF-8"))
 						 .parseClaimsJws(jwt);
 		} catch (Exception e) {
+			return "false";
 		}
 		System.out.println(claims.getBody().toString());
 		@SuppressWarnings("unchecked")

@@ -63,22 +63,26 @@ public class MemberController {
   //로그인
   @ApiOperation(value = "로그인", notes = "로그인", response = Map.class)
   @PostMapping("/login")
-  public ResponseEntity<String> loginMember(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
+  public ResponseEntity<Map<String, String>> loginMember(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
     System.out.println(req);
     String conclusion ="";
+    Map<String, String> conclusionmap = new HashMap<String, String>();
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("post to /member/login done");
     System.out.println("로그인");
     if(memberService.login(memberbody)) {
     	conclusion = "SUCESS";
+    	MemberDto tmpmember = memberService.getMemberInfo(memberbody.getId());
+    	String token = jwtService.create("id", memberbody.getId(), "id");
+    	conclusionmap.put("token", token);
+    	conclusionmap.put("id", tmpmember.getId());
+    	conclusionmap.put("nickname", tmpmember.getNickname());
+    	conclusionmap.put("name", tmpmember.getName());
     }
     else {
     	conclusion = "FAIL";
     }
-    String token = jwtService.create("id", memberbody.getId(), "id");
-    System.out.println(token);
-    System.out.println(jwtService.get("id", token));
-    return new ResponseEntity<String>(conclusion, status);
+    return new ResponseEntity<Map<String, String>>(conclusionmap, status);
   }
   //중복검사
   @ApiOperation(value = "중복검사", notes = "중복검사", response = Map.class)
@@ -192,6 +196,22 @@ public class MemberController {
     System.out.println(token);
     System.out.println(jwtService.get("email", token));
     return new ResponseEntity<String>(token, status);
+  }
+  @ApiOperation(value = "토큰인증", notes = "토큰인증", response = Map.class)
+  @PostMapping("/auth")
+  public ResponseEntity<String> authToken(@RequestBody Map<String,String> memberbody, HttpServletRequest req) throws SQLException {
+    System.out.println(req);
+    String conclusion ="";
+    HttpStatus status = HttpStatus.ACCEPTED;
+    System.out.println("get to /member/auth done");
+    System.out.println("토큰인증");
+    if(!jwtService.get("id", memberbody.get("token")).equals("false")) {
+    	conclusion = "SUCESS";
+    }
+    else {
+    	conclusion = "FAIL";
+    }
+    return new ResponseEntity<String>(conclusion, status);
   }
   public String getTempAuth(){
       char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
