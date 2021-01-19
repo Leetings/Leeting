@@ -16,9 +16,15 @@ class Login extends React.Component {
             id: this.state.id,
             pw: this.state.pw
         }).then(res => {
-            console.log(res);
-            console.log(res.data);
-            localStorage.setItem('token', res.data);
+            // console.log(res);
+            console.log(res.data.message);
+            if (res.data.message == "SUCCESS") {
+                sessionStorage.setItem("token", res.data.token);
+                sessionStorage.setItem("nickname", res.data.nickname);
+                window.location.replace("/");
+            } else {
+                alert("아이디와 비밀번호를 확인해주세요.");
+            }
         })
     };
     idChange = (e) => {

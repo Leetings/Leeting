@@ -59,19 +59,27 @@
     background: #4d88b7 url(../img/topsearch_icon.png) no-repeat 15px 50%;
 }
 
-#header .gtop ul {
+#header #login {
+    display: none;
+}
+
+#header .gtop #login ul,
+#header .gtop #nologin ul {
     position: absolute;
     top: 30px;
     right: 0;
 }
 
-#header .gtop ul li {
+#header .gtop #login ul li,
+#header .gtop #nologin ul li {
     float: left;
     font-size: 14px;
     color: #424242;
+    cursor: pointer;
 }
 
-#header .gtop ul li::after {
+#header .gtop #login ul li::after,
+#header .gtop #nologin ul li::after {
     content: '';
     display: inline-block;
     width: 1px;
@@ -80,7 +88,8 @@
     margin: 0 10px;
 }
 
-#header .gtop ul li:last-child::after {
+#header .gtop #login ul li:last-child::after,
+#header .gtop #nologin ul li:last-child::after {
     display: none;
 }
 

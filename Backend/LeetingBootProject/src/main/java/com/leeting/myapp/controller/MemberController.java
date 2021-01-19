@@ -74,13 +74,14 @@ public class MemberController {
     	conclusion = "SUCESS";
     	MemberDto tmpmember = memberService.getMemberInfo(memberbody.getId());
     	String token = jwtService.create("id", memberbody.getId(), "id");
+    	conclusionmap.put("message", "SUCCESS");
     	conclusionmap.put("token", token);
     	conclusionmap.put("id", tmpmember.getId());
     	conclusionmap.put("nickname", tmpmember.getNickname());
     	conclusionmap.put("name", tmpmember.getName());
     }
     else {
-    	conclusion = "FAIL";
+    	conclusionmap.put("message", "FAIL");
     }
     return new ResponseEntity<Map<String, String>>(conclusionmap, status);
   }
