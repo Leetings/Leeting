@@ -23,6 +23,8 @@ class Home extends React.Component {
                             </div>
                             <div className="slider2">
                             </div>
+                            <div className="slider3">
+                            </div>
                         </Slider>
                     </div>
                 </div>

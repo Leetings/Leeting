@@ -26,7 +26,7 @@ function Header() {
             <div className="gnb cB" id="gnb">
                 <ul className="topmenu" id="head-menu">
                     <li className="lnb1">
-                        <a href="#">Leeting</a>
+                        <a href="/Leeting">Leeting</a>
                     </li>
                     <li className="lnb2">
                         <a href="#" >메뉴2</a>

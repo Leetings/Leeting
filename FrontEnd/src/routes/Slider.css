@@ -1,5 +1,5 @@
 .main_visual {
-    height: 455px;
+    height: 500px;
     margin-bottom: 20px;
     overflow: hidden;
 }
@@ -13,7 +13,15 @@
 }
 
 .slider2 {
-    background: #fadcdd url(../img/slider01.png) no-repeat 50% bottom;
+    background: #efefef url(../img/slider02.png) no-repeat 50% bottom;
+    padding-top: 50px;
+    height: 455px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.slider3 {
+    background: #ebebeb url(../img/slider03.png) no-repeat 50% bottom;
     padding-top: 50px;
     height: 455px;
     box-sizing: border-box;

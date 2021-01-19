@@ -18,6 +18,7 @@ class Login extends React.Component {
         }).then(res => {
             console.log(res);
             console.log(res.data);
+            localStorage.setItem('token', res.data);
         })
     };
     idChange = (e) => {

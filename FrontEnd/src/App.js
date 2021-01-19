@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import Join from "./routes/Join";
 import Login from "./routes/Login";
 import Find from "./routes/Find";
+import Leeting from "./routes/Leeting";
 import NotFound from "./routes/NotFound";
 import "./App.css";
 
@@ -16,6 +17,7 @@ function App() {
         <Header/>
         <Switch>
             <Route path="/" exact={true} component={Home} />
+            <Route path="/Leeting" exact={true} component={Leeting} />
             <Route path="/join" exact={true} component={Join} />
             <Route path="/login" exact={true} component={Login} />
             <Route path="/find" exact={true} component={Find}/>
