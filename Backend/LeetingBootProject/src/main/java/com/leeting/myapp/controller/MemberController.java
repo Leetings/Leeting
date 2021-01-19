@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leeting.myapp.dao.MemberDao;
@@ -206,7 +207,7 @@ public class MemberController {
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("get to /member/auth done");
     System.out.println("토큰인증");
-    if(jwtService.get("token", memberbody.get("token")).equals(memberbody.get("auth"))) {
+    if(jwtService.get("email", memberbody.get("token")).equals(memberbody.get("auth"))) {
     	conclusion = "SUCCESS";
     }
     else {
@@ -215,25 +216,39 @@ public class MemberController {
     return new ResponseEntity<String>(conclusion, status);
   }
   @ApiOperation(value = "아이디찾기", notes = "아이디찾기", response = Map.class)
-  @PostMapping("/findid")
-  public ResponseEntity<String> findid(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
+  @GetMapping("/findid")
+  public ResponseEntity<String> findid(@RequestParam("name") String membername,@RequestParam("email") String memberemail,  HttpServletRequest req) throws SQLException {
     System.out.println(req);
     String conclusion ="";
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("get to /member/findid done");
     System.out.println("아이디찾기");
+    MemberDto memberbody = new MemberDto();
+    memberbody.setName(membername);
+    memberbody.setEmail(memberemail);
+    System.out.println(memberbody);
     conclusion = memberService.findid(memberbody);
+    if(conclusion == null) {
+    	conclusion = "FAIL";
+    }
     return new ResponseEntity<String>(conclusion, status);
   }
   @ApiOperation(value = "비밀번호찾기", notes = "비밀번호찾기", response = Map.class)
-  @PostMapping("/findpw")
-  public ResponseEntity<String> findpw(@RequestBody MemberDto memberbody, HttpServletRequest req) throws SQLException {
+  @GetMapping("/findpw")
+  public ResponseEntity<String> findpw(@RequestParam("name") String membername,@RequestParam("email") String memberemail, @RequestParam("id") String memberid, HttpServletRequest req) throws SQLException {
     System.out.println(req);
     String conclusion ="";
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("get to /member/findpw done");
     System.out.println("비밀번호찾기");
+    MemberDto memberbody = new MemberDto();
+    memberbody.setName(membername);
+    memberbody.setEmail(memberemail);
+    memberbody.setId(memberid);
     conclusion = memberService.findpw(memberbody);
+    if(conclusion == null) {
+    	conclusion = "FAIL";
+    }
     return new ResponseEntity<String>(conclusion, status);
   }
   public String getTempAuth(){

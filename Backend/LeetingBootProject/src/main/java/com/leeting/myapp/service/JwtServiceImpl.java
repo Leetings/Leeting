@@ -73,9 +73,12 @@ public class JwtServiceImpl implements JwtService{
 						 .setSigningKey(SALT.getBytes("UTF-8"))
 						 .parseClaimsJws(jwt);
 		} catch (Exception e) {
-			return "false";
+			return "";
 		}
 		System.out.println(claims.getBody().toString());
+		if(!claims.getBody().containsKey(key)) {
+			return "";
+		}
 		@SuppressWarnings("unchecked")
 		Object value =  claims.getBody().get(key);
 		return value;

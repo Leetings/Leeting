@@ -48,7 +48,7 @@ public class MemberDaoImpl implements MemberDao{
 		sqlSession.update("member.modify",member);
 	}
 	@Override
-	public MemberDto findid(MemberDto member) throws SQLException {
+	public String findid(MemberDto member) throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String,String> map = new HashMap<>();
 		map.put("name", member.getName());
@@ -56,7 +56,7 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("member.findid", map);
 	}
 	@Override
-	public MemberDto findpw(MemberDto member) throws SQLException {
+	public String findpw(MemberDto member) throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String,String> map = new HashMap<>();
 		map.put("name", member.getName());

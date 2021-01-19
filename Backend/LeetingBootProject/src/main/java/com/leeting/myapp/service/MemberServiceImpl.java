@@ -104,18 +104,18 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public String findid(MemberDto member) {
 		try {
-            MemberDto membertmp = memberDao.findid(member);
-            return membertmp.getId();
+            String memberid = memberDao.findid(member);
+            return memberid;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return null;
+            return "fail";
         }
 	}
 	@Override
 	public String findpw(MemberDto member) {
 		try {
-            MemberDto membertmp = memberDao.findpw(member);
-            return membertmp.getPw();
+            String memberpw = memberDao.findpw(member);
+            return memberpw;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
