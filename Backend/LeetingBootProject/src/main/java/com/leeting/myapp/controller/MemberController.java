@@ -37,13 +37,14 @@ import io.swagger.annotations.ApiOperation;
 public class MemberController {
 
   // service
-  private final MemberService memberService;
+  private  MemberService memberService;
 
 
   @Autowired
   public MemberController(MemberService memberService) {
     this.memberService = memberService;
   }
+
   @Autowired
   private JwtService jwtService;
   @Autowired

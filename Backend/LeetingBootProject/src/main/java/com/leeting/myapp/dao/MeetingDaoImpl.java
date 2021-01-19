@@ -9,21 +9,22 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.leeting.myapp.model.ExerciseDto;
+
+import com.leeting.myapp.model.MeetingDto;
 
 @Repository
-public class ExerciseDaoImpl implements ExerciseDao{
+public class MeetingDaoImpl implements MeetingDao{
 
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@Override
-	public void enrollExercise(Map<String,String> exerciseMeeting)  throws SQLException{
-		sqlSession.insert("exercise.enrollExercise",exerciseMeeting);
+	public void enrollMeeting(MeetingDto meeting)  throws SQLException{
+		sqlSession.insert("meeting.enrollMeeting",meeting);
 	}
 	
 	@Override
-    public List<ExerciseDto> listExercise()  throws SQLException{
-		return sqlSession.selectList("exercise.listExercise");
+    public List<MeetingDto> listMeeting()  throws SQLException{
+		return sqlSession.selectList("meeting.listMeeting");
 	}
 }
