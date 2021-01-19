@@ -1,6 +1,9 @@
 package com.leeting.myapp.service;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,11 +25,18 @@ public class JwtServiceImpl implements JwtService{
 	
 	@Override
 	public <T> String create(String key, T data, String subject){
+		Date datetime = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(datetime);
+		System.out.println(cal);
+		cal.add(Calendar.MINUTE, 10);
+		datetime = cal.getTime();
 		String jwt = Jwts.builder()
 						 .setHeaderParam("typ", "JWT")
 						 .setHeaderParam("regDate", System.currentTimeMillis())
 						 .setSubject(subject)
 						 .claim(key, data)
+						 .setExpiration(datetime)
 						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
 						 .compact();
 		return jwt;
@@ -64,6 +74,7 @@ public class JwtServiceImpl implements JwtService{
 						 .parseClaimsJws(jwt);
 		} catch (Exception e) {
 		}
+		System.out.println(claims.getBody().toString());
 		@SuppressWarnings("unchecked")
 		Object value =  claims.getBody().get(key);
 		return value;

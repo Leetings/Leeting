@@ -1,9 +1,7 @@
 package com.leeting.myapp.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.leeting.myapp.dao.MemberDao;
+import com.leeting.myapp.dao.MemberDaoImpl;
 import com.leeting.myapp.model.MemberDto;
-
 import com.leeting.myapp.service.JwtService;
 import com.leeting.myapp.service.MemberService;
 
@@ -36,10 +34,9 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/member")
 public class MemberController {
-	  @Autowired
-  // service
-  private  MemberService memberService;
 
+  // service
+  private final MemberService memberService;
 
 
   @Autowired
@@ -55,6 +52,7 @@ public class MemberController {
   @GetMapping("")
   public ResponseEntity<Map<String, Object>> getMemberInfo(HttpServletRequest req) throws SQLException {
     System.out.println(req);
+
     Map<String, Object> resultMap = new HashMap<>();
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("get to /member done");
@@ -71,10 +69,11 @@ public class MemberController {
     HttpStatus status = HttpStatus.ACCEPTED;
     System.out.println("post to /member/login done");
     System.out.println("로그인");
-    if (memberService.login(memberbody)) {
-      conclusion = "SUCESS";
-    } else {
-      conclusion = "FAIL";
+    if(memberService.login(memberbody)) {
+    	conclusion = "SUCESS";
+    }
+    else {
+    	conclusion = "FAIL";
     }
     String token = jwtService.create("id", memberbody.getId(), "id");
     System.out.println(token);
