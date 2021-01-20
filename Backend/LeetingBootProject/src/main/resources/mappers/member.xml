@@ -29,6 +29,9 @@
 	<select id="userinfo" parameterType="String" resultType="member">
 		SELECT * FROM member WHERE id = #{id}
 	</select>
+	<select id ="sameEmail" parameterType = "String" resultType="int">
+		SELECT count(*) FROM member WHERE email=#{email}
+	</select>
 	<!-- 삭제 -->
 	<delete id="delete" parameterType="String">
 		DELETE FROM member WHERE id=#{id}

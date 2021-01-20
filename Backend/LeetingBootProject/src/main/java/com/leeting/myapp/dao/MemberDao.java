@@ -14,4 +14,5 @@ public interface MemberDao {
 	int sameNick(String Nickname) throws SQLException;
 	public String findid(MemberDto member) throws SQLException;
 	public String findpw(MemberDto member) throws SQLException;
+	int sameEmail(String email) throws SQLException;
 }

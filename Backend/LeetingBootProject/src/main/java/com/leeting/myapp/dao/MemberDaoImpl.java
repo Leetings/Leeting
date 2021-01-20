@@ -64,4 +64,8 @@ public class MemberDaoImpl implements MemberDao{
 		map.put("id", member.getId());
 		return sqlSession.selectOne("member.findpw", map);
 	}
+	@Override
+	public int sameEmail(String email)  throws SQLException{
+		return sqlSession.selectOne("member.sameEmail",email);
+	}
 }

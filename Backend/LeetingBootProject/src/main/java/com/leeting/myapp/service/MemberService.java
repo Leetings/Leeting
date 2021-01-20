@@ -15,5 +15,6 @@ public interface MemberService {
 	boolean sameNick(String memberNickname);
 	String findid(MemberDto member);
 	String findpw(MemberDto member);
+	boolean sameEmail(String memberEmail);
 }
 

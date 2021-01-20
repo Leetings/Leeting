@@ -121,7 +121,20 @@ public class MemberServiceImpl implements MemberService{
             return null;
         }
 	}
-
+    @Override
+    public boolean sameEmail(String memberEmail) {
+        try {
+            if(memberDao.sameEmail(memberEmail)==1) {
+            	return false;
+            }
+            else {
+            return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
 //    @Override
 //    public void logout(Long memberId) {
 //
