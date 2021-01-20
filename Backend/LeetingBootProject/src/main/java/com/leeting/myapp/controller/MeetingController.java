@@ -84,7 +84,7 @@ public class MeetingController {
 		    list = meetingService.listMeeting();
 		    System.out.println("get to /meetinglist done");
 		    System.out.println("미팅 목록");
-		    System.out.println(list.get(1).toString());
+		    System.out.println(list.get(0).toString());
 		    return new ResponseEntity<List<MeetingDto>>(meetingService.listMeeting(), status);
 	  }
 	  //미팅 상세정보
