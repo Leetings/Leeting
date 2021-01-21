@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -133,6 +134,16 @@ public class MemberServiceImpl implements MemberService{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
+        }
+    }
+    @Override
+    public List<Object> userMeet(String memberId) {
+        try {
+           List<Object> meetlist = memberDao.userMeetingFive(memberId);
+           return meetlist;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
         }
     }
 //    @Override

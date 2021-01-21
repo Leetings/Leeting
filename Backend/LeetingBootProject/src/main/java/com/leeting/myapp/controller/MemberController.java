@@ -2,6 +2,7 @@ package com.leeting.myapp.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -258,6 +259,16 @@ public class MemberController {
     	conclusion = "FAIL";
     }
     return new ResponseEntity<String>(conclusion, status);
+  }
+  @ApiOperation(value = "참여미팅", notes = "참여미팅메인", response = Map.class)
+  @GetMapping("/usermeet")
+  public ResponseEntity<List<Object>> usermeet(@RequestParam("id") String memberid, HttpServletRequest req) throws SQLException {
+    System.out.println(req);
+    HttpStatus status = HttpStatus.ACCEPTED;
+    System.out.println("get to /member/usermeet done");
+    System.out.println("참여미팅");
+    List<Object> meetlist = memberService.userMeet(memberid);
+    return new ResponseEntity<List<Object>>(meetlist, status);
   }
   public String getTempAuth(){
       char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
