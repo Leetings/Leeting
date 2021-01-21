@@ -25,8 +25,9 @@ public class MeetingDaoImpl implements MeetingDao{
 	}
 	
 	@Override
-    public List<MeetingDto> listMeeting()  throws SQLException{
-		return sqlSession.selectList("meeting.listMeeting");
+    public List<MeetingDto> listMeeting(int categoryno)  throws SQLException{
+		if(categoryno==0) return sqlSession.selectList("meeting.listMeeting");
+		else return sqlSession.selectList("meeting.listMeetingCategory",categoryno);
 	}
 	
 	@Override

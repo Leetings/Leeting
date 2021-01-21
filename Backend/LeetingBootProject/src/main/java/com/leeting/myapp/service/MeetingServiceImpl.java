@@ -33,9 +33,9 @@ public class MeetingServiceImpl implements MeetingService{
     }
 	
 	@Override
-    public List<MeetingDto> listMeeting() throws SQLException {
+    public List<MeetingDto> listMeeting(int categoryno) throws SQLException {
 		System.out.println("확인");
-	    	return meetingDao.listMeeting();
+	    	return meetingDao.listMeeting(categoryno);
 
     }
 	

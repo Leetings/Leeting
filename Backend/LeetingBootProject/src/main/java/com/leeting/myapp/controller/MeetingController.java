@@ -75,31 +75,53 @@ public class MeetingController {
 	  }
 	  //미팅 목록
 	  @ApiOperation(value = "미팅 목록", notes = "미팅 목록", response = List.class)
-	  @GetMapping("/listmeeting")
-	  public ResponseEntity<List<MeetingDto>> listMeeting(HttpServletRequest req) throws SQLException {
+	  @GetMapping("/{category}")
+	  public ResponseEntity<List<MeetingDto>> listMeeting(@PathVariable(value="category") String category,HttpServletRequest req) throws SQLException {
 		   System.out.println(req);
 		    Map<String, Object> resultMap = new HashMap<>();
 		    HttpStatus status = HttpStatus.ACCEPTED;
+		    int categoryno = 0;
+		    switch(category) {
+		    case "exercise":
+		    	categoryno = 1;
+		    	break;
+		    case "music":
+		    	categoryno = 2;
+		    	break;
+		    case "game":
+		    	categoryno = 3;
+		    	break;
+		    case "diy":
+		    	categoryno = 4;
+		    	break;
+		    case "lans":
+		    	categoryno = 5;
+		    	break;
+		    case "study":
+		    	categoryno = 6;
+		    	break; 
+		    default : break;
+		    }
 		    List<MeetingDto> list = new ArrayList<>();
-		    list = meetingService.listMeeting();
+		    list = meetingService.listMeeting(categoryno);
 		    System.out.println("get to /meetinglist done");
 		    System.out.println("미팅 목록");
 		    System.out.println(list.get(0).toString());
-		    return new ResponseEntity<List<MeetingDto>>(meetingService.listMeeting(), status);
+		    return new ResponseEntity<List<MeetingDto>>(list, status);
 	  }
-	  //미팅 상세정보
-	  @ApiOperation(value = "미팅 상세정보", notes = "미팅 상세정보", response = Map.class)
-	  @GetMapping("/{no}")
-	  public ResponseEntity<MeetingDto> getMeetingInfo(@PathVariable(value="no") int meetingno, HttpServletRequest req) throws SQLException {
-		  System.out.println(meetingno); 
-		  System.out.println(req);
-		    MeetingDto meetingtmp = meetingService.getMeetingInfo(meetingno);
-		    HttpStatus status = HttpStatus.ACCEPTED;
-		    System.out.println(meetingtmp.toString());
-		    System.out.println("get to /meetingdetail done");
-		    System.out.println("미팅상세정보");
-		    return new ResponseEntity<MeetingDto>(meetingtmp, status);
-	  }
+//	  //미팅 상세정보
+//	  @ApiOperation(value = "미팅 상세정보", notes = "미팅 상세정보", response = Map.class)
+//	  @GetMapping("/{no}")
+//	  public ResponseEntity<MeetingDto> getMeetingInfo(@PathVariable(value="no") int meetingno, HttpServletRequest req) throws SQLException {
+//		  System.out.println(meetingno); 
+//		  System.out.println(req);
+//		    MeetingDto meetingtmp = meetingService.getMeetingInfo(meetingno);
+//		    HttpStatus status = HttpStatus.ACCEPTED;
+//		    System.out.println(meetingtmp.toString());
+//		    System.out.println("get to /meetingdetail done");
+//		    System.out.println("미팅상세정보");
+//		    return new ResponseEntity<MeetingDto>(meetingtmp, status);
+//	  }
 	  //미팅정보수정
 	  @ApiOperation(value = "미팅수정", notes = "미팅수정", response = Map.class)
 	  @PutMapping("")
