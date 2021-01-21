@@ -1,7 +1,7 @@
 package com.leeting.myapp.model;
 
-public class ContentDto {
-    private int contentno;
+public class ContentsDto {
+    private int contentsno;
 
     private String writer; // member id
 
@@ -9,25 +9,34 @@ public class ContentDto {
 
     private String detail;
 
-    private String filepath;
+    private String file;
 
     private int categoryno;
 
-    public ContentDto(int contentno, String writer, String date, String detail, String filepath, int categoryno) {
-        this.contentno = contentno;
+    public ContentsDto() {}
+
+    public ContentsDto(int contentsno, String writer, String date, String detail, String file, int categoryno) {
+        this.contentsno = contentsno;
         this.writer = writer;
         this.date = date;
         this.detail = detail;
-        this.filepath = filepath;
         this.categoryno = categoryno;
     }
 
-    public int getContentno() {
-        return contentno;
+    public ContentsDto(String writer, String date, String detail, String file, int categoryno) {
+        this.writer = writer;
+        this.date = date;
+        this.detail = detail;
+        this.file = file;
+        this.categoryno = categoryno;
     }
 
-    public void setContentno(int contentno) {
-        this.contentno = contentno;
+    public int getContentsno() {
+        return contentsno;
+    }
+
+    public void setContentsno(int contentsno) {
+        this.contentsno = contentsno;
     }
 
     public String getWriter() {
@@ -54,12 +63,12 @@ public class ContentDto {
         this.detail = detail;
     }
 
-    public String getFilepath() {
-        return filepath;
+    public String getFile() {
+        return file;
     }
 
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public int getCategoryno() {
