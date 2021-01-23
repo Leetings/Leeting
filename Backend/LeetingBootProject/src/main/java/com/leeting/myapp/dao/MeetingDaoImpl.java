@@ -15,7 +15,7 @@ import com.leeting.myapp.model.MemberDto;
 import com.leeting.myapp.model.ParticipationDto;
 
 @Repository
-public class MeetingDaoImpl implements MeetingDao{
+public class MeetingDaoImpl implements MeetingDao {
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -48,5 +48,21 @@ public class MeetingDaoImpl implements MeetingDao{
 	@Override
 	public List<ParticipationDto> listparticipants(int meetingno){
 		return sqlSession.selectList("meeting.listparticipants",meetingno);
+	}
+
+	// 미팅 참여자 중복 검사
+	@Override
+	public ParticipationDto participationinfo(ParticipationDto participationDto) {
+		return sqlSession.selectOne("meeting.participationinfo", participationDto);
+	}
+
+	@Override
+	public void setlikestatus(ParticipationDto participationDto) {
+		sqlSession.update("meeting.setlikestatus", participationDto);
+	}
+
+	@Override
+	public void clickmeeting(ParticipationDto participationDto) {
+		sqlSession.insert("meeting.clickmeeting", participationDto);
 	}
 }
