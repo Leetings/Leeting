@@ -145,6 +145,7 @@ class write extends React.Component {
 
     writeClick = (e) => {
         e.preventDefault();
+        let sId = sessionStorage.getItem('id');
 
         // console.log(document.getElementById("datepick").value);
         this.setState({
@@ -155,23 +156,23 @@ class write extends React.Component {
         // console.log( this.state.sDate);
         // console.log( this.state.content);
         // console.log(this.state.categoryno);
-        console.log(this.state.thumb);
-        // axios.post("http://127.0.0.1:8080/myapp/meeting/enrollmeeting", {
-        //     hostid: "admin",
-        //     maintitle: this.state.mainTit,
-        //     subtitle: this.state.subTit,
-        //     date: document.getElementById("datepick").value,
-        //     detail: this.state.content,
-        //     categoryno: this.state.categoryno,
-        //     file:this.state.thumb
-        // }).then(res => {
-        //     if (res.data === "SUCESS") {
-        //         console.log("성공");
-        //     }
-        //     else {
-        //         console.log("실패");
-        //     }
-        // })
+        // console.log(this.state.thumb);
+        axios.post("http://127.0.0.1:8080/myapp/meeting/enrollmeeting", {
+            hostid: sId,
+            maintitle: this.state.mainTit,
+            subtitle: this.state.subTit,
+            date: document.getElementById("datepick").value,
+            detail: this.state.content,
+            categoryno: this.state.categoryno,
+            file:this.state.thumb
+        }).then(res => {
+            if (res.data === "SUCESS") {
+                console.log("성공");
+            }
+            else {
+                console.log("실패");
+            }
+        })
     }
 
     
@@ -207,7 +208,7 @@ class write extends React.Component {
                     <button type="button" onClick={this.uploadImage}>업로드</button>
                 </div>
                 <div className="writeInput">
-                    <span>종료일</span>
+                    <span>시작일</span>
                     <App /> 
                 </div>
                 <div className="editor">
