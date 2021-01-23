@@ -113,16 +113,25 @@ public class MeetingController {
 	  //미팅 참여자 정보
 	  @ApiOperation(value = "미팅 참여자 정보", notes = "미팅 참여자 정보", response = List.class)
 	  @GetMapping("/{category}/{meetingno}")
-	  public ResponseEntity<List<ParticipationDto>> listMeeting(@PathVariable(value="meetingno") int meetingno,HttpServletRequest req) throws SQLException {
+	  public ResponseEntity <Map<String, Object>> listparticipants(@PathVariable(value="meetingno") int meetingno,HttpServletRequest req) throws SQLException {
 		   System.out.println(req);
+		   String conclusion ="";
+		   Map<String, Object> conclusionmap = new HashMap<String, Object>();
 		    Map<String, Object> resultMap = new HashMap<>();
 		    HttpStatus status = HttpStatus.ACCEPTED;		    
 		    List<ParticipationDto> list = new ArrayList<>();
 		    list = meetingService.listparticipants(meetingno);
+		    if(!list.isEmpty()) {
+		    	conclusion = "SUCESS";
+		    	conclusionmap.put("message", "SUCCESS");
+		    	conclusionmap.put("list", list);
+		    }
+		    else conclusionmap.put("message", "FAIL");
 		    System.out.println("get to /participantslist done");
 		    System.out.println("미팅  참여자 목록");
-		    System.out.println(list.get(0).toString());
-		    return new ResponseEntity<List<ParticipationDto>>(list, status);
+		    System.out.println(conclusionmap.get("message"));
+		  //  System.out.println(conclusionmap.get("list").toString());
+		    return new ResponseEntity<Map<String, Object>>(conclusionmap, status);
 	  }
 //	  //미팅 상세정보
 //	  @ApiOperation(value = "미팅 상세정보", notes = "미팅 상세정보", response = Map.class)
