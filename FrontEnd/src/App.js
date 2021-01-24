@@ -15,6 +15,8 @@ import DIYMeeting from "./routes/meeting/js/diy";
 import LansMeeting from "./routes/meeting/js/lans";
 import StudyMeeting from "./routes/meeting/js/study";
 
+import ContentsList from "./routes/contents/js/list";
+
 import Detail from "./routes/meeting/js/Detail";
 
 import NotFound from "./routes/NotFound";
@@ -37,7 +39,8 @@ function App() {
           <Route path="/meeting/diy" exact={true} component={DIYMeeting} />
           <Route path="/meeting/lans" exact={true} component={LansMeeting} />
           <Route path="/meeting/study" exact={true} component={StudyMeeting} />
-          <Route path="/meeting/:id" exact={true} component={Detail}/>
+          <Route path="/meeting/:id" exact={true} component={Detail} />
+          <Route path="/contents/list" exact={true} component={ContentsList}/>
           <Route component={NotFound}/>
         </Switch>
         <Footer/>

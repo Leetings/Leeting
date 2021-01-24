@@ -65,7 +65,7 @@ class Header extends Component {
                                 <a href="/meeting/exercise" >Leeting's</a>
                             </li>
                             <li className="lnb3">
-                                <a href="#" >메뉴3</a>
+                                <a href="/contents/list" >컨텐츠</a>
                             </li>
                             <li className="lnb4">
                                 <a href="#" >메뉴4</a>
