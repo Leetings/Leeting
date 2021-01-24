@@ -16,6 +16,7 @@ public interface MeetingDao {
 	public List<ParticipationDto> listparticipants(int meetingno);
 	public ParticipationDto participationinfo(ParticipationDto participationDto);
 	void setlikestatus(ParticipationDto participationDto);
+	public void setmeetinglike(Map<String,Double>scoremap);
 	void clickmeeting(ParticipationDto participationDto);
 	public void exitmeeting(ParticipationDto participationDto);
 }

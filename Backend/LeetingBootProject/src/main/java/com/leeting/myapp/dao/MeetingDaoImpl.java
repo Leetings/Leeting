@@ -60,13 +60,19 @@ public class MeetingDaoImpl implements MeetingDao {
 	public void setlikestatus(ParticipationDto participationDto) {
 		sqlSession.update("meeting.setlikestatus", participationDto);
 	}
+	@Override
+	public void setmeetinglike(Map<String,Double>scoremap) {
+		sqlSession.update("meeting.setmeetinglike", scoremap);
+	}
 
 	@Override
 	public void clickmeeting(ParticipationDto participationDto) {
 		sqlSession.insert("meeting.clickmeeting", participationDto);
+		sqlSession.update("meeting.plusparticipant",participationDto);
 	}
 	@Override
 	public void exitmeeting(ParticipationDto participationDto) {
 		sqlSession.delete("meeting.exitmeeting", participationDto);
+		sqlSession.update("meeting.minusparticipant",participationDto);
 	}
 }

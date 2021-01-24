@@ -37,11 +37,19 @@
 		SEt likestatus = #{likestatus}
 		where userid = #{userid} and meetingno = #{meetingno}
 	</update>
+	<update id="setmeetinglike" parameterType="map">
+		UPDATE meeting
+		SEt meetinglike = #{score}
+		where no = cast(#{meetingno} as signed Integer)
+	</update>
 	<!-- 미팅 참석-->
 	<insert id="clickmeeting" parameterType="participation">
 		INSERT INTO participation (meetingno, userid, likestatus)
 		VALUES (#{meetingno}, #{userid}, 0)
 	</insert>
+	<update id="plusparticipant" parameterType="participation">
+		UPDATE meeting SET participants = participants+1 WHERE no = #{meetingno}
+	</update>
 	<!--  참여자 정보  -->
 	<select id="participationinfo" parameterType="participation" resultType="participation">
 		SELECT no, meetingno, userid, likestatus
@@ -52,4 +60,7 @@
 	<delete id="exitmeeting" parameterType="participation">
 		DELETE FROM participation WHERE meetingno=#{meetingno} AND userid = #{userid};		
 	</delete>
+	<update id="minusparticipant" parameterType="participation">
+		UPDATE meeting SET participants = participants-1 WHERE no = #{meetingno}
+	</update>
 </mapper>

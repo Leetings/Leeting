@@ -78,6 +78,10 @@ public class MeetingServiceImpl implements MeetingService{
     public void setlikestatus(ParticipationDto participationDto) throws SQLException {
         meetingDao.setlikestatus(participationDto);
     }
+    @Override
+    public void setmeeinglike(Map<String,Double> scoremap) throws SQLException {
+    	meetingDao.setmeetinglike(scoremap);
+    }
 
     @Override
     public boolean clickmeeting(ParticipationDto participationDto) throws SQLException {

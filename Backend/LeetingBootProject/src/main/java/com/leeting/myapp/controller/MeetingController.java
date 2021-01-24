@@ -179,11 +179,17 @@ public class MeetingController {
 		  System.out.println(req);
 		  Map<String, Object> resultMap = new HashMap<>();
 		  HttpStatus status = HttpStatus.ACCEPTED;
+		  Map<String, Double> scoremap = new HashMap<>();
 		  System.out.println("update to /setlike done");
 		  System.out.println("좋아요클릭");
 		  System.out.println(participationDto.getUserid());
 		  System.out.println(participationDto.getLikestatus());
 		  meetingService.setlikestatus(participationDto);
+		  MeetingDto meetingdto = meetingService.getMeetingInfo(participationDto.getMeetingno());
+		  double score = RecommendController.calculatescore(meetingdto);
+		  scoremap.put("score",score);
+		  scoremap.put("meetingno",(double) participationDto.getMeetingno());
+		  meetingService.setmeeinglike(scoremap);
 		  return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	  }
 
