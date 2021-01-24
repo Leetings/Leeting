@@ -10,6 +10,7 @@ class Detail extends React.Component {
     constructor() {
         super();
         this.state = {
+            meetinglike:0,
             likes: false,
             checkJoin:false,
         }
@@ -128,10 +129,18 @@ class Detail extends React.Component {
     likeClick = (e) => {
         e.preventDefault();
         const { location } = this.props;
+        let meetinglike = location.state.meetinglike;
+        if (this.state.likes) {
+            meetinglike = meetinglike - 1;
+        }
+        else {
+            meetinglike = meetinglike + 1;
+        }
 
         let sId = sessionStorage.getItem('id');
 
         axios.put('http://127.0.0.1:8080/myapp/meeting/setlike', {
+            // meetinglike: meetinglike,
             likestatus: !(this.state.likes),
             userid: sId,
             meetingno: location.state.id

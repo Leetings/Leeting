@@ -64,7 +64,7 @@ class Modify extends React.Component {
         // console.log(this.editorRef);
         // editor.setHtml(location.state.detail);
         // console.log(subtit);
-        // console.log(document.getElementById('datepick').value);
+        console.log(document.getElementById('datepick').value);
     }
 
 
@@ -151,7 +151,6 @@ class Modify extends React.Component {
 
     writeClick = (e) => {
         e.preventDefault();
-        let sId = sessionStorage.getItem('id');
 
         // console.log(document.getElementById("datepick").value);
         this.setState({
@@ -168,6 +167,18 @@ class Modify extends React.Component {
             file:this.state.file
         }).then(res => {
                 console.log("성공");
+        })
+    }
+
+    deleteClick = (e) => { 
+        e.preventDefault();
+        let no = this.state.id;
+
+        axios.delete("http://127.0.0.1:8080/myapp/meeting"+"/"+no, {
+            meetingno: this.state.id,
+            no:this.state.id
+        }).then(res => {
+            console.log("삭제 성공");
         })
     }
     
@@ -205,7 +216,9 @@ class Modify extends React.Component {
                 </div>
                 <div className="writeInput">
                     <span>시작일</span>
-                    <App /> 
+                    <App
+                        startDates={location.state.date}
+                    /> 
                 </div>
                 <div className="editor">
                     <Editor
@@ -222,15 +235,16 @@ class Modify extends React.Component {
                 </div>
                 <div className="btn">
                     <button onClick={this.writeClick}>등록하기</button>
+                    <button onClick={this.deleteClick}>삭제하기</button>
                 </div>
             </div>
         );
     }
 }
 
-function App() {
+function App({startDates}) {
     // 달력 날짜 변경 시 기준점이 되는 날짜 
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(startDates));
             
     // 요일 반환 
     const getDayName = (date) => {

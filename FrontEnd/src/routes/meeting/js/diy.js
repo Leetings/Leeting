@@ -102,16 +102,19 @@ class diy extends React.Component {
                     <div className="list_view">
                         {data.map((leeting, idx)=> (
                             <Diy
-                                key={idx}
-                                idx={idx}
-                                id={leeting.meetingno}
-                                maintitle={leeting.maintitle}
-                                subtitle={leeting.subtitle}
-                                date={leeting.date}
-                                hostid={leeting.hostid}
-                                detail={leeting.detail}
-                                categoryno={leeting.categoryno}
-                                file={leeting.file}
+                            key={idx}
+                            idx={idx}
+                            id={leeting.meetingno}
+                            maintitle={leeting.maintitle}
+                            subtitle={leeting.subtitle}
+                            date={leeting.date}
+                            hostid={leeting.hostid}
+                            detail={leeting.detail}
+                            categoryno={leeting.categoryno}
+                            file={leeting.file}
+                            meetinglike={leeting.meetinglike}
+                            enddate={leeting.enddate}
+                            participants={leeting.participants}
                             />
                         ))}
                     </div>

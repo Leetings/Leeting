@@ -112,6 +112,9 @@ class music extends React.Component {
                                 detail={leeting.detail}
                                 categoryno={leeting.categoryno}
                                 file={leeting.file}
+                                meetinglike={leeting.meetinglike}
+                                enddate={leeting.enddate}
+                                participants={leeting.participants}
                             />
                         ))}
                     </div>

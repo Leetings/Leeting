@@ -12,6 +12,7 @@ class exercise extends React.Component {
     getLeeting = async () => {
         let data = await axios.get('http://127.0.0.1:8080/myapp/meeting/exercise');
         data = data.data;
+        // console.log(data);
         // console.log('data is ' + JSON.stringify(data.categories));
         this.setState({ data, isLoading: false });
     }
@@ -101,16 +102,19 @@ class exercise extends React.Component {
                     <div className="list_view">
                         {data.map((leeting, idx)=> (
                             <Exercise
-                                key={idx}
-                                idx={idx}
-                                id={leeting.meetingno}
-                                maintitle={leeting.maintitle}
-                                subtitle={leeting.subtitle}
-                                date={leeting.date}
-                                hostid={leeting.hostid}
-                                detail={leeting.detail}
-                                categoryno={leeting.categoryno}
-                                file={leeting.file}
+                            key={idx}
+                            idx={idx}
+                            id={leeting.meetingno}
+                            maintitle={leeting.maintitle}
+                            subtitle={leeting.subtitle}
+                            date={leeting.date}
+                            hostid={leeting.hostid}
+                            detail={leeting.detail}
+                            categoryno={leeting.categoryno}
+                            file={leeting.file}
+                            meetinglike={leeting.meetinglike}
+                            enddate={leeting.enddate}
+                            participants={leeting.participants}
                             />
                         ))}
                     </div>

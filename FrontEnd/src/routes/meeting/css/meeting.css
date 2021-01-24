@@ -129,21 +129,22 @@
     text-align: left;
 }
 
+
 .itemListView img {
     width: 200px;
     height: 200px;
+    border-radius: 20px;
 }
 
 .itemListView .subtit {
-    font-size: 14px;
-    color: #ccc;
-    font-weight: bold;
+    font-size: 16px;
+    color: gray;
 }
 
 .itemListView .tit {
-    font-size: 20px;
+    font-size: 22px;
+    color: black;
     font-weight: bold;
-    height: 60px;
 }
 
 .writeBtn {
@@ -154,8 +155,7 @@
 
 #meeting_detail {
     width: 1200px;
-    margin: 0 auto;
-    height: 1000px;
+    margin: 0 auto 50px;
 }
 
 #meeting_detail .titleset {
@@ -319,6 +319,8 @@
 }
 
 .detail_subtit {
+    width: 1000px;
+    margin: 0 auto;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
