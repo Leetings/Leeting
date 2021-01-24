@@ -39,7 +39,7 @@
 	</update>
 	<update id="setmeetinglike" parameterType="map">
 		UPDATE meeting
-		SEt meetinglike = #{score}
+		SEt meetinglike = meetinglike+#{score}
 		where no = cast(#{meetingno} as signed Integer)
 	</update>
 	<!-- 미팅 참석-->

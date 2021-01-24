@@ -187,8 +187,12 @@ public class MeetingController {
 		  meetingService.setlikestatus(participationDto);
 		  MeetingDto meetingdto = meetingService.getMeetingInfo(participationDto.getMeetingno());
 		  double score = RecommendController.calculatescore(meetingdto);
-		  scoremap.put("score",score);
+		  if(participationDto.getLikestatus())
+			  scoremap.put("score",(double)(1.0));
+		  else
+			  scoremap.put("score",(double)(-1.0));
 		  scoremap.put("meetingno",(double) participationDto.getMeetingno());
+		  System.out.println(score);
 		  meetingService.setmeeinglike(scoremap);
 		  return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	  }
