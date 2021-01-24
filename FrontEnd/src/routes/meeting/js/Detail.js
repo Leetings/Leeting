@@ -12,7 +12,8 @@ class Detail extends React.Component {
         this.state = {
             meetinglike:0,
             likes: false,
-            checkJoin:false,
+            checkJoin: false,
+            btnText : "미팅 참가하기",
         }
     }
 
@@ -46,7 +47,7 @@ class Detail extends React.Component {
         if (location.state.hostid === sId) {
             document.getElementById('likebtn').disabled = true;
             document.getElementById('joinBtn').setAttribute("style", "display:none");
-            document.getElementById('joinOutBtn').setAttribute("style", "display:none");
+            // document.getElementById('joinOutBtn').setAttribute("style", "display:none");
             document.getElementById('modifyBtn').setAttribute("style", "display:block");
         }
         
@@ -113,14 +114,19 @@ class Detail extends React.Component {
             for (let i = 0; i < data.length; i++) {
                 // console.log(data[i].userid);
                 if (sId === data[i].userid) {
-                    this.state.checkJoin = true;
+                    // this.state.checkJoin = true;
+                    this.setState({
+                        checkJoin: true,
+                        btnText:"미팅 나가기"
+                    })
                 }
             }
             // console.log(this.state.checkJoin);
             if (this.state.checkJoin === true) {
-                document.getElementById('joinBtn').setAttribute("style", "display:none");
-                document.getElementById('joinOutBtn').setAttribute("style", "display:block");
-            }
+                // document.getElementById('joinBtn').value="미팅 나가기";
+                // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
+            } else
+                document.getElementById('likebtn').disabled = true;
             // data = data.data;
             // this.setState({ data, isLoading: false });
         }
@@ -129,18 +135,10 @@ class Detail extends React.Component {
     likeClick = (e) => {
         e.preventDefault();
         const { location } = this.props;
-        let meetinglike = location.state.meetinglike;
-        if (this.state.likes) {
-            meetinglike = meetinglike - 1;
-        }
-        else {
-            meetinglike = meetinglike + 1;
-        }
 
         let sId = sessionStorage.getItem('id');
 
         axios.put('http://127.0.0.1:8080/myapp/meeting/setlike', {
-            // meetinglike: meetinglike,
             likestatus: !(this.state.likes),
             userid: sId,
             meetingno: location.state.id
@@ -171,14 +169,21 @@ class Detail extends React.Component {
             userid: sId
         }).then(res => {
             if (res.data === "SUCESS") {
-                console.log("성공");
-                document.getElementById('joinBtn').setAttribute("style", "display:none");
-                document.getElementById('joinOutBtn').setAttribute("style", "display:block");
+                console.log("미팅 참여");
                 this.setState({
+                    btnText:"미팅 나가기",
                     checkJoin:true
                 })
+                // document.getElementById('joinBtn').setAttribute("style", "display:none");
+                // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
+                document.getElementById('likebtn').disabled = false;
             } else {
-                console.log("실패");
+                console.log("미팅 나감");
+                this.setState({
+                    btnText:"미팅 참가하기",
+                    checkJoin:false
+                })
+                document.getElementById('likebtn').disabled = true;
             }
         })
     }
@@ -211,8 +216,8 @@ class Detail extends React.Component {
                             {/* <p className="likecnt">1</p> */}
                             </div>
                         <div className="joinMeeting" >
-                            <button id="joinBtn" onClick={ this.joinMeetingClick }>미팅 참여하기</button>
-                            <button id="joinOutBtn">미팅 나가기</button>
+                            <button id="joinBtn" onClick={ this.joinMeetingClick }>{this.state.btnText}</button>
+                            {/* <button id="joinOutBtn">미팅 나가기</button> */}
                             <GoModify
                                 key={location.state.id}
                                 id={location.state.id}
