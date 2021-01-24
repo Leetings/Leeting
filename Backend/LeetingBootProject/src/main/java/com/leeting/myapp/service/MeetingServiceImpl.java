@@ -86,6 +86,7 @@ public class MeetingServiceImpl implements MeetingService{
             meetingDao.clickmeeting(participationDto);
             return true;
         }else{
+        	meetingDao.exitmeeting(participationDto);
 	        return false;
         }
     }

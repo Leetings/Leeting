@@ -65,4 +65,8 @@ public class MeetingDaoImpl implements MeetingDao {
 	public void clickmeeting(ParticipationDto participationDto) {
 		sqlSession.insert("meeting.clickmeeting", participationDto);
 	}
+	@Override
+	public void exitmeeting(ParticipationDto participationDto) {
+		sqlSession.delete("meeting.exitmeeting", participationDto);
+	}
 }

@@ -42,10 +42,14 @@
 		INSERT INTO participation (meetingno, userid, likestatus)
 		VALUES (#{meetingno}, #{userid}, 0)
 	</insert>
-
+	<!--  참여자 정보  -->
 	<select id="participationinfo" parameterType="participation" resultType="participation">
 		SELECT no, meetingno, userid, likestatus
 		FROM participation
 		WHERE userid = #{userid} and meetingno = #{meetingno}
 	</select>
+	<!-- 미팅나가기 -->
+	<delete id="exitmeeting" parameterType="participation">
+		DELETE FROM participation WHERE meetingno=#{meetingno} AND userid = #{userid};		
+	</delete>
 </mapper>

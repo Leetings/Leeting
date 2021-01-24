@@ -199,7 +199,7 @@ public class MeetingController {
 			System.out.println("미팅참여");
 			conclusion = "SUCESS";
 		}else{
-			System.out.println("중복참여");
+			System.out.println("미팅나가기");
 			conclusion = "FAIL";
 		}
 		return new ResponseEntity<>(conclusion, status);

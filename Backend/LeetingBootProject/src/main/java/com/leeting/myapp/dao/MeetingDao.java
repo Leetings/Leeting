@@ -17,4 +17,5 @@ public interface MeetingDao {
 	public ParticipationDto participationinfo(ParticipationDto participationDto);
 	void setlikestatus(ParticipationDto participationDto);
 	void clickmeeting(ParticipationDto participationDto);
+	public void exitmeeting(ParticipationDto participationDto);
 }
