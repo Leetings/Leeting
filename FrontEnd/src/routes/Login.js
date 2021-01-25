@@ -8,6 +8,38 @@ class Login extends React.Component {
         id: "",
         pw: "",
     }
+
+    Naver = () => {
+        var location = this.state.currentLocation;
+            var link = 'http://127.0.0.1:8080/myapp/member/naver'
+            window.location.assign(link);
+        };
+    componentDidMount() {
+        const search = this.props.location.search;
+        const params = new URLSearchParams(search);
+        const code = params.get('code');
+        const state = params.get('state');
+        console.log(code);
+        console.log(state);
+        if (code != null && state != null) {
+            axios.get('http://127.0.0.1:8080/myapp/member/naver/callback1', {
+                params: {
+                    code: code,
+                    state : state
+                }
+            }).then(res => {
+                console.log(res.data);
+                if (res.data.message === "SUCCESS") {
+                    sessionStorage.setItem("token", res.data.token);
+                    sessionStorage.setItem("nickname", res.data.nickname);
+                    sessionStorage.setItem("id", res.data.id);
+                    window.location.replace("/");
+                } else {
+                    alert("아이디와 비밀번호를 확인해주세요.");
+                }
+            })
+        }
+    };
     handleClick = (e) => {
         // e.preventDefault();
         
@@ -78,7 +110,7 @@ class Login extends React.Component {
                         </div>
                         <div className="loginset">
                             <div className="col-9 defaultlogin" onClick ={this.handleClick}>로 그 인</div>
-                            <div className="col-9 naverlogin">네이버 로그인</div>
+                            <div className="col-9 naverlogin" onClick={this.Naver}>네이버 로그인</div>
                             <div className="col-9 googlelogin" >구글 로그인</div>
                             <div className="col-9 kakaologin" >카카오 계정 로그인</div>
                         </div>
