@@ -36,7 +36,7 @@ public class MeetingServiceImpl implements MeetingService{
 	@Override
     public List<MeetingDto> listMeeting(int categoryno) throws SQLException {
 		System.out.println("확인");
-	    	return meetingDao.listMeeting(categoryno);
+		return meetingDao.listMeeting(categoryno);
 
     }
 	
@@ -93,6 +93,16 @@ public class MeetingServiceImpl implements MeetingService{
         	meetingDao.exitmeeting(participationDto);
 	        return false;
         }
+    }
+
+    @Override
+    public List<MeetingDto> searchByTitle(String keyword) throws SQLException {
+        return meetingDao.searchbytitle(keyword);
+    }
+
+    @Override
+    public List<MeetingDto> searchById(String keyword) throws SQLException {
+        return meetingDao.searchbyid(keyword);
     }
 
 }
