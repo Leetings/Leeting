@@ -75,4 +75,14 @@ public class MeetingDaoImpl implements MeetingDao {
 		sqlSession.delete("meeting.exitmeeting", participationDto);
 		sqlSession.update("meeting.minusparticipant",participationDto);
 	}
+
+	@Override
+	public List<MeetingDto> searchbytitle(String keyword) {
+		return sqlSession.selectList("meeting.searchbytitle", keyword);
+	}
+
+	@Override
+	public List<MeetingDto> searchbyid(String keyword) {
+		return sqlSession.selectList("meeting.searchbyid", keyword);
+	}
 }

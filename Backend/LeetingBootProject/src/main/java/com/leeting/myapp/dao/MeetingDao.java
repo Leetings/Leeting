@@ -19,4 +19,6 @@ public interface MeetingDao {
 	public void setmeetinglike(Map<String,Double>scoremap);
 	void clickmeeting(ParticipationDto participationDto);
 	public void exitmeeting(ParticipationDto participationDto);
+	List<MeetingDto> searchbytitle(String keyword);
+	List<MeetingDto> searchbyid(String keyword);
 }
