@@ -1,6 +1,9 @@
 import React, {Component } from "react";
 import "../css/meeting.css"
 import axios from "axios";
+import { Link } from "react-router-dom";
+import moment from 'moment';
+import 'moment/locale/ko';
 import Music from "../../../components/meeting/music"
 
 class music extends React.Component {
@@ -121,7 +124,16 @@ class music extends React.Component {
                 )}
                 
                 <div id="writeBtn" className="writeBtn">
-                    <button onClick={this.writeBtn}>등록하기</button>
+                    <Link
+                        to={{
+                            pathname: `/meeting/write`,
+                            state: {
+                                date: moment().add(1, 'd')._d
+                            }
+                        }}
+                    >
+                        <button >등록하기</button>
+                    </Link>
                 </div>
             </div>
         );

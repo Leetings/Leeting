@@ -20,6 +20,7 @@ class Detail extends React.Component {
     componentDidMount() {
         const { location, history } = this.props;
         let sId = sessionStorage.getItem('id');
+        console.log(location.state.enddate);
         if (location.state === undefined) {
             history.push("/");
         }
@@ -224,6 +225,7 @@ class Detail extends React.Component {
                                 maintitle={location.state.maintitle}
                                 subtitle={location.state.subtitle}
                                 date={location.state.date}
+                                enddate={location.state.enddate}
                                 hostid={location.state.hostid}
                                 detail={location.state.detail}
                                 categoryno={location.state.categoryno}
@@ -253,7 +255,7 @@ class Detail extends React.Component {
   }
 }
 
-function GoModify({ id, maintitle, subtitle, date, hostid, detail, categoryno, file }) {
+function GoModify({ id, maintitle, subtitle, date, hostid, detail, categoryno, enddate, file }) {
     return (
         <div id="modifyBtn">
             <Link
@@ -267,7 +269,8 @@ function GoModify({ id, maintitle, subtitle, date, hostid, detail, categoryno, f
                         hostid,
                         detail,
                         categoryno,
-                        file
+                        file,
+                        enddate
                     }
                 }}
             >미팅 관리하기
@@ -285,7 +288,8 @@ GoModify.propTypes = {
     hostid: propTypes.string.isRequired,
     detail: propTypes.string.isRequired,
     categoryno: propTypes.number.isRequired,
-    file: propTypes.string.isRequired
+    file: propTypes.string.isRequired,
+    enddate: propTypes.string
 };
     
 export default Detail;

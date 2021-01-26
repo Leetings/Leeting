@@ -1,6 +1,9 @@
 import React from "react";
 import "../css/meeting.css"
 import axios from "axios";
+import { Link } from "react-router-dom";
+import moment from 'moment';
+import 'moment/locale/ko';
 import Lans from "../../../components/meeting/lans"
 
 class lans extends React.Component {
@@ -120,7 +123,16 @@ class lans extends React.Component {
                 )}
                 
                 <div id="writeBtn" className="writeBtn">
-                    <button onClick={this.writeBtn}>등록하기</button>
+                    <Link
+                        to={{
+                            pathname: `/meeting/write`,
+                            state: {
+                                date: moment().add(1, 'd')._d
+                            }
+                        }}
+                    >
+                        <button >등록하기</button>
+                    </Link>
                 </div>
             </div>
         );
