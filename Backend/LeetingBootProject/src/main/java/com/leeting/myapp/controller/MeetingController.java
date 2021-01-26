@@ -46,6 +46,8 @@ public class MeetingController {
 	    HttpStatus status = HttpStatus.ACCEPTED;
 	    System.out.println("post to /meeting done");
 	    System.out.println(" 미팅 등록");
+	    Map<String, Object> meetingmap = new HashMap<String, Object>();
+	    meetingmap.put("photo", meeting.getPhoto().getBytes());
 //	    MeetingDto meeting = new MeetingDto();
 //
 //	    meeting.setCategoryno(1);
@@ -59,7 +61,7 @@ public class MeetingController {
 //	    if(meetingService.enrollMeeting(meeting)) {
 //	    	System.out.println("Success");
 //	    };
-	    if(meetingService.enrollMeeting(meeting)) {
+	    if(meetingService.enrollMeeting(meeting,meetingmap)) {
 	    	conclusion = "SUCESS";
 	    }
 	    else {

@@ -21,8 +21,10 @@ public class MeetingDaoImpl implements MeetingDao {
 	private SqlSession sqlSession;
 	
 	@Override
-	public void enrollMeeting(MeetingDto meeting)  throws SQLException{
+	public void enrollMeeting(MeetingDto meeting,Map<String, Object> meetingmap)  throws SQLException{
 		sqlSession.insert("meeting.enrollMeeting",meeting);
+		meetingmap.put("title", meeting.getMaintitle());
+		sqlSession.update("meeting.putImage",meetingmap);
 	}
 	
 	@Override

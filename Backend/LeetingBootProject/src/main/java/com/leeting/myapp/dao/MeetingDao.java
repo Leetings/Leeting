@@ -8,7 +8,7 @@ import com.leeting.myapp.model.MeetingDto;
 import com.leeting.myapp.model.ParticipationDto;
 
 public interface MeetingDao {
-	public void enrollMeeting(MeetingDto meeting) throws SQLException;
+	public void enrollMeeting(MeetingDto meeting,Map<String, Object> meetingmap) throws SQLException;
     public List<MeetingDto> listMeeting(int categoryno)  throws SQLException;
     public MeetingDto meetinginfo(int meetingno) throws SQLException;
 	public void delete(int meetingno) throws SQLException;
