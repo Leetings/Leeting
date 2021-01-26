@@ -249,4 +249,28 @@ public class MeetingController {
 			conclusion = "FAIL";
 		return new ResponseEntity<>(conclusion, httpStatus);
 	}
+
+	@PutMapping("/updatereview")
+	public ResponseEntity<String> updateReview(@RequestBody ReviewDto reviewDto, HttpServletRequest req) throws SQLException {
+		System.out.println(req);
+		String conclusion = "";
+		HttpStatus httpStatus = HttpStatus.ACCEPTED;
+		if(meetingService.updateReview(reviewDto))
+			conclusion = "SUCCESS";
+		else
+			conclusion = "FAIL";
+		return new ResponseEntity<>(conclusion, httpStatus);
+	}
+
+	@DeleteMapping("/deletereview")
+	public ResponseEntity<String> deleteReview(@RequestParam(value = "no") int no, HttpServletRequest req) throws SQLException {
+		System.out.println(req);
+		String conclusion = "";
+		HttpStatus httpStatus = HttpStatus.ACCEPTED;
+		if(meetingService.deleteReview(no))
+			conclusion = "SUCCESS";
+		else
+			conclusion = "FAIL";
+		return new ResponseEntity<>(conclusion, httpStatus);
+	}
 }

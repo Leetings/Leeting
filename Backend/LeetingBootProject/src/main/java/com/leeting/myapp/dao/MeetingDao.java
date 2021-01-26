@@ -22,5 +22,7 @@ public interface MeetingDao {
 	public void exitmeeting(ParticipationDto participationDto);
 	List<MeetingDto> searchbytitle(String keyword);
 	List<MeetingDto> searchbyid(String keyword);
-    void postReview(ReviewDto reviewDto);
+    boolean postReview(ReviewDto reviewDto);
+	boolean updateReview(ReviewDto reviewDto);
+	boolean deleteReview(int no);
 }
