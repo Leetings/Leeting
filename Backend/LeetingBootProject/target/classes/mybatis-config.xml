@@ -7,5 +7,7 @@
  		<typeAlias type="com.leeting.myapp.model.ContentsDto" alias="contents"></typeAlias>
  		<typeAlias type="com.leeting.myapp.model.GalleryDto" alias="gallery"></typeAlias>
  		<typeAlias type="com.leeting.myapp.model.ParticipationDto" alias="participation"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.NoticeDto" alias="notice"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.QuestionDto" alias="question"></typeAlias>
  	</typeAliases>
  </configuration>

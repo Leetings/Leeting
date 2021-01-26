@@ -1,6 +1,7 @@
 package com.leeting.myapp.controller;
 
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,14 +39,13 @@ public class MeetingController {
 	  //운동 미팅 등록
 	  @ApiOperation(value = "미팅 등록", notes = "미팅 등록", response = Map.class)
 	  @PostMapping("/enrollmeeting")
-	  public ResponseEntity<String> enrollMeeting(@RequestBody MeetingDto meeting, HttpServletRequest req) {
+	  public ResponseEntity<String> enrollMeeting(@RequestBody MeetingDto meeting, HttpServletRequest req) throws IOException {
 	    System.out.println(req);
 	    Map<String, Object> resultMap = new HashMap<>();
 	    String conclusion = "";
 	    HttpStatus status = HttpStatus.ACCEPTED;
 	    System.out.println("post to /meeting done");
 	    System.out.println(" 미팅 등록");
-
 //	    MeetingDto meeting = new MeetingDto();
 //
 //	    meeting.setCategoryno(1);
@@ -59,7 +59,6 @@ public class MeetingController {
 //	    if(meetingService.enrollMeeting(meeting)) {
 //	    	System.out.println("Success");
 //	    };
-
 	    if(meetingService.enrollMeeting(meeting)) {
 	    	conclusion = "SUCESS";
 	    }
