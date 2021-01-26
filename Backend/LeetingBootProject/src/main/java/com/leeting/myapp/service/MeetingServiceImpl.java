@@ -24,10 +24,10 @@ public class MeetingServiceImpl implements MeetingService{
 
 	
 	@Override
-    public boolean enrollMeeting(MeetingDto meeting) {
+    public boolean enrollMeeting(MeetingDto meeting,Map<String, Object> meetingmap) {
 	      try {
 				System.out.println("확인");
-				meetingDao.enrollMeeting(meeting);
+				meetingDao.enrollMeeting(meeting,meetingmap);
 	            return true;
 	        } catch (SQLException throwables) {
 	            throwables.printStackTrace();
