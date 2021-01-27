@@ -121,4 +121,12 @@ public class MeetingServiceImpl implements MeetingService{
     public boolean deleteReview(int no) throws SQLException {
         return meetingDao.deleteReview(no);
     }
+
+
+	@Override
+	public boolean enrollPhoto(Map<String, Object> meetingmap) {
+		System.out.println("확인");
+		meetingDao.enrollPhoto(meetingmap);
+		return false;
+	}
 }

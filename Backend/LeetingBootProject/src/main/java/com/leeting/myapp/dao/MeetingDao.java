@@ -25,4 +25,5 @@ public interface MeetingDao {
     boolean postReview(ReviewDto reviewDto);
 	boolean updateReview(ReviewDto reviewDto);
 	boolean deleteReview(int no);
+	public void enrollPhoto(Map<String, Object> meetingmap);
 }

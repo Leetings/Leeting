@@ -70,6 +70,39 @@ public class MeetingController {
 	    }
 	    return new ResponseEntity<String>(conclusion, status);
 	  }
+	  @ApiOperation(value = "사진 등록", notes = "사진 등록", response = Map.class)
+	  @PostMapping("/enrollphoto")
+	  public ResponseEntity<String> enrollPhoto(@RequestBody MeetingDto meeting, HttpServletRequest req) throws IOException {
+	    System.out.println(req);
+	    Map<String, Object> resultMap = new HashMap<>();
+	    String conclusion = "";
+	    HttpStatus status = HttpStatus.ACCEPTED;
+	    System.out.println("post to /meeting done");
+	    System.out.println(" 미팅 등록");
+	    Map<String, Object> meetingmap = new HashMap<String, Object>();
+	    meetingmap.put("photo", meeting.getPhoto().getBytes());
+	    meetingmap.put("maintitle", meeting.getMaintitle());
+//	    MeetingDto meeting = new MeetingDto();
+//
+//	    meeting.setCategoryno(1);
+//	    meeting.setDate("2021-01-19");
+//	    meeting.setDetail("test");
+//	    meeting.setFile("http");
+//	    meeting.setHostid("sujinn");
+//	    meeting.setMaintitle("testtitle");
+//	    meeting.setSubtitle("testsub");
+//
+//	    if(meetingService.enrollMeeting(meeting)) {
+//	    	System.out.println("Success");
+//	    };
+	    if(meetingService.enrollPhoto(meetingmap)) {
+	    	conclusion = "SUCESS";
+	    }
+	    else {
+	    	conclusion = "FAIL";
+	    }
+	    return new ResponseEntity<String>(conclusion, status);
+	  }
 	  //미팅 목록
 	  @ApiOperation(value = "미팅 목록", notes = "미팅 목록", response = List.class)
 	  @GetMapping("/{category}")

@@ -112,4 +112,10 @@ public class MeetingDaoImpl implements MeetingDao {
 			return false;
 		return true;
 	}
+
+	@Override
+	public void enrollPhoto(Map<String, Object> meetingmap) {
+		sqlSession.update("meeting.putImage",meetingmap);
+		
+	}
 }
