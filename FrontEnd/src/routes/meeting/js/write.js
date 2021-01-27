@@ -274,7 +274,7 @@ class write extends React.Component {
             categoryno: this.state.categoryno,
             file: this.state.thumb,
             enddate: enddate,
-            photo: null
+            photo: this.state.selectedFile
         }).then(res => {
             if (res.data === "SUCESS") {
                 console.log("성공");
@@ -283,6 +283,8 @@ class write extends React.Component {
                 console.log("실패");
             }
         })
+
+
     }
 
     
@@ -325,11 +327,11 @@ class write extends React.Component {
                             <tr>
                                 <th scope="row">썸네일</th>
                                 <td colSpan="5">
-                                <div className="filebox bs3-primary">
+                                <form className="filebox bs3-primary"  encType="multipart/form-data">
                                     <input className="upload-name" id="upload-name"placeholder="파일선택" disabled="disabled"/>
                                     <label htmlFor="ex_filename">업로드</label> 
-                                    <input type="file" id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
-                                </div>
+                                    <input type="file" accept="image/*"id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
+                                </form>
                                     {/* <input type="file" name="file" onChange={e => this.handleFileInput(e)}/>
                                     <button type="button" onClick={this.uploadImage}>업로드</button> */}
                                 </td>

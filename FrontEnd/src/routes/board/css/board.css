@@ -1,0 +1,73 @@
+.board_list {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.board_list .notice_list_view table {
+    width: 100%;
+    border-spacing: 0;
+    border-top: 2px solid #2b2b2b;
+    table-layout: fixed;
+}
+
+.board_list .notice_list_view p {
+    display: inline-block;
+}
+
+.board_list .notice_list_view .no {
+    width: 10%;
+}
+
+.board_list .notice_list_view .title {
+    width: 45%;
+}
+
+.board_list .notice_list_view .writer {
+    width: 15%;
+}
+
+.board_list .notice_list_view .date {
+    width: 15%;
+}
+
+.board_list .notice_list_view .hit {
+    width: 8%;
+}
+
+.board_list .notice_list_view .file {
+    width: 7%;
+}
+
+.board_list .notice_list_view .header {
+    padding: 16px 10px;
+    border-top: 2px solid #2b2b2b;
+    border-bottom: 1px solid #d8d8d8;
+    background-color: #f9f9f9;
+    font-weight: 400;
+    text-align: center;
+}
+
+.board_list .notice_list_view .content {
+    position: relative;
+    padding: 12px 10px;
+    border-bottom: 1px solid #d8d8d8;
+    font-weight: 200;
+    text-align: center;
+}
+
+.board_list .notice_list_view .content div {
+    display: inline-block;
+}
+
+.board_list .notice_list_view .content .title {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.b-title-box .b-etc-box .b-new {
+    display: inline-block;
+    font-weight: 300;
+    font-size: 12px;
+    color: #f15a08;
+    vertical-align: middle;
+}

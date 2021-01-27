@@ -205,6 +205,16 @@ class Modify extends React.Component {
         this.setState({
             selectedFile : e.target.files[0],
         })
+        var filename;
+        if(window.FileReader){
+            filename = e.target.files[0].name;
+        } else {
+            filename = e.target.val().split('/').pop().split('\\').pop();
+        }
+        // console.log(e.target.files[0]);
+        // console.log(filename);
+
+        document.getElementById('upload-name').value=filename;
     }
 
 
@@ -324,7 +334,7 @@ class Modify extends React.Component {
                                 <div className="filebox bs3-primary">
                                     <input className="upload-name" id="upload-name"placeholder="파일선택" disabled="disabled"/>
                                     <label htmlFor="ex_filename">업로드</label> 
-                                    <input type="file" id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
+                                    <input type="file" accept="image/*" id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
                                 </div>
                                     {/* <input type="file" name="file" onChange={e => this.handleFileInput(e)}/>
                                     <button type="button" onClick={this.uploadImage}>업로드</button> */}
