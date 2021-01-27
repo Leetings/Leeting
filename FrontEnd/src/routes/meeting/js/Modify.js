@@ -1,4 +1,4 @@
-import React, {Component, useState } from "react";
+import React, { useState } from "react";
 import "../css/meeting.css"
 
 import 'codemirror/lib/codemirror.css';
@@ -20,9 +20,6 @@ class Modify extends React.Component {
     editorRef = React.createRef();
     dateRef = React.createRef();
     
-    constructor() {
-        super();
-    }    
     state = {
         value:"1",
         id : "1",
@@ -48,7 +45,9 @@ class Modify extends React.Component {
         }
         console.log(location.state.enddate);
         if (location.state.enddate === undefined) {
-            this.state.enddate = location.state.date;
+            this.setState({
+                enddate: location.state.date
+            })
             console.log("test");
         }
         this.setState({
@@ -214,16 +213,11 @@ class Modify extends React.Component {
         // console.log(e.target.files[0]);
         // console.log(filename);
 
-        document.getElementById('upload-name').value=filename;
-    }
-
-
-    uploadImage = (e) => {
-        e.preventDefault();
+        document.getElementById('upload-name').value = filename;
         
-        var file = this.state.selectedFile;
-        console.log(this.state.startDay);
-        console.log(file);
+        var file = e.target.files[0];
+        // console.log(this.state.startDay);
+        // console.log(file);
         var formData = new FormData();
         formData.append('data', file);
         axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
@@ -232,22 +226,11 @@ class Modify extends React.Component {
             },
         }).then(res => {
             this.setState({
-                file: res.data
+                thumb: res.data
             })
-            console.log(this.state.thumb);
+            // console.log(this.state.thumb);
         }).catch(err => {
-            console.log(err);
-        })
-    }
-
-    handlePost(){
-        const formData = new FormData();
-        formData.append('file', this.state.selectedFile);
-
-        axios.post("/api/upload", formData).then(res => {
-            return alert('성공')
-        }).catch(err => {
-            return alert('실패')
+            // console.log(err);
         })
     }
 
@@ -278,19 +261,52 @@ class Modify extends React.Component {
             file: this.state.file,
             enddate : enddate,
         }).then(res => {
+            if (res.data === "SUCESS") {
                 console.log("성공");
+                alert("수정 완료되었습니다.");
+                if (this.state.categoryno === 1)
+                    window.location.replace('/meeting/exercise');
+                else if (this.state.categoryno === 2)
+                    window.location.replace('/meeting/music');
+                else if (this.state.categoryno === 3)
+                    window.location.replace('/meeting/game');
+                else if (this.state.categoryno === 4)
+                    window.location.replace('/meeting/diy');
+                else if (this.state.categoryno === 5)
+                    window.location.replace('/meeting/lans');
+                else
+                    window.location.replace('/meeting/study');
+            }
+            else {
+                console.log("실패");
+                alert("수정 실패하셨습니다. 다시 작성해 주세요!");
+                var url = "/meeting/modify/" + this.state.id;
+                window.location.replace(url);
+            }
         })
     }
 
     deleteClick = (e) => { 
         e.preventDefault();
         let no = this.state.id;
-
-        axios.delete("http://127.0.0.1:8080/myapp/meeting"+"/"+no, {
+        var url = "http://127.0.0.1:8080/myapp/meeting/" + no;
+        axios.delete(url, {
             meetingno: this.state.id,
             no:this.state.id
         }).then(res => {
-            console.log("삭제 성공");
+            alert("삭제 성공");
+            if (this.state.categoryno === 1)
+                window.location.replace('/meeting/exercise');
+            else if (this.state.categoryno === 2)
+                window.location.replace('/meeting/music');
+            else if (this.state.categoryno === 3)
+                window.location.replace('/meeting/game');
+            else if (this.state.categoryno === 4)
+                window.location.replace('/meeting/diy');
+            else if (this.state.categoryno === 5)
+                window.location.replace('/meeting/lans');
+            else
+                window.location.replace('/meeting/study');
         })
     }
     

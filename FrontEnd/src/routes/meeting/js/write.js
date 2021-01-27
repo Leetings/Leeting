@@ -66,7 +66,7 @@ class write extends React.Component {
             checkCategory:true
         })
         document.getElementById('category').value = event.target.value;
-        console.log(this.state.categoryno);
+        // console.log(this.state.categoryno);
     }
 
     mainTitChange = (event) => {
@@ -74,7 +74,7 @@ class write extends React.Component {
             mainTit: event.target.value,
             checkmainTit:true
         })
-        console.log(this.state.mainTit);
+        // console.log(this.state.mainTit);
     }
 
     subTitChange = (event) => {
@@ -82,14 +82,14 @@ class write extends React.Component {
             subTit: "#"+event.target.value,
             checksubTit:true
         })
-        console.log(this.state.subTit);
+        // console.log(this.state.subTit);
     }
 
     setStartDate = (event) => { 
         this.setState({
             sDate: event.target.value,
         })
-        console.log(this.state.sDate);
+        // console.log(this.state.sDate);
     }
 
     editorChange = (e) => { 
@@ -200,48 +200,24 @@ class write extends React.Component {
         // console.log(e.target.files[0]);
         // console.log(filename);
 
-        document.getElementById('upload-name').value=filename;
-    }
-
-
-    // uploadImage = (e) => {
-    //     e.preventDefault();
+        document.getElementById('upload-name').value = filename;
         
-    //     var file = this.state.selectedFile;
-    //     console.log(this.state.startDay);
-    //     console.log(file);
-    //     var formData = new FormData();
-    //     formData.append('data', file);
-    //     axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
-    //         headers: {
-    //             'content-type': 'multipart/form-data',
-    //         },
-    //     }).then(res => {
-    //         this.setState({
-    //             thumb: res.data
-    //         })
-    //         console.log(this.state.thumb);
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
-
-
-    // calenderCheck = (e) => {
-    //     this.setState({
-    //         startDay : e.value
-    //     })
-    //     console.log(this.state.startDay);
-    // }
-
-    handlePost(){
-        const formData = new FormData();
-        formData.append('file', this.state.selectedFile);
-
-        axios.post("/api/upload", formData).then(res => {
-            return alert('성공')
+        var file = e.target.files[0];
+        // console.log(this.state.startDay);
+        // console.log(file);
+        var formData = new FormData();
+        formData.append('data', file);
+        axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+        }).then(res => {
+            this.setState({
+                thumb: res.data
+            })
+            // console.log(this.state.thumb);
         }).catch(err => {
-            return alert('실패')
+            // console.log(err);
         })
     }
 
@@ -273,14 +249,28 @@ class write extends React.Component {
             detail: this.state.content,
             categoryno: this.state.categoryno,
             file: this.state.thumb,
-            enddate: enddate,
-            photo: this.state.selectedFile
+            enddate: enddate
         }).then(res => {
             if (res.data === "SUCESS") {
                 console.log("성공");
+                alert("글 작성이 완료되었습니다.");
+                if (this.state.categoryno === 1)
+                    window.location.replace('/meeting/exercise');
+                else if (this.state.categoryno === 2)
+                    window.location.replace('/meeting/music');
+                else if (this.state.categoryno === 3)
+                    window.location.replace('/meeting/game');
+                else if (this.state.categoryno === 4)
+                    window.location.replace('/meeting/diy');
+                else if (this.state.categoryno === 5)
+                    window.location.replace('/meeting/lans');
+                else
+                    window.location.replace('/meeting/study');
             }
             else {
                 console.log("실패");
+                alert("글 작성에 실패하셨습니다. 다시 작성해 주세요!");
+                window.location.replace('/meeting/write');
             }
         })
 

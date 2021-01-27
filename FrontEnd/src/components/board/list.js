@@ -13,12 +13,12 @@ function List({ no, title, detail, date, writer, hit, file1, file2, file3 }) {
     if (t3 < 3) {
         newsign = "NEW";
     }
-    var filecheck = false;
-    if (file1 === null && file2 === null && file3 === null) {
-        filecheck = false;
-    } else {
-        filecheck = true;
-    }
+    // var filecheck = false;
+    // if (file1 === null && file2 === null && file3 === null) {
+    //     filecheck = false;
+    // } else {
+    //     filecheck = true;
+    // }
 
     var sYear = date.substring(0,4);
     var sMonth = date.substring(5,7);
@@ -59,46 +59,10 @@ function List({ no, title, detail, date, writer, hit, file1, file2, file3 }) {
             <div className="hit">{hit}</div>
             <div className="file"></div>
             
-            {/* <tbody>
-        <tr>
-            <td class="b-num-box">{no}</td>
-            <td class="b-td-left">
-            </td>
-            <td>{writer}</td>
-            <td>{date}</td>
-            <td>{hit}</td>
-            <td class="b-no-right">
-
-            </td>
-        </tr>
-    </tbody> */}
-
         </div>
             
     );
 }
-
-
-{/* <table summary="번호, 제목, 작성자, 등록일, 조회, 첨부파일로 구성된 공지사항을 보여주는 표">
-<caption class="hide">공지사항</caption>
-<colgroup>
-    <col class="b-col01"/>
-    <col class="b-col02"/>
-    <col class="b-col03"/>
-    <col class="b-col04"/>
-    <col class="b-col05"/>
-    <col class="b-col06"/>
-</colgroup>
-<thead>
-    <tr>
-        <th scope="col">NO.</th>
-        <th scope="col">제목</th>
-        <th scope="col">작성자</th>
-        <th scope="col">등록일</th>
-        <th scope="col">조회</th>
-        <th scope="col" class="b-no-right">파일</th>
-    </tr>
-</thead> */}
 
 List.propTypes  = {
     no: propTypes.number.isRequired,
