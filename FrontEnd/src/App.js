@@ -7,6 +7,7 @@ import Join from "./routes/Join";
 import Login from "./routes/Login";
 import Find from "./routes/Find";
 import Leeting from "./routes/Leeting";
+import Mypage from "./routes/Mypage";
 
 import ExcerciseMeeting from "./routes/meeting/js/exercise";
 import MusicMeeting from "./routes/meeting/js/music";
@@ -33,6 +34,9 @@ function App() {
           <Route path="/join" exact={true} component={Join} />
           <Route path="/login" exact={true} component={Login} />
           <Route path="/find" exact={true} component={Find} />
+
+          <Route path="/mypage" exact={true} component={Mypage} />
+          
           <Route path="/meeting/exercise" exact={true} component={ExcerciseMeeting} />
           <Route path="/meeting/music" exact={true} component={MusicMeeting} />
           <Route path="/meeting/game" exact={true} component={GameMeeting} />

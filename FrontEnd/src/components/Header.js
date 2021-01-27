@@ -49,7 +49,7 @@ class Header extends Component {
                     </div>
                     <div id="login">
                         <ul>
-                            <li><a href="/">{sessionStorage.getItem("nickname")}님 환영합니다</a></li>
+                            <li><a href='/Mypage' >{sessionStorage.getItem("nickname")}님 환영합니다</a></li>
                             <li><a onClick={this.logout}>로그아웃</a></li>
                         </ul>
                     </div>
