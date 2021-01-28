@@ -7,7 +7,7 @@ import My from "../components/common/myleetinglist"
 
 class Mypage extends React.Component {
     constructor(props) {
-        super(props);
+      super(props);
       this.state = {
         value: '선택하세요',
         checkPw: false,
@@ -32,6 +32,10 @@ class Mypage extends React.Component {
       data:[],
       tab: 0,
       reconfirm: false,
+      backupname: "",
+      backupnickname: "",
+      backuppw: "",
+      backupmobile: "",
     }
 
     getUserInfo = (e) => {
@@ -77,9 +81,17 @@ class Mypage extends React.Component {
       }
     }
 
-    tabZero = (e) => { this.setState({tab: 0,}) }
+    tabZero = (e) => {
+      this.getLeeting();
+      this.setState({
+        tab: 0,
+      })
+    }
     tabOne = (e) => { this.setState({tab: 1,}) }
-    tabTwo = (e) => { this.setState({tab: 2,}) }
+    tabTwo = (e) => { 
+      this.backupUserInfo();
+      this.setState({tab: 2,}) 
+    }
 
     pwReconfirm = (e) => {
       if (document.getElementById('reconfirmPw').value === this.state.pw) {
@@ -94,29 +106,16 @@ class Mypage extends React.Component {
       };
     }
 
-    // Join.js
-    handleChange = (event) => {
-      if (event.target.value !== '직접입력') {
-        this.setState({
-          value: event.target.value,
-          domain: event.target.value,
-          checkEmail: true
-        });
-          document.getElementById('validateDomain').textContent = "";
-          document.getElementById('writedomain').value = event.target.value;
-          document.getElementById('writedomain').readOnly=true;
-        }
-      else {
-        this.setState({
-          value: event.target.value,
-          checkEmail: false
-        });
-        document.getElementById('writedomain').readOnly = false;
-        document.getElementById('writedomain').value = "";
-        document.getElementById('writedomain').placeholder = "입력하세요";
-      }
+    backupUserInfo = (e) => {
+      this.setState({
+        backuppw: this.state.pw,
+        backupname: this.state.name,
+        backupnickname: this.state.nickname,
+        backupmobile: this.state.mobile,
+      })
     }
 
+    // Join.js
     pwChange = (e) => {
       var pwReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/g;
       
@@ -197,6 +196,7 @@ class Mypage extends React.Component {
     nicknameChange = (e) => {
       var nickNameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,10}$/g;
       if (!nickNameReg.test(e.target.value)) {
+        
         this.setState({
           checkNickname: false
         });
@@ -249,7 +249,12 @@ class Mypage extends React.Component {
       e.preventDefault();
       
       var nickNameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,10}$/g;
-      if (!nickNameReg.test(e.target.value)) {
+      console.log(e.target.value)
+      if (e.target.value !== this.backupnickname) {
+        document.getElementById('validateNickName').textContent = "사용가능한 닉네임입니다.";
+        document.getElementById('validateNickName').setAttribute('style', 'color:blue');
+      }
+      else if (!nickNameReg.test(e.target.value)) {
         axios.post('http://127.0.0.1:8080/myapp/member/samenick', {
           nickname: this.state.nickname
         }).then(res => {
@@ -299,58 +304,27 @@ class Mypage extends React.Component {
         auth: e.target.value
       });
     }
-    emailtokenCheck = (e) => {
-      e.preventDefault();
-  
-      console.log(this.state.auth);
-      console.log(this.state.token);
-  
-      axios.post('http://127.0.0.1:8080/myapp/member/auth', {
-        token: this.state.token,
-        auth: this.state.auth,      
-        }).then(res => {
-          console.log(res);
-          console.log(res.data);
-          if (res.data === "SUCCESS") {
-            this.setState({
-              checkEmail: true
-            });
-            document.getElementById('auth').disabled = true;
-            document.getElementById('sendtoken').setAttribute('style', 'display:none');
-            document.getElementById('checktoken').setAttribute('style', 'display:none');
-          
-            document.getElementById('validateDomain').textContent = "인증번호가 확인되었습니다.";
-            document.getElementById('validateDomain').setAttribute('style', 'color: blue');
-          } else {
-            document.getElementById('sendtoken').setAttribute('style', 'display:inline-block');
-            document.getElementById('validateDomain').textContent = "인증번호를 재확인해주세요";
-            document.getElementById('validateDomain').setAttribute('style', 'color: #ff3535');
-          }
-        })
-    };
 
     handleClick = (e) => {
       e.preventDefault();
       console.log(this.state);
-      if (this.state.checkEmail === true && this.state.checkMobile === true && this.state.checkName === true && this.state.checkNickname === true && this.state.checkPw === true) {
+      if (this.state.checkMobile === true && this.state.checkName === true && this.state.checkNickname === true && this.state.checkPw === true) {
         axios.put('http://127.0.0.1:8080/myapp/member', {
           id: this.state.id,
           pw: this.state.pw,
           nickname: this.state.nickname,
           name: this.state.name,
-          email: this.state.email + "@" + this.state.domain,
+          email: this.state.email,
           mobile : this.state.mobile
         }).then(res => {
           if (res.data === "SUCCESS") {
-            alert("환영합니다~ 로그인 페이지로 이동합니다.");
-            console.log("회원가입 완료");
-            this.props.history.push('/login');
+            alert("회원정보 수정이 완료되었습니다.");
+            console.log("회원정보수정 완료");
           }
           else {
             console.log(res.data)
-            alert("회원가입에 실패하였습니다. 메인 페이지로 이동합니다.");
+            alert("회원정보 수정에 실패하였습니다.");
             console.log("회원가입 실패");
-            this.props.history.replace('/');
           }
         })
       }
@@ -360,9 +334,21 @@ class Mypage extends React.Component {
       }
     };
 
+    // Join End
+
+    returnUserInfo = (e) => {
+      this.setState({
+        pw: this.state.backuppw,
+        name: this.state.backupname,
+        nickname: this.state.backupnickname,
+        mobile: this.state.backupmobile,
+      })
+      this.tabZero();
+    };
+
   render() {
     const { isLoading, data, reconfirm } = this.state
-    let emailDomain = this.state.email ? this.state.email.split('@') : null 
+    // let emailDomain = this.state.email ? this.state.email.split('@') : null 
 
     return (
       <div className="joinContainer">
@@ -371,7 +357,7 @@ class Mypage extends React.Component {
         <div className="d-flex">
             <div className="tabcenter col-4">
                 <div class="list-group">
-                    <p class="list-group-item list-group-item-action active" onClick={this.tabZero}>프로필</p> {/*aria-current="true"*/}
+                    <p class="list-group-item list-group-item-action" onClick={this.tabZero}>프로필</p> {/*aria-current="true"*/}
                     <p class="list-group-item list-group-item-action" onClick={this.tabOne}>일정</p>
                     <p class="list-group-item list-group-item-action" onClick={this.tabTwo}>계정 설정</p>
                 </div>
@@ -466,62 +452,48 @@ class Mypage extends React.Component {
                             <div className="form-group">
                               <div className="col-9">
                                 <label className="font-weight-bold" id="labelName" htmlFor="inputName">성명</label>
-                                <input type="text" id="inputName" className="form-control margin-bottom-20" placeholder="한글 이름을 입력해주세요" onChange ={this.nameChange}></input>
+                                <input type="text" id="inputName" className="form-control margin-bottom-20" placeholder="한글 이름을 입력해주세요" onChange ={this.nameChange} defaultValue={this.state.name}></input>
                               </div>
                               <label id="validateName"></label>
                             </div>
                             <div className="form-group">
                               <div className="col-12">
                                 <label className="font-weight-bold" id="labelNickName" htmlFor="inputNickName">닉네임</label>
-                              <input type="text" id="inputNickName" className="col-9 form-control margin-bottom-20" placeholder="닉네임을 입력해주세요" onChange={this.nicknameChange} value={this.state.nickname}></input>
+                              <input type="text" id="inputNickName" className="col-9 form-control margin-bottom-20" placeholder="닉네임을 입력해주세요" onChange={this.nicknameChange} defaultValue={this.state.nickname}></input>
                               <button id="checkNickName" className="btn" onClick={this.sameNickClick}>중복 확인</button>
                               </div>
                               <label id="validateNickName"></label>
                             </div>
                               <div className="col-9">
                                 <label id="labelPw" className="font-weight-bold" htmlFor="inputPw">비밀번호</label>
-                                <input type="password" id="inputPw" className="form-control margin-bottom-20" placeholder="비밀번호를 입력해주세요" onChange={this.pwChange} value={this.state.pw}></input>
+                                <input type="password" id="inputPw" className="form-control margin-bottom-20" placeholder="비밀번호를 입력해주세요" onChange={this.pwChange} defaultValue={this.state.pw}></input>
                               </div>
                               <label id="validatePw"></label>
                             </div>
                             <div className="form-group">
                               <div className="col-9">
                                 <label className="font-weight-bold" id="labelCPw" htmlFor="inputCPw">비밀번호 확인</label>
-                                <input type="password" id="inputCPw" className="form-control margin-bottom-20" placeholder="확인용 비밀번호를 입력해주세요" onChange={this.cpwChange} value={this.state.pw}></input>
+                                <input type="password" id="inputCPw" className="form-control margin-bottom-20" placeholder="확인용 비밀번호를 입력해주세요" onChange={this.cpwChange} defaultValue={this.state.pw}></input>
                               </div>
                               <label id="validateCPw"></label>
                             </div>
-                          <div className="form-group">
+                            <div className="form-group">
                               <div className="col-12">
                                 <label id="labelEmail" className="font-weight-bold foremail" htmlFor="email">이메일</label>
-                                <input type="text" id="email" name="inputEmail" className="form-control col-4 margin-bottom-20" placeholder="이메일을 입력해주세요" onChange={this.emailChange} value={emailDomain && (emailDomain[0])}></input>
-                                &nbsp;<label id="at">@</label>&nbsp;
-                                <input id="writedomain" name="inputdomain" className="form-control col-4 margin-bottom-20 inputdomain" placeholder="선택하세요" onChange={this.domainChange} value={emailDomain && emailDomain[1]} readOnly></input>&nbsp;
-                                <select id="domain" name="selectdomain" className="form-control col-3 margin-bottom-20" value={this.state.value} onChange={this.handleChange}>
-                                        <option value="선택하세요">선택하세요</option>
-                                        <option value="kakao.com" >kakao.com</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="daum.net">daum.net</option>
-                                        <option value="직접입력" defaultValue>직접입력</option>
-                                </select>
+                                <p>{this.state.email}</p>
                             </div>
-                            <div className="col-12">
-                              <input type="text" id="auth" className="form-control col-4 margin-bottom-20" onChange={this.authChange} disabled></input>
-                              <button id="sendtoken" className="btn" onClick={this.authCheck}>인증번호 전송</button>
-                              <button id="checktoken" className="btn" onClick={this.emailtokenCheck}>인증번호 확인</button>
-                            </div>
-                              <label id="validateDomain"></label>
                             </div>
                             <div className="form-group">
                               <div className="col-9">
                                 <label className="font-weight-bold" id="labelPhone" htmlFor="inputPhone">휴대전화 번호</label>
-                                <input type="tel" id="inputPhone" className="form-control margin-bottom-20" placeholder="휴대폰 번호를 입력해주세요" onChange={this.mobileChange} value={this.state.mobile}></input>
+                                <input type="tel" id="inputPhone" className="form-control margin-bottom-20" placeholder="휴대폰 번호를 입력해주세요" onChange={this.mobileChange} defaultValue={this.state.mobile}></input>
                               </div>
                               <label id="validatePhone"></label>
                             </div>
                             <br />
                             <div className="row form-group">
                               <div className="col-12 text-center">
+                                <button type="button" id="cancelbtn" className="btn" onClick={this.returnUserInfo}>수정취소</button>
                                 <button type="submit" id="joinbtn" className="btn btn-primary" onClick={this.handleClick}>수정완료</button>
                               </div>
                             </div>
