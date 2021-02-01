@@ -45,58 +45,8 @@ public class MeetingController {
 	    Map<String, Object> resultMap = new HashMap<>();
 	    String conclusion = "";
 	    HttpStatus status = HttpStatus.ACCEPTED;
-	    System.out.println("post to /meeting done");
-	    System.out.println(" 미팅 등록");
-	    Map<String, Object> meetingmap = new HashMap<String, Object>();
-//	    meetingmap.put("photo", meeting.getPhoto().getBytes());
-//	    MeetingDto meeting = new MeetingDto();
-//
-//	    meeting.setCategoryno(1);
-//	    meeting.setDate("2021-01-19");
-//	    meeting.setDetail("test");
-//	    meeting.setFile("http");
-//	    meeting.setHostid("sujinn");
-//	    meeting.setMaintitle("testtitle");
-//	    meeting.setSubtitle("testsub");
-//
-//	    if(meetingService.enrollMeeting(meeting)) {
-//	    	System.out.println("Success");
-//	    };
-	    if(meetingService.enrollMeeting(meeting,meetingmap)) {
-	    	conclusion = "SUCESS";
-	    }
-	    else {
-	    	conclusion = "FAIL";
-	    }
-	    return new ResponseEntity<String>(conclusion, status);
-	  }
-	  @ApiOperation(value = "사진 등록", notes = "사진 등록", response = Map.class)
-	  @PostMapping("/enrollphoto")
-	  public ResponseEntity<String> enrollPhoto(@RequestBody MeetingDto meeting, HttpServletRequest req) throws IOException {
-	    System.out.println(req);
-	    Map<String, Object> resultMap = new HashMap<>();
-	    String conclusion = "";
-	    HttpStatus status = HttpStatus.ACCEPTED;
-	    System.out.println("post to /meeting done");
-	    System.out.println(" 미팅 등록");
-	    Map<String, Object> meetingmap = new HashMap<String, Object>();
-	    meetingmap.put("photo", meeting.getPhoto().getBytes());
-	    meetingmap.put("maintitle", meeting.getMaintitle());
-//	    MeetingDto meeting = new MeetingDto();
-//
-//	    meeting.setCategoryno(1);
-//	    meeting.setDate("2021-01-19");
-//	    meeting.setDetail("test");
-//	    meeting.setFile("http");
-//	    meeting.setHostid("sujinn");
-//	    meeting.setMaintitle("testtitle");
-//	    meeting.setSubtitle("testsub");
-//
-//	    if(meetingService.enrollMeeting(meeting)) {
-//	    	System.out.println("Success");
-//	    };
-	    if(meetingService.enrollPhoto(meetingmap)) {
-	    	conclusion = "SUCESS";
+	    if(meetingService.enrollMeeting(meeting)) {
+	    	conclusion = "SUCCESS";
 	    }
 	    else {
 	    	conclusion = "FAIL";
@@ -134,9 +84,6 @@ public class MeetingController {
 		    }
 		    List<MeetingDto> list = new ArrayList<>();
 		    list = meetingService.listMeeting(categoryno);
-		    System.out.println("get to /meetinglist done");
-		    System.out.println("미팅 목록");
-		    System.out.println(list.get(0).toString());
 		    return new ResponseEntity<List<MeetingDto>>(list, status);
 	  }
 	  //미팅 참여자 정보
@@ -151,15 +98,10 @@ public class MeetingController {
 		    List<ParticipationDto> list = new ArrayList<>();
 		    list = meetingService.listparticipants(meetingno);
 		    if(!list.isEmpty()) {
-		    	conclusion = "SUCESS";
 		    	conclusionmap.put("message", "SUCCESS");
 		    	conclusionmap.put("list", list);
 		    }
 		    else conclusionmap.put("message", "FAIL");
-		    System.out.println("get to /participantslist done");
-		    System.out.println("미팅  참여자 목록");
-		    System.out.println(conclusionmap.get("message"));
-		  //  System.out.println(conclusionmap.get("list").toString());
 		    return new ResponseEntity<Map<String, Object>>(conclusionmap, status);
 	  }
 //	  //미팅 상세정보
@@ -185,7 +127,6 @@ public class MeetingController {
 	    System.out.println("put to /meeting done");
 	    System.out.println("미팅수정");
 	    meetingService.update(meeting);
-	    System.out.println(meeting.toString());
 	    return new ResponseEntity<String>(conclusion, status);
 	  }
 	  //미팅삭제
