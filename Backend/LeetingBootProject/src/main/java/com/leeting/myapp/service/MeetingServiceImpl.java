@@ -14,7 +14,7 @@ import com.leeting.myapp.model.MemberDto;
 import com.leeting.myapp.model.ParticipationDto;
 
 @Service
-public class MeetingServiceImpl implements MeetingService{
+public class MeetingServiceImpl implements MeetingService {
 
 	private final MeetingDao meetingDao;
 	
@@ -95,6 +95,11 @@ public class MeetingServiceImpl implements MeetingService{
         	meetingDao.exitmeeting(participationDto);
 	        return false;
         }
+    }
+
+    @Override
+    public List<MeetingDto> searchAll(String keyword) throws SQLException {
+        return meetingDao.searchall(keyword);
     }
 
     @Override
