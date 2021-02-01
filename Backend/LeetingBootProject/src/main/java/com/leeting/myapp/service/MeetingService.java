@@ -10,7 +10,7 @@ import com.leeting.myapp.model.ReviewDto;
 
 public interface MeetingService {
 
-	boolean enrollMeeting(MeetingDto meeting,Map<String, Object> meetingmap);
+	boolean enrollMeeting(MeetingDto meeting);
     List<MeetingDto> listMeeting(int categoryno) throws SQLException;
     MeetingDto getMeetingInfo(int meetingno);
     void delete(int meetingno);
