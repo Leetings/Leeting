@@ -48,7 +48,7 @@ public class MeetingController {
 	    System.out.println("post to /meeting done");
 	    System.out.println(" 미팅 등록");
 	    Map<String, Object> meetingmap = new HashMap<String, Object>();
-	    meetingmap.put("photo", meeting.getPhoto().getBytes());
+//	    meetingmap.put("photo", meeting.getPhoto().getBytes());
 //	    MeetingDto meeting = new MeetingDto();
 //
 //	    meeting.setCategoryno(1);
