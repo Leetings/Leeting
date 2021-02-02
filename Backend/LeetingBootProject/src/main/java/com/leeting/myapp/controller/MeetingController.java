@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.leeting.myapp.model.MemberDto;
+import com.leeting.myapp.model.NoticeDto;
 import com.leeting.myapp.model.ReviewDto;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -272,7 +273,7 @@ public class MeetingController {
 		return new ResponseEntity<>(conclusion, httpStatus);
 	}
 	
-	 @GetMapping("/{meetingno}/{hostid}")
+	 @GetMapping("/{meetingno}/hostmeeting/{hostid}")
 	  public ResponseEntity <List<MeetingDto>> hostMeetinglist(@PathVariable(value="hostid") String hostid,HttpServletRequest req) throws SQLException {
 		   System.out.println(req);
 		    HttpStatus status = HttpStatus.ACCEPTED;		    
@@ -280,4 +281,6 @@ public class MeetingController {
 		    list = meetingService.hostMeetinglist(hostid);
 		    return new ResponseEntity<List<MeetingDto>>(list, status);
 	  }
+
+	  
 }

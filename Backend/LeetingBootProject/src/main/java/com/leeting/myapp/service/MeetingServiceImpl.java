@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.leeting.myapp.dao.MeetingDao;
 import com.leeting.myapp.model.MeetingDto;
 import com.leeting.myapp.model.MemberDto;
+import com.leeting.myapp.model.NoticeDto;
 import com.leeting.myapp.model.ParticipationDto;
 
 @Service
@@ -145,5 +146,40 @@ public class MeetingServiceImpl implements MeetingService {
 	public List<MeetingDto> hostMeetinglist(String hostid) {
 		// TODO Auto-generated method stub
 		return meetingDao.hostMeetinglist(hostid);
+	}
+	@Override
+	public List<NoticeDto> meetingnoticelist(int meetingno) {
+		// TODO Auto-generated method stub
+		return meetingDao.meetingnoticelist(meetingno);
+	}
+
+
+	@Override
+	public boolean meetingnoticewrite(NoticeDto notice, Map<String, Object> noticemap) {
+		System.out.println("확인");
+		meetingDao.meetingnoticewrite(notice,noticemap);
+		return true;
+	}
+
+
+	@Override
+	public NoticeDto getNoticeInfo(int meetingnoticeno) {
+		NoticeDto noticeDto = null;
+        noticeDto = meetingDao.noticeinfo(meetingnoticeno);
+        return noticeDto;
+	}
+
+
+	@Override
+	public boolean updatenotice(NoticeDto notice, Map<String, Object> noticemap) {
+		 meetingDao.updatenotice(notice,noticemap);
+		 return true;
+	}
+
+
+	@Override
+	public void deletenotice(int noticeno) {
+		 meetingDao.deletenotice(noticeno);
+		
 	}
 }

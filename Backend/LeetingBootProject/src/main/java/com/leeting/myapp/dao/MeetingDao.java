@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.leeting.myapp.model.MeetingDto;
+import com.leeting.myapp.model.NoticeDto;
 import com.leeting.myapp.model.ParticipationDto;
 import com.leeting.myapp.model.ReviewDto;
 
@@ -29,4 +30,9 @@ public interface MeetingDao {
 	boolean deleteReview(int no);
 	public void enrollPhoto(Map<String, Object> meetingmap);
 	public List<MeetingDto> hostMeetinglist(String hostid);
+	public List<NoticeDto> meetingnoticelist(int meetingno);
+	public void meetingnoticewrite(NoticeDto notice, Map<String, Object> noticemap);
+	public NoticeDto noticeinfo(int meetingnoticeno);
+	public void updatenotice(NoticeDto notice, Map<String, Object> noticemap);
+	public void deletenotice(int noticeno);
 }
