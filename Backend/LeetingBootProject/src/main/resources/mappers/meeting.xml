@@ -107,4 +107,9 @@
 		DELETE FROM meeting_review
 		WHERE no = #{no};
 	</insert>
+	
+	<!-- 호스트가 만든 미팅 목록 -->
+	<select id="hostmeeting" parameterType="String" resultType="meeting">
+		SELECT * FROM meeting WHERE hostid=#{hostid}
+	</select>
 </mapper>

@@ -139,4 +139,11 @@ public class MeetingServiceImpl implements MeetingService {
 		meetingDao.enrollPhoto(meetingmap);
 		return false;
 	}
+
+
+	@Override
+	public List<MeetingDto> hostMeetinglist(String hostid) {
+		// TODO Auto-generated method stub
+		return meetingDao.hostMeetinglist(hostid);
+	}
 }

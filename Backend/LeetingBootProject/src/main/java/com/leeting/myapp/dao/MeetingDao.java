@@ -28,4 +28,5 @@ public interface MeetingDao {
 	boolean updateReview(ReviewDto reviewDto);
 	boolean deleteReview(int no);
 	public void enrollPhoto(Map<String, Object> meetingmap);
+	public List<MeetingDto> hostMeetinglist(String hostid);
 }

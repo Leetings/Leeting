@@ -271,4 +271,13 @@ public class MeetingController {
 			conclusion = "FAIL";
 		return new ResponseEntity<>(conclusion, httpStatus);
 	}
+	
+	 @GetMapping("/{meetingno}/{hostid}")
+	  public ResponseEntity <List<MeetingDto>> hostMeetinglist(@PathVariable(value="hostid") String hostid,HttpServletRequest req) throws SQLException {
+		   System.out.println(req);
+		    HttpStatus status = HttpStatus.ACCEPTED;		    
+		    List<MeetingDto> list = new ArrayList<>();
+		    list = meetingService.hostMeetinglist(hostid);
+		    return new ResponseEntity<List<MeetingDto>>(list, status);
+	  }
 }

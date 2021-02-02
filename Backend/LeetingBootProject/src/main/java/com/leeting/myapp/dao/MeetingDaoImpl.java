@@ -126,4 +126,10 @@ public class MeetingDaoImpl implements MeetingDao {
 		sqlSession.update("meeting.putImage",meetingmap);
 		
 	}
+
+	@Override
+	public List<MeetingDto> hostMeetinglist(String hostid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("meeting.hostmeeting",hostid);
+	}
 }

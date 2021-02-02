@@ -27,4 +27,5 @@ public interface MeetingService {
 	boolean updateReview(ReviewDto reviewDto) throws SQLException;
 	boolean deleteReview(int no) throws SQLException;
 	boolean enrollPhoto(Map<String, Object> meetingmap);
+	List<MeetingDto> hostMeetinglist(String hostid);
 }
