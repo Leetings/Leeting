@@ -23,7 +23,7 @@ public class GalleryController {
     @ApiOperation(value = "데이터 등록", notes = "데이터 등록")
     @RequestMapping(value=("/upload"), headers = ("content-type=multipart/form-data"), method=RequestMethod.POST)
     public String uploadGallery(@RequestParam("data") MultipartFile multipartFile,
-                                @RequestParam("id") int id,
+                                @RequestParam("hostid") String id,
                                 @RequestParam("dirNum") int dirNum) throws IOException, SQLException {
         // 현재 dirName: "static", 이후 페이지별 디렉토리 추가 가능
         String dirName = "";

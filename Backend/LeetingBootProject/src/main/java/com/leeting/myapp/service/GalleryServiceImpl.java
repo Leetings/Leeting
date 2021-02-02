@@ -29,13 +29,13 @@ public class GalleryServiceImpl implements GalleryService {
     private String bucket;
 
     @Override
-    public String upload(String dirName, int id, MultipartFile multipartFile) throws IOException, SQLException {
+    public String upload(String dirName, String id, MultipartFile multipartFile) throws IOException, SQLException {
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
         return uploadFile(dirName, id, uploadFile);
     }
 
     @Override
-    public String uploadFile(String dirName, int id, File uploadFile) throws SQLException {
+    public String uploadFile(String dirName, String id, File uploadFile) throws SQLException {
         String fileName = dirName + "/" + id+"-"+uploadFile.getName();
 
 //        이전 파일 url 주소를 prevFile에 저장할 경우 삭제 가능
