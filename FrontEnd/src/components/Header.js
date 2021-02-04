@@ -111,8 +111,8 @@ class Header extends Component {
                 <div className="header wide_con cb">
                     <div className="dvwrap">
                     <h1 className="logo_wrap cb ani">
-                        <a href="/" className="ani">
-                            <img className="ani" src="img/pclogo.png" alt="Leeting입니다" title=""/>
+                        <a href="/" className="ani logo">리팅입니다.
+                            {/* <img className="ani logo" src="img/pclogo.png" alt="Leeting입니다" title=""/> */}
                         </a>
                     </h1>                        
                         <div className="nav_wrap cb">
@@ -180,10 +180,12 @@ class Header extends Component {
                         <div id="nologin" className="login_nav">
                             <ul>
                                 <li id="beforeSearchNo" onClick={this.searchOpen}>
-                                    <img className="searchico" src="./img/ico-search.png" alt="검색"></img>
+                                    <div className="searchico">검색열기</div>
+                                    {/* <img className="searchico" src="./img/ico-search.png" alt="검색"></img> */}
                                 </li>
                                 <li id="afterSearchNo" onClick={this.searchClose}>
-                                    <img className="searchico"src="./img/ico-search-active.png" alt="검색"></img>
+                                    <div className="searchico">검색닫기</div>
+                                    {/* <img className="searchico"src="./img/ico-search-active.png" alt="검색"></img> */}
                                 </li>
                                 <li>
                                     <Link
@@ -208,10 +210,12 @@ class Header extends Component {
                         <div id="login" className="login_nav">
                             <ul>
                                 <li id="beforeSearch" onClick={this.searchOpen}>
-                                    <img className="searchico" src="./img/ico-search.png" alt="검색"></img>
+                                    <a className="searchico">검색열기</a>
+                                    {/* <img className="searchico" src="./img/ico-search.png" alt="검색"></img> */}
                                 </li>
                                 <li id="afterSearch" onClick={this.searchClose}>
-                                    <img className="searchico"src="./img/ico-search-active.png" alt="검색"></img>
+                                    <a className="searchico">검색닫기</a>
+                                    {/* <img className="searchico"src="./img/ico-search-active.png" alt="검색"></img> */}
                                 </li>
                                 <li>
                                     <Link

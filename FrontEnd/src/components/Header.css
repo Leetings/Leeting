@@ -241,6 +241,8 @@
     transition: all 0.3s;
 }
 
+.logo {}
+
 .wide_con {
     max-width: 1800px;
     margin: 0 auto
@@ -275,8 +277,15 @@
 .header .logo_wrap a {
     display: inline-block;
     width: 133px;
-    padding: 15px 0;
-    height: 101px;
+    /* padding: 15px 0; */
+    padding-bottom: 15px;
+    margin-top: 15px;
+    height: 86px;
+
+    background: url(../img/pclogo.png) no-repeat;
+    background-clip: padding-box;
+    background-size: contain;
+    text-indent: -9999px;
 }
 
 .header .logo_wrap a img {
@@ -391,7 +400,7 @@
 
 .login_nav>ul li {
     display: inline-block;
-    padding: 7px 10px;
+    padding: 7px 5px;
     color: #000;
     font-size: 0.9em;
     border-radius: 20px;
@@ -413,10 +422,24 @@
     margin-left: 0
 }
 
-.searchico {
+#beforeSearchNo .searchico,
+#beforeSearch .searchico {
     width: 20px;
     height: 20px;
     cursor: pointer;
+    background: url(../img/ico-search.png);
+    background-size: 20px;
+    text-indent: -9999px;
+}
+
+#afterSearchNo .searchico,
+#afterSearch .searchico {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: url(../img/ico-search-active.png);
+    background-size: 20px;
+    text-indent: -9999px;
 }
 
 #searchBar {
