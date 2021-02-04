@@ -250,7 +250,8 @@ class Header extends Component {
                         >
                             <button>검색</button>
                         </Link>
-                        <img onClick={this.searchClose} src="./img/btn-close-black.png" alt="검색창 닫기"></img>
+                        <div className="searchCloseBtn" onClick={this.searchClose}>검색창 닫기</div>
+                        {/* <img onClick={this.searchClose} src="./img/btn-close-black.png" alt="검색창 닫기"></img> */}
                     </div>
                 </div>
                 {/* side menu */}
