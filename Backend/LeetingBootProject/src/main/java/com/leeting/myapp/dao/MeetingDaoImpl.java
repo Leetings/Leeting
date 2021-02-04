@@ -145,8 +145,6 @@ public class MeetingDaoImpl implements MeetingDao {
 		sqlSession.insert("notice.meetingnoticewrite",notice);
 		noticemap.put("title", notice.getTitle());
 		if(noticemap.get("file1") != null) sqlSession.update("notice.putImage",noticemap);
-	//	if(noticemap.get("file2") != null) sqlSession.insert("notice.putImage2",noticemap);
-	//	if(noticemap.get("file3") != null) sqlSession.insert("notice.putImage3",noticemap);
 	}
 
 	@Override
@@ -157,13 +155,11 @@ public class MeetingDaoImpl implements MeetingDao {
 	@Override
 	public void updatenotice(NoticeDto notice, Map<String, Object> noticemap) {
 		sqlSession.update("notice.noticemodify",notice);
-		sqlSession.update("notice.noticefilemodify",noticemap);
-		
+		sqlSession.update("notice.noticefilemodify",noticemap);	
 	}
 
 	@Override
 	public void deletenotice(int noticeno) {
-		sqlSession.delete("notice.noticedelete",noticeno);
-		
+		sqlSession.delete("notice.noticedelete",noticeno);	
 	}
 }

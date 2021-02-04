@@ -21,6 +21,7 @@
 	<!-- 미팅 삭제 -->
 	<delete id="meetingdelete" parameterType="int">
 		DELETE FROM participation WHERE meetingno=#{meetingno};
+		DELETE FROM notice WHERE meetingno=#{meetingno};	
 		DELETE FROM meeting WHERE no=#{meetingno};		
 	</delete>
 	<!-- 미팅 수정 -->

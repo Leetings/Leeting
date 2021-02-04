@@ -40,34 +40,22 @@ public class MeetingNoticeController {
 	  @ApiOperation(value = "미팅게시판 목록", notes = "공지사항 목록", response = List.class)
 	  @GetMapping("/{meetingno}")
 	  public ResponseEntity<List<NoticeDto>> meetingnoticelist(@PathVariable(value="meetingno") int meetingno, HttpServletRequest req) throws SQLException {
-		   System.out.println(req);
 		    Map<String, Object> resultMap = new HashMap<>();
 		    HttpStatus status = HttpStatus.ACCEPTED;
 		    List<NoticeDto> list = new ArrayList<>();
 		    list = meetingService.meetingnoticelist(meetingno);
-		    System.out.println("get to /meetingnoticelist done");
-		    System.out.println("공지사항 목록");
-//		    System.out.println(list.toString());
 		    return new ResponseEntity<List<NoticeDto>>(list,status);
 	  }
-	  @ApiOperation(value = "공지사항 등록", notes = "공지사항 등록", response = Map.class)
+	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)
 	  @GetMapping(value = ("/{meetingno}"), headers = ("content-type=multipart/form-data"))
 	 public ResponseEntity<String> meetingnoticewrite(@PathVariable(value="meetingno") int meetingno,@RequestBody NoticeDto notice, HttpServletRequest req) throws IOException {
 		 String conclusion = "";
 		    HttpStatus status = HttpStatus.ACCEPTED;
-		    System.out.println("post to /meetingnoticewrite done");
-		    System.out.println("공지사항 등록");
 		    Map<String, Object> noticemap = new HashMap<String, Object>();
-//		    NoticeDto notice = new NoticeDto();
-//		    notice.setDetail("test");
-//		    notice.setTitle("test12");
-//		    notice.setWriter("test");
-//		    System.out.println(meetingno);
 		    notice.setMeetingno(meetingno);
 //		    File file = new File("C:/Users/multicampus/Desktop/AKR20201201068200005_01_i_P2.jpg");
 //		     byte[] fileContent = Files.readAllBytes(file.toPath());
 //		    noticemap.put("file1", fileContent);
-		//    System.out.println(noticemap.get("file1"));
 		    if(notice.getFile1()!=null)noticemap.put("file1", notice.getFile1().getBytes());
 		    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
 		    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
@@ -80,17 +68,12 @@ public class MeetingNoticeController {
 		    }
 		    return new ResponseEntity<String>(conclusion, status);
 	 }
-	  //공지사항 상세정보
-	  @ApiOperation(value = "공지사항 상세정보", notes = "공지사항 상세정보", response = Map.class)
+	  //미팅게시판 상세정보
+	  @ApiOperation(value = "미팅게시판 상세정보", notes = "미팅게시판 상세정보")
 	  @GetMapping("/{meetingno}/{no}")
 	  public ResponseEntity<NoticeDto> getNoticeInfo(@PathVariable(value="no") int meetingnoticeno, HttpServletRequest req) throws SQLException, IOException {
-		  System.out.println(meetingnoticeno); 
-		  System.out.println(req);
 		  NoticeDto noticetmp = meetingService.getNoticeInfo(meetingnoticeno);
 		    HttpStatus status = HttpStatus.ACCEPTED;
-		    System.out.println(noticetmp.toString());
-		    System.out.println("get to /noticedetail done");
-		    System.out.println("공지사항상세정보");
 //		    Map<String, Object> map = noticeService.getByteImage();
 //		       byte[] imageContent = (byte[]) map.get("file1");
 //	    		byte[] encodeBase64 = Base64.encodeBase64(imageContent);
@@ -101,23 +84,14 @@ public class MeetingNoticeController {
 //		       headers.setContentType(MediaType.IMAGE_PNG);
 		    return new ResponseEntity<NoticeDto>(noticetmp, HttpStatus.OK);
 	  }
-	  //공지사항정보수정
-	  @ApiOperation(value = "공지사항 수정", notes = "공지사항 수정", response = Map.class)
+	  //미팅게시판정보수정
+	  @ApiOperation(value = "미팅게시판 수정", notes = "미팅게시판 수정")
 	  @PutMapping("")
 	  public ResponseEntity<String> updatemeetingNotice(@RequestBody NoticeDto notice, HttpServletRequest req) throws SQLException, IOException {
-	    System.out.println(req);
 	    String conclusion = "SUCCESS";
 	    HttpStatus status = HttpStatus.ACCEPTED;
-	    System.out.println("put to /meeting done");
-	    System.out.println("미팅수정");
-	    System.out.println(notice.toString());
 	    Map<String, Object> noticemap = new HashMap<String, Object>();
-//	    NoticeDto notice = new NoticeDto();
-//	    notice.setDetail("test");
-//	    notice.setTitle("test");
-//	    notice.setWriter("test");
 	    if(notice.getFile1()!=null) noticemap.put("file1", notice.getFile1().getBytes());
-	    System.out.println(noticemap.get("file1"));
 	    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
 	    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
 	    if(meetingService.updatenotice(notice,noticemap)) {
@@ -129,15 +103,12 @@ public class MeetingNoticeController {
 	    return new ResponseEntity<String>(conclusion, status);
 	  }
 	  
-	  //공지사항삭제
-	  @ApiOperation(value = "공지사항삭제", notes = "공지사항삭제", response = Map.class)
+	  //미팅게시판삭제
+	  @ApiOperation(value = "미팅게시판삭제", notes = "미팅게시판삭제", response = Map.class)
 	  @DeleteMapping("/{no}")
 	  public ResponseEntity<Map<String, Object>> deletenotice(@PathVariable(value="no") int noticeno, HttpServletRequest req) {
-	    System.out.println(req);
 	    Map<String, Object> resultMap = new HashMap<>();
 	    HttpStatus status = HttpStatus.ACCEPTED;
-	    System.out.println("delete to /notice done");
-	    System.out.println("공지사항삭제");
 	    meetingService.deletenotice(noticeno);
 	    return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	  }
