@@ -196,8 +196,10 @@ public class MeetingController {
 		Map<String, Object> map = new HashMap<>();
 		HttpStatus httpStatus = HttpStatus.ACCEPTED;
 		List<ReviewDto> list = meetingService.getReview(meetingno);
+		System.out.println("get /review");
 		if(list.size()>0) {
 			for(ReviewDto reviewDto : list)
+				System.out.println("reviewDto.getReview() = " + reviewDto.getReview());
 			map.put("list", list);
 			map.put("conclusion", "SUCCESS");
 		}
@@ -209,10 +211,11 @@ public class MeetingController {
 	}
 	// 리뷰 쓰기
 	@ApiOperation(value="리뷰쓰기", notes="리뷰쓰기")
-	@PostMapping("/postreview")
+	@PostMapping("/review")
 	public ResponseEntity<String> postReview(@RequestBody ReviewDto reviewDto, HttpServletRequest req) throws SQLException {
 		String conclusion = "";
 		HttpStatus httpStatus = HttpStatus.ACCEPTED;
+		System.out.println("post /review");
 		if(meetingService.postReview(reviewDto))
 			conclusion = "SUCCESS";
 		else
@@ -221,10 +224,11 @@ public class MeetingController {
 	}
 	// 리뷰 수정
 	@ApiOperation(value="리뷰수정", notes="리뷰수정")
-	@PutMapping("/updatereview")
+	@PutMapping("/review")
 	public ResponseEntity<String> updateReview(@RequestBody ReviewDto reviewDto, HttpServletRequest req) throws SQLException {
 		String conclusion = "";
 		HttpStatus httpStatus = HttpStatus.ACCEPTED;
+		System.out.println("put /review");
 		if(meetingService.updateReview(reviewDto))
 			conclusion = "SUCCESS";
 		else
@@ -233,10 +237,11 @@ public class MeetingController {
 	}
 	// 리뷰 삭제
 	@ApiOperation(value="리뷰삭제", notes="리뷰삭제")
-	@DeleteMapping("/deletereview")
+	@DeleteMapping("/review")
 	public ResponseEntity<String> deleteReview(@RequestParam(value = "no") int no, HttpServletRequest req) throws SQLException {
 		String conclusion = "";
 		HttpStatus httpStatus = HttpStatus.ACCEPTED;
+		System.out.println("del /review");
 		if(meetingService.deleteReview(no))
 			conclusion = "SUCCESS";
 		else
