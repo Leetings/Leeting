@@ -148,6 +148,10 @@
     font-weight: bold;
 }
 
+.itemListView a p {
+    cursor: pointer;
+}
+
 .writeBtn {
     position: relative;
     width: 1200px;
@@ -246,6 +250,7 @@
 
 .hosthr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 30px;
 }
 
 #meeting_detail .titleset .host {
@@ -293,6 +298,21 @@
     border: none;
 }
 
+.joinMeeting #boardMeeting {
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto 10px;
+
+    border-radius: 5px;
+    background-color: #008be6;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    display: none;
+}
+
 .joinMeeting #joinOutBtn {
     width: 300px;
     height: 40px;
@@ -325,7 +345,8 @@
     border: none;
 }
 
-.joinMeeting #modifyBtn a {
+.joinMeeting #modifyBtn a,
+.joinMeeting #boardMeeting a {
     color: white;
 }
 
@@ -335,6 +356,7 @@
 
 .detail_hr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    width: 950px;
 }
 
 .detail_view {

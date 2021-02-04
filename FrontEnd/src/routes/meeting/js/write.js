@@ -273,7 +273,7 @@ class write extends React.Component {
             file: this.state.thumb,
             enddate: enddate
         }).then(res => {
-            if (res.data === "SUCCESS") {
+            if (res.data === "SUCESS") {
                 console.log("성공");
                 console.log(this.state.categoryno);
                 alert("글 작성이 완료되었습니다.");
@@ -293,6 +293,8 @@ class write extends React.Component {
     render() {
         const { location } = this.props;
         return (
+            
+      <div id="main_content">
             <div className="writeWrap">
                 <div className="titleset">
                     <p className="mainTit">Leeting 등록</p>
@@ -382,7 +384,8 @@ class write extends React.Component {
                     </div>
                 </div>
                 
-            </div>
+                </div>
+                </div>
         );
     }
 }

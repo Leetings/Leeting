@@ -323,6 +323,8 @@ class Modify extends React.Component {
     render() {
         const { location } = this.props;
         return (
+            
+      <div id="main_content">
             <div className="writeWrap">
                 <div className="titleset">
                     <p className="mainTit">Leeting 관리</p>
@@ -455,7 +457,8 @@ class Modify extends React.Component {
                     />
                      <button onClick={this.handleClick}>저장</button> 
                 </div>*/}
-            </div>
+                </div>
+                </div>
         );
     }
 }

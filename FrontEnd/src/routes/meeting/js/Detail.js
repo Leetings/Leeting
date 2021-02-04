@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import "../css/meeting.css"
 import axios from "axios";
 
@@ -50,7 +50,7 @@ class Detail extends React.Component {
         if (location.state.hostid === sId) {
             document.getElementById('likebtn').disabled = true;
             document.getElementById('joinBtn').setAttribute("style", "display:none");
-            // document.getElementById('joinOutBtn').setAttribute("style", "display:none");
+            document.getElementById('boardMeeting').setAttribute("style","display:block");
             document.getElementById('modifyBtn').setAttribute("style", "display:block");
             document.getElementById('viewMember').setAttribute("style", "display:block");
         }
@@ -194,6 +194,7 @@ class Detail extends React.Component {
                     btnText:"미팅 나가기",
                     checkJoin:true
                 })
+                document.getElementById('boardMeeting').setAttribute("style","display:block");
                 // document.getElementById('joinBtn').setAttribute("style", "display:none");
                 // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
                 document.getElementById('likebtn').disabled = false;
@@ -203,6 +204,7 @@ class Detail extends React.Component {
                     btnText:"미팅 참가하기",
                     checkJoin:false
                 })
+                document.getElementById('boardMeeting').setAttribute("style","display:none");
                 document.getElementById('likebtn').disabled = true;
             }
         })
@@ -222,7 +224,9 @@ class Detail extends React.Component {
 
 
     if (location.state) {
-        return (
+    return (
+            
+      <div id="main_content">
             <div id="meeting_detail">
                 <div className="titleset">
                     <img src={location.state.file} alt={location.state.maintitle}></img>
@@ -238,6 +242,11 @@ class Detail extends React.Component {
                             {/* <p className="likecnt">1</p> */}
                             </div>
                         <div className="joinMeeting" >
+                            <GoBoard
+                                id={location.state.id}
+                                hostid={location.state.hostid}
+                                />
+                            {/* <button id="boardMeeting" >미팅 게시판</button> */}
                             <button id="joinBtn" onClick={ this.joinMeetingClick }>{this.state.btnText}</button>
                             {/* <button id="joinOutBtn">미팅 나가기</button> */}
                             <GoModify
@@ -267,7 +276,8 @@ class Detail extends React.Component {
                     <div className="detail_content" dangerouslySetInnerHTML={{ __html: codes} }></div>
                 </div>
                 
-            </div>
+                </div>
+                </div>
             // 
         );            
     } else {
@@ -275,6 +285,7 @@ class Detail extends React.Component {
     }
   }
 }
+
 
 function GoModify({ id, maintitle, subtitle, date, hostid, detail, categoryno, enddate, file }) {
     return (
@@ -309,8 +320,30 @@ GoModify.propTypes = {
     hostid: propTypes.string.isRequired,
     detail: propTypes.string.isRequired,
     categoryno: propTypes.number.isRequired,
-    file: propTypes.string.isRequired,
+    file: propTypes.string,
     enddate: propTypes.string
 };
+
+function GoBoard({ id, hostid }) {
+    return (
+        <div id="boardMeeting">
+            <Link
+                to={{
+                    pathname: `/meeting/board/${id}`,
+                    state: {
+                        id,
+                        hostid
+                    }
+                }}
+            >미팅 게시판
+            </Link>
+        </div>
+    )
+}
     
+GoBoard.propTypes = {
+    id: propTypes.number.isRequired,
+    hostid: propTypes.string.isRequired
+};
+
 export default Detail;
