@@ -1,7 +1,7 @@
 import React from 'react'
 import List from "./reviewList"
 
-const reviewPosts = ({ posts, loading }) => {
+const reviewPosts = ({ posts, loading, noPosts }) => {
     if (loading) {
         return (
             <div className="loading_view">
@@ -14,7 +14,13 @@ const reviewPosts = ({ posts, loading }) => {
             </div>
         )
     }
-    
+    if (noPosts) {
+        return (
+            <div id="noPosts">
+                <img src="../../img/writeReview.png" alt="글이없어요"></img>
+            </div>
+        )
+    }
     return (
         <div className="list_view">
             <ul>

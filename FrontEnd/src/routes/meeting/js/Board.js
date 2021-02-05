@@ -37,7 +37,7 @@ const Board = (props) => {
         
     }, []);
     
-    console.log(posts);
+    // console.log(posts);
     
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
@@ -49,31 +49,33 @@ const Board = (props) => {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
-            
+
     return (
-        
-    <div id="main_content">
-    <div id="board_list" className="board_list">
-        <div className="titles">
-            <h1 className="tit">{location.state.id}번글 공지 사항</h1>
-        </div>
-            <Posts posts={currentPosts} loading={loading} noPosts={noPosts}/>
-
-            <Pagination
-                postsPerPage={postsPerPage}
-                totalPosts={posts.length}
-                paginate={paginate}
-                currentPage={currentPage}
-                loading={loading}
-                noPosts={noPosts}
-            />
-
-        <div id="writeBtn" className="writeBtn">
-        <button>등록하기</button>
-        </div>
+    
+        <div id="main_content">
+            <div id="board_list" className="board_list">
+                <div className="titles">
+                    <h1 className="tit">{location.state.id}번글 공지 사항</h1>
+                </div>
+                <Posts posts={currentPosts} loading={loading} noPosts={noPosts}/>
+    
+                <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={posts.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                    loading={loading}
+                    noPosts={noPosts}
+                />
+    
+                <div id="writeBtn" className="writeBtn">
+                    <button>등록하기</button>
+                </div>
             </div>
-            </div>
+        </div>
     )
+    
+    
 }
 
 export default Board;

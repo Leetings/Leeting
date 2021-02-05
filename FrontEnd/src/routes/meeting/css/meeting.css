@@ -209,7 +209,7 @@
 #meeting_detail .titleset .titles {
     display: inline-block;
     padding-top: 0px;
-    height: 200px;
+    height: 150px;
     width: 350px;
 }
 
@@ -250,7 +250,7 @@
 
 .hosthr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    margin-top: 30px;
+    margin-top: 80px;
 }
 
 #meeting_detail .titleset .host {
@@ -670,11 +670,22 @@
     display: block;
 }
 
+#viewReviews #noPosts {
+    margin-top: 20px;
+    width: 950px;
+    height: auto;
+}
+
+#viewReviews #noPosts img {
+    width: 950px;
+}
+
 .te-ww-container>.te-editor {
     overflow: hidden !important;
 }
 
 .reviewListView {
+    position: relative;
     width: 950px;
     margin: 20px 0;
     padding-bottom: 20px;
@@ -693,6 +704,19 @@
 
 .reviewListView .detail_content {
     margin: 0;
+    display: inline-block;
+}
+
+.reviewListView div.detail_content {
+    display: none;
+}
+
+.detail_content div div .te-toolbar-section {
+    display: none;
+}
+
+.detail_content .tui-editor-contents {
+    font-size: 16px;
 }
 
 .reviewWriter,
@@ -702,4 +726,21 @@
 
 .reviewWriter {
     margin-right: 20px;
+}
+
+.reviewBtns {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+}
+
+.reviewBtns button {
+    border: none;
+    background: none;
+    margin-left: 20px;
+}
+
+.reviewBtns #reviewModifyCancle,
+.reviewBtns #reviewConfirmModify {
+    display: none;
 }

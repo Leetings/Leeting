@@ -74,7 +74,7 @@ class Detail extends React.Component {
             enddate: data.data.enddate,
             participants:data.data.participants
         })
-        console.log(data.data);
+        // console.log(data.data);
     }
 
     checkHost = async () => {
@@ -176,6 +176,7 @@ class Detail extends React.Component {
 
             // console.log(this.state.checkJoin);
             if (this.state.checkJoin === true) {
+                document.getElementById('boardMeeting').setAttribute("style", "display:block");
                 // document.getElementById('joinBtn').value="미팅 나가기";
                 // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
             } else{
