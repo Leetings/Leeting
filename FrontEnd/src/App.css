@@ -30,7 +30,6 @@ th,
 td {
   margin: 0;
   padding: 0;
-  cursor: default;
 }
 
 html,
@@ -106,4 +105,8 @@ body {
 a:hover {
   text-decoration: none;
   color: black;
+}
+
+.te-mode-switch-section {
+  display: none !important;
 }

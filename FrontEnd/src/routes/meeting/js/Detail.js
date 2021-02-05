@@ -3,7 +3,9 @@ import "../css/meeting.css"
 import axios from "axios";
 
 import { Link } from "react-router-dom";
-import propTypes  from "prop-types";
+import propTypes from "prop-types";
+
+import Reviews from "../../../components/meeting/Review"
 
 class Detail extends React.Component {
 
@@ -14,7 +16,18 @@ class Detail extends React.Component {
             likes: false,
             checkJoin: false,
             btnText: "미팅 참가하기",
-            joinMember : ""
+            joinMember: "",
+
+            no:"",
+            hostid: "",
+            maintitle: "",
+            subtitle:"",
+            date: "",
+            detail: "",
+            categoryno:"",
+            file: "",
+            enddate: "",
+            participants:""
         }
     }
 
@@ -23,6 +36,8 @@ class Detail extends React.Component {
         let sId = sessionStorage.getItem('id');
         // console.log(location.state.enddate);
         
+        this.showDetail();
+
         if (location.state === undefined) {
             history.push("/");
         }
@@ -40,6 +55,26 @@ class Detail extends React.Component {
             this.checkHost();
             // console.log(this.state.joinMember);
         }
+    }
+
+    showDetail = async () => {
+        const { location } = this.props;
+
+        let url = 'http://127.0.0.1:8080/myapp/meeting/data/' + location.state.id;
+                
+        let data = await axios.get(url);
+        this.setState({
+            hostid: data.data.hostid,
+            maintitle: data.data.maintitle,
+            subtitle: data.data.subtitle,
+            date: data.data.date,
+            detail: data.data.detail,
+            categoryno:data.data.categoryno,
+            file: data.data.file,
+            enddate: data.data.enddate,
+            participants:data.data.participants
+        })
+        console.log(data.data);
     }
 
     checkHost = async () => {
@@ -130,21 +165,22 @@ class Detail extends React.Component {
                     // console.log(sId + ", " + data[i].userid);
                     this.setState({
                         checkJoin: true,
-                        btnText:"미팅 나가기"
+                        btnText: "미팅 나가기"
                     })
                 }
             }
-            joinmember = joinmember.substr(0, joinmember.length - 2) + "( "+cnt+"명 )";
+            joinmember = joinmember.substr(0, joinmember.length - 2) + "( " + cnt + "명 )";
             this.setState({
-                joinMember : joinmember
+                joinMember: joinmember
             })
 
             // console.log(this.state.checkJoin);
             if (this.state.checkJoin === true) {
                 // document.getElementById('joinBtn').value="미팅 나가기";
                 // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
-            } else
+            } else{
                 document.getElementById('likebtn').disabled = true;
+            }
             // data = data.data;
             // this.setState({ data, isLoading: false });
         }
@@ -212,9 +248,10 @@ class Detail extends React.Component {
 
   render() {
       const { location } = this.props;
-      let codes = location.state.detail;
 
-      var date = location.state.date;
+      var codes = this.state.detail;
+
+      var date = this.state.date;
 
       var sYear = date.substring(0,4);
       var sMonth = date.substring(5,7);
@@ -270,10 +307,26 @@ class Detail extends React.Component {
                         </div>
                     </div>
                 </div>
-                <hr className="detail_hr"/>
-                <div className="detail_view">
-                    <p className="detail_subtit">Leeting 소개</p>
-                    <div className="detail_content" dangerouslySetInnerHTML={{ __html: codes} }></div>
+                <div className="formcenter">
+                    <input id="tab1" type="radio" name="tabs" defaultChecked></input>
+                    <label className="forradio" htmlFor="tab1">Leeting 소개</label>
+                    <input id="tab2" type="radio" name="tabs"></input>
+                    <label className="forradio" htmlFor="tab2">Leeting 댓글</label>
+                
+                    <form id="viewReviews">
+                        <Reviews
+                            id={location.state.id}
+                            checkJoin={this.state.checkJoin}
+                            writer={sessionStorage.getItem('id')}
+                        />
+                    </form>
+
+                    <form id="viewDetails">
+                        <div className="detail_view">
+                            <p className="detail_subtit">Leeting 소개</p>
+                            <div className="detail_content" dangerouslySetInnerHTML={{ __html: codes} }></div>
+                        </div>
+                    </form>
                 </div>
                 
                 </div>

@@ -99,19 +99,19 @@ public class MeetingController {
 		    else conclusionmap.put("message", "FAIL");
 		    return new ResponseEntity<Map<String, Object>>(conclusionmap, status);
 	  }
-//	  //미팅 상세정보
-//	  @ApiOperation(value = "미팅 상세정보", notes = "미팅 상세정보", response = Map.class)
-//	  @GetMapping("/{no}")
-//	  public ResponseEntity<MeetingDto> getMeetingInfo(@PathVariable(value="no") int meetingno, HttpServletRequest req) throws SQLException {
-//		  System.out.println(meetingno); 
-//		  System.out.println(req);
-//		    MeetingDto meetingtmp = meetingService.getMeetingInfo(meetingno);
-//		    HttpStatus status = HttpStatus.ACCEPTED;
-//		    System.out.println(meetingtmp.toString());
-//		    System.out.println("get to /meetingdetail done");
-//		    System.out.println("미팅상세정보");
-//		    return new ResponseEntity<MeetingDto>(meetingtmp, status);
-//	  }
+	  //미팅 상세정보
+	  @ApiOperation(value = "미팅 상세정보", notes = "미팅 상세정보", response = Map.class)
+	  @GetMapping("data/{no}")
+	  public ResponseEntity<MeetingDto> getMeetingInfo(@PathVariable(value="no") int meetingno, HttpServletRequest req) throws SQLException {
+		  System.out.println(meetingno); 
+		  System.out.println(req);
+		    MeetingDto meetingtmp = meetingService.getMeetingInfo(meetingno);
+		    HttpStatus status = HttpStatus.ACCEPTED;
+		    System.out.println(meetingtmp.toString());
+		    System.out.println("get to /meetingdetail done");
+		    System.out.println("미팅상세정보");
+		    return new ResponseEntity<MeetingDto>(meetingtmp, status);
+	  }
 	  //미팅정보수정
 	  @ApiOperation(value = "미팅수정", notes = "미팅수정")
 	  @PutMapping("")

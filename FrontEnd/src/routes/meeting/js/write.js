@@ -4,6 +4,8 @@ import "../css/meeting.css"
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
+
+
 import axios from "axios";
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -366,12 +368,12 @@ class write extends React.Component {
                             </tr>
                             <tr>
                                 <th scope="row">내 용</th>
-                                <td colSpan="5">
+                                    <td colSpan="5">
                                     <Editor
                                         previewStyle="vertical"
                                         height="300px"
-                                        initialEditType="wysiwyg"
                                         placeholder="글쓰기"
+                                        initialEditType="wysiwyg"
                                         ref={this.editorRef}
                                         onChange={this.editorChange}
                                     />

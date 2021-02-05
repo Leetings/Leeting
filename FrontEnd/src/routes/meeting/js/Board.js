@@ -18,7 +18,7 @@ const Board = (props) => {
             setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/meetingnotice/'+meetingno);
             setPosts(res.data);
-            if (res.data.length == 0) {
+            if (res.data.length === 0) {
                 setVPost(true);
                 setLoading(false);
             }
@@ -37,13 +37,13 @@ const Board = (props) => {
         
     }, []);
     
+    console.log(posts);
     
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
     
-    console.log(posts);
 
     //change page
     const paginate = (pageNumber) => {

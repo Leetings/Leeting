@@ -91,6 +91,7 @@
 		SELECT no, meetingno, date, review, writer
 		FROM meeting_review
 		WHERE meetingno = #{meetingno}
+		ORDER BY no DESC
 	</select>
 	<!--리뷰 작성-->
 	<insert id="postreview" parameterType="review">
