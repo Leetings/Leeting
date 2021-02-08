@@ -23,14 +23,16 @@ const List = () => {
         const fetchPosts = async () => {
             setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/report/listreport');
-            
-            setPosts(res.data);
-            if (res.data.length === 0) {
+            if (res.data.message === "FAIL") {
                 setVPost(true);
                 setLoading(false);
+                setPosts([nullpost]);
             }
-            else
+            else {
+                console.log(res.data.list);
+                setPosts(res.data.list);
                 setLoading(false);
+            }
         }
 
         if (sId === 'leetingadmin') {

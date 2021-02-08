@@ -132,3 +132,7 @@
     color: white;
     border: 1px solid #000;
 }
+
+#reportNoPosts {
+    height: 300px;
+}

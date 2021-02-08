@@ -5,16 +5,14 @@ export const Posts = ({ posts, loading, noPosts }) => {
     // console.log(posts);
     
     if (noPosts) {
-        console.log('test2');
         return (
-            <div id="noPosts">
-                <img src="../../img/noPosts.png" alt="글이없어요"></img>
+            <div id="reportNoPosts">
+                <img src="../../img/cleanLeeting.png" alt="글이없어요"></img>
             </div>
         )
     }
-    
+
     if (loading) {
-        console.log('test');
         return (
             <div className="loading_view">
                 <div className="loader loader-7">
