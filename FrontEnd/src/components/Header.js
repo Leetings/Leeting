@@ -166,7 +166,7 @@ class Header extends Component {
                                 <li className="report">
                                         <Link
                                             to={{
-                                                pathname: `/notice`
+                                                pathname: `/report`
                                             }}
                                         >
                                             REPORT 119

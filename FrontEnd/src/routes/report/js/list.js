@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
-import Posts from "../../../components/board/Posts"
+import Posts from "../../../components/report/Posts"
 import Pagination from '../../../components/common/Pagination'
 
-const Board = (props) => {
+const List = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [noPosts, setVPost] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    const { location } = props;
+    const sId = sessionStorage.getItem('id');
+    const nullpost = [{
+        no : 0,
+        id:"test",
+        reportid:"test",
+        detail:"<p>test</p>",
+        date: "2021-01-01 00:00:00"
+    }];
     
     useEffect(() => {
         const fetchPosts = async () => {
-            const meetingno = location.state.id;
             setLoading(true);
-            const res = await axios.get('http://127.0.0.1:8080/myapp/meetingnotice/'+meetingno);
+            const res = await axios.get('http://127.0.0.1:8080/myapp/report/listreport');
+            
             setPosts(res.data);
             if (res.data.length === 0) {
                 setVPost(true);
@@ -25,24 +32,22 @@ const Board = (props) => {
             else
                 setLoading(false);
         }
-        
-        if (sessionStorage.getItem("id") === location.state.hostid) {
-            document.getElementById('writeBtn').setAttribute("style", "display:inline-block");
-        }
-        else {
-            document.getElementById('writeBtn').setAttribute("style", "display:none");
+
+        if (sId === 'leetingadmin') {
+            document.getElementById('noAdmin').setAttribute('style', 'display:none');
+            document.getElementById('Admin').setAttribute('style', 'display:block');
         }
         
         fetchPosts();
         
     }, []);
     
-    
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
     
+
     //change page
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -51,9 +56,10 @@ const Board = (props) => {
     return (
     
         <div id="main_content">
-            <div id="board_list" className="board_list">
+            <div id="board_list" className="board_list report">
                 <div className="titles">
-                    <h1 className="tit">{location.state.id}번글 공지 사항</h1>
+                    <h1 id="noAdmin" className="tit">{sessionStorage.getItem('nickname')}님 신고 목록</h1>
+                    <h1 id="Admin" className="tit">종합 신고 목록</h1>
                 </div>
                 <Posts posts={currentPosts} loading={loading} noPosts={noPosts}/>
     
@@ -65,10 +71,6 @@ const Board = (props) => {
                     loading={loading}
                     noPosts={noPosts}
                 />
-    
-                <div id="writeBtn" className="writeBtn">
-                    <button>등록하기</button>
-                </div>
             </div>
         </div>
     )
@@ -76,4 +78,4 @@ const Board = (props) => {
     
 }
 
-export default Board;
+export default List;

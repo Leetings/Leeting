@@ -7,6 +7,9 @@ import Join from "./routes/Join";
 import Login from "./routes/Login";
 import Find from "./routes/Find";
 import Leeting from "./routes/Leeting";
+import Report from "./routes/report/js/report"
+import ReportList from "./routes/report/js/list"
+import ReportDetail from "./routes/report/js/detail"
 
 import ExcerciseMeeting from "./routes/meeting/js/exercise";
 import MusicMeeting from "./routes/meeting/js/music";
@@ -39,8 +42,10 @@ function App() {
           <Route path="/join" exact={true} component={Join} />
           <Route path="/login" exact={true} component={Login} />
           <Route path="/find" exact={true} component={Find} />
+          <Route path="/report" exact={true} component={Report} />
+          <Route path="/report/list" exact={true} component={ReportList} />
 
-          <Route path="/mypage" exact={true} component={Mypage} />
+          <Route path="/mypage" exact={true} component={Mypage} />          
 
           <Route path="/meeting/exercise" exact={true} component={ExcerciseMeeting} />
           <Route path="/meeting/music" exact={true} component={MusicMeeting} />
@@ -56,7 +61,8 @@ function App() {
           <Route path="/meeting/:id" exact={true} component={Detail} />
           <Route path="/meeting/modify/:id" exact={true} component={ModifyMeeting} />
           <Route path="/meeting/board/:id" exact={true} component={MeetingBoard}/>
-          
+          <Route path="/report/detail/:id" exact={true} component={ReportDetail}/>
+
           <Route component={NotFound}/>
         </Switch>
         <Footer/>

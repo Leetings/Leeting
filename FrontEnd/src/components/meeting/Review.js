@@ -27,7 +27,7 @@ const Review = (props) => {
         review: "<p>test</p>↵",
         writer: "test"
     }];
-    const editorRef = React.createRef();
+    const [editorRef, setEditorRef] = useState(React.createRef());
     const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
     useEffect(() => {
@@ -98,9 +98,9 @@ const Review = (props) => {
                     if (noPosts) {
                         window.location.replace('/meeting/' + props.id);
                     } else {
+                        editorRef.current.getInstance().setHtml("");
                         setVPost(false);
                         setReviewBool(true);
-                        editorRef.current.setHtml("<br/>", false);
                     }
                 } else {
                     alert('잠시후 다시 시도해주세요');
@@ -112,13 +112,11 @@ const Review = (props) => {
         }
     }
 
-
     return (
         <div>
             <div id="editWrap">
                 <div id="editorWrap">
                     <Editor
-                        id="editorReview"
                         className="editorr"
                         previewStyle="vertical"
                         height="60px"
@@ -126,7 +124,9 @@ const Review = (props) => {
                         initialEditType="wysiwyg"
                         ref={editorRef}
                         onChange={editorChange}
-                    />
+                        initialValue={content}
+                    /> 
+                    <div id="editor"></div>
                 </div>
                 <div id="reviewWriteBtn">
                     <button onClick={reviewAdd}>

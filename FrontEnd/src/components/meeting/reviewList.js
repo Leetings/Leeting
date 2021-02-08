@@ -11,7 +11,8 @@ function ReviewList({ id, review, writer, date }) {
     let codes = review;
     let reviewWrapId = id +"_"+ writer;
     let reviewModifyId = writer +"_"+ id;
-    let reviewTxtId = writer +"_"+ id + "txt";
+    let reviewTxtId = writer + "_" + id + "txt";
+    let reviewBtnId = writer + "_" + id;
 
     const Modify = (e) => {
         e.preventDefault();

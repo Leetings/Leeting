@@ -37,6 +37,7 @@ const Notice = () => {
       const indexOfFirstPost = indexOfLastPost - postsPerPage;
       const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
     
+      console.log(indexOfLastPost);
       //change page
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
