@@ -1,67 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Slider from "react-slick";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Slider.css";
 import "./Home.css";
 
-import My from "../components/meeting/my"
+import Posts from "../components/meeting/my"
 
-class Home extends React.Component {
+const Home = () => {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [noPosts, setVPost] = useState(false);
+    const sId = sessionStorage.getItem('id');
 
-    state = {
-        isLoading: true,
-        data:[]
-    }
+    useEffect(() => {
+        const fetchPosts = async () => {
+            let data = await axios.get('http://127.0.0.1:8080/myapp/member/usermeet', {
+                params: {
+                    id : sId
+                }
+            });
+            data = data.data;
 
-    getLeeting = async () => {
-        let sId = sessionStorage.getItem('id');
-        let data = await axios.get('http://127.0.0.1:8080/myapp/member/usermeet', {
-            params: {
-                id : sId
+            // document.getElementById('myleetingNo').setAttribute("style", "display:none");
+
+            console.log(data);
+            console.log(data.length);
+            if (data.length === 0) {
+                setVPost(true);
+                setLoading(false);
+                // document.getElementById('myleetingList').setAttribute("style", "display:none");
+                // document.getElementById('myleetingNo').setAttribute("style", "display:block");
+            } else {
+                setPosts(data);
+                setLoading(false);
+                // document.getElementById('myleetingList').setAttribute("style", "display:block");
+                // document.getElementById('myleetingNo').setAttribute("style", "display:none");
             }
-        });
-        data = data.data;
-
-        this.setState({ data, isLoading: false });
-        // document.getElementById('myleetingNo').setAttribute("style", "display:none");
-
-        console.log(data.length);
-        if (data.length === 0) {
-            document.getElementById('myleetingList').setAttribute("style", "display:none");
-            document.getElementById('myleetingNo').setAttribute("style", "display:block");
-        } else {
-            document.getElementById('myleetingList').setAttribute("style", "display:block");
-            document.getElementById('myleetingNo').setAttribute("style", "display:none");
+            console.log(loading+" : "+noPosts);
         }
-    }
-    componentDidMount() {
+
         let sId = sessionStorage.getItem('id');
 
         if (sId !== null) {
-            this.getLeeting();
+            fetchPosts();
         } else {
             document.getElementById('myleetingTit').setAttribute('style', 'display:none');
             document.getElementById('myleetingList').setAttribute('style', 'display:none');
-            document.getElementById('myleetingNo').setAttribute('style', 'display:none');
         }
+        
+    }, []);
 
-        // console.log(this.state.data);
-    }
+    const settings = {
+        dots: true,
+        fade: true,
+        infinite: true,
+        speed: 500,
+        autoplay: true,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
 
-    render() {
-        const { isLoading, data } = this.state;
-        const settings = {
-            dots: true,
-            fade: true,
-            infinite: true,
-            speed: 500,
-            autoplay: true,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        };
-        return (
-            <div id="main_content">
+    return (
+        <div id="main_content">
                 <div className="slick_slider">
                     <div className="main_visual">
                         <Slider {...settings}>
@@ -150,17 +151,9 @@ class Home extends React.Component {
                         마이페이지 가기
                     </Link>
                 </div>
-                <div id="myleetingNo">
-                    <Link
-                        to={{
-                            pathname: `/meeting/exercise`
-                        }}
-                    >
-                        <img src="img/noMyLeeting.png" alt="참여 리팅 없음"></img>
-                    </Link>
-                </div>
                 <div id="myleetingList">
-                    {isLoading ? (
+                    <Posts posts={posts} loading={loading} noPosts={noPosts} />
+                    {/* {isLoading ? (
                         <div className="loading_view">
                             <div className="loader loader-7">
                                 <div className="line line1"></div>
@@ -190,7 +183,7 @@ class Home extends React.Component {
                                         />
                                 ))}
                             </div>
-                    )}
+                    )} */}
                 </div>
                 <div className="quicktit">
                     <h3>지금 가장 인기 있는 리팅 🥇</h3>
@@ -254,8 +247,7 @@ class Home extends React.Component {
 
                 </div>
             </div>
-    );
-    }
+    )
 }
   
   export default Home;
