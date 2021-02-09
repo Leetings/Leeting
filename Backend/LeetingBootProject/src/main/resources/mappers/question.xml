@@ -12,11 +12,15 @@
 	</update>
 	<!-- 문의사항 목록 -->
 	<select id="listQuestion" parameterType="String" resultType="question">
-		SELECT no, title, date, qwriter FROM questions WHERE qwriter = #{writer}
+		select @ROWNUM := @ROWNUM + 1 AS ROWNUM, q.* 
+		from questions q,(select @ROWNUM:=0) tmp
+		WHERE qwriter = #{writer} ORDER BY ROWNUM DESC
 	</select>
 	<!-- 문의사항 전체목록 -->
 	<select id="listAllQuestion" parameterType="String" resultType="question">
-		SELECT no, title, date, qwriter FROM questions
+		select @ROWNUM := @ROWNUM + 1 AS ROWNUM, q.* 
+		from questions q,(select @ROWNUM:=0) tmp
+		ORDER BY ROWNUM DESC
 	</select>
 	<!-- 문의사항 상세정보 -->
 	<select id="questioninfo" parameterType="int" resultType="question">
