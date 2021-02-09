@@ -16,4 +16,6 @@ public interface QuestionDao {
 	public void update(QuestionDto question, Map<String,Object> questionmap);
 
 	public void delete(int questionno);
+
+	public List<QuestionDto> listAllQuestion();
 }

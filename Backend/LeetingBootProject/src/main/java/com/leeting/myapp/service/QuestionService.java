@@ -16,4 +16,6 @@ public interface QuestionService {
 	boolean update(QuestionDto question, Map<String,Object> questionmap)  throws SQLException;
 
 	void delete(int questionno);
+
+	List<QuestionDto> listAllQuestion();
 }

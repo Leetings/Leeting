@@ -55,4 +55,11 @@ public class QuestionServiceImpl implements QuestionService{
 		
 	}
 
+
+	@Override
+	public List<QuestionDto> listAllQuestion() {
+		// TODO Auto-generated method stub
+		return questionDao.listAllQuestion();
+	}
+
 }

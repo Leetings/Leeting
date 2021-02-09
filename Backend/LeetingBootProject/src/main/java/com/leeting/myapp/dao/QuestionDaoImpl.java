@@ -45,4 +45,9 @@ public class QuestionDaoImpl implements QuestionDao{
 		sqlSession.delete("question.questiondelete",questionno);
 		
 	}
+	@Override
+	public List<QuestionDto> listAllQuestion() {
+		List<QuestionDto> objects = sqlSession.selectList("question.listAllQuestion");
+		return objects;
+	}
 }

@@ -77,6 +77,24 @@ public class QuestionController {
 			}
 			return new ResponseEntity<>(resultMap, status);
 	  }
+	 @ApiOperation(value = "문의사항 전체목록", notes = "문의사항 전체목록", response = List.class)
+	  @GetMapping("/listAllquestion")
+	  public ResponseEntity<Map<String, Object>> listAllquestion(HttpServletRequest req) throws SQLException {
+			System.out.println(req);
+			Map<String, Object> resultMap = new HashMap<>();
+			HttpStatus status = HttpStatus.ACCEPTED;
+		 	List<QuestionDto> list = questionService.listAllQuestion();
+		 	if(list.size()>0) {
+				for (QuestionDto questionDto : list)
+					System.out.println("questionDto.toString() = " + questionDto.toString());
+				resultMap.put("list", list);
+				resultMap.put("conclusion", "SUCCESS");
+			}else{
+		 		resultMap.put("list",null);
+		 		resultMap.put("conclusion", "FAIL");
+			}
+			return new ResponseEntity<>(resultMap, status);
+	  }
 	  //문의사항 상세정보
 	  @ApiOperation(value = "문의사항 상세정보", notes = "문의사항 상세정보", response = Map.class)
 	  @GetMapping("/{no}")
