@@ -35,7 +35,7 @@
 	</update>
 	<!-- 문의사항 삭제 -->
 	<delete id="nquestionldelete" parameterType="int">
-		DELETE FROM answer WHERE questionno=#{questionno} 
-		DELETE FROM questions WHERE no=#{questionno} 
+		DELETE FROM answer WHERE questionno=#{questionno};
+		DELETE FROM questions WHERE no=#{questionno};
 	</delete>
 </mapper>

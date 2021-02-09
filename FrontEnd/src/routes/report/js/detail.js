@@ -6,12 +6,6 @@ class Detail extends React.Component {
     constructor() {
         super();
         this.state = {
-            meetinglike:0,
-            likes: false,
-            checkJoin: false,
-            btnText: "미팅 참가하기",
-            joinMember: "",
-
             no:"",
             id:"",
             reportid:"",

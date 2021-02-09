@@ -157,10 +157,10 @@ class Header extends Component {
                                 <li className="lnb4">
                                         <Link
                                             to={{
-                                                pathname: `/notice`
+                                                pathname: `/sc/faq`
                                             }}
                                         >
-                                            JOIN LEETING
+                                            SERVICE CENTER
                                         </Link>
                                 </li>
                                 <li className="report">

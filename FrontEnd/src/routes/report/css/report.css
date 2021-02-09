@@ -90,8 +90,8 @@
     margin-bottom: 0px;
 }
 
-.report .notice_list_view .header .date {
-    width: 33% !important;
+.report .notice_list_view .header .reportdate {
+    width: 33%;
     margin-bottom: 0px;
 }
 
@@ -104,7 +104,7 @@
     width: 33%;
 }
 
-.report .notice_list_view .list-group .content .date {
+.report .notice_list_view .list-group .content .reportdate {
     width: 33%;
 }
 

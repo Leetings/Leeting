@@ -13,7 +13,7 @@
 	</select>
 	<!-- 답변 수정 -->
 	<update id="updateAnswer" parameterType="question">
-		UPDATE answer SET detail=#{detail},date=now() WHERE no=#{no};
+		UPDATE answer SET detail=#{detail},date=now() WHERE questionno=#{questionno};
 	</update>
 	<!-- 답변 삭제 -->
 	<delete id="deleteAnswer" parameterType="int">

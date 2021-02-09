@@ -31,7 +31,7 @@ public class QuestionDaoImpl implements QuestionDao{
 
 	@Override
 	public QuestionDto questioninfo(int questionno) {
-		return sqlSession.selectOne("question.noticeinfo",questionno);
+		return sqlSession.selectOne("question.questioninfo",questionno);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class QuestionDaoImpl implements QuestionDao{
 
 	@Override
 	public void delete(int questionno) {
-		sqlSession.delete("question.questiondelete",questionno);
+		sqlSession.delete("question.nquestionldelete",questionno);
 		
 	}
 	@Override

@@ -28,7 +28,7 @@ function List({ no, id, reportid, detail, date }) {
                     </Link>
                 </div>
             </div>
-            <div className="date">{dateformat}</div>
+            <div className="reportdate">{dateformat}</div>
             
         </div>
             

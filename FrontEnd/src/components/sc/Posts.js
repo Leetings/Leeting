@@ -2,16 +2,7 @@ import React from 'react'
 import List from "./list"
 
 export const Posts = ({ posts, loading, noPosts }) => {
-    // console.log(posts);
     
-    if (noPosts) {
-        return (
-            <div id="reportNoPosts">
-                <img src="../../img/cleanLeeting.png" alt="글이없어요"></img>
-            </div>
-        )
-    }
-
     if (loading) {
         return (
             <div className="loading_view">
@@ -24,12 +15,22 @@ export const Posts = ({ posts, loading, noPosts }) => {
             </div>
         )
     }
+    
+    if (noPosts) {
+        return (
+            <div id="noPosts">
+                <img src="../../img/noPosts.png" alt="글이없어요"></img>
+            </div>
+        )
+    }
     return (
         <div id="notice_list_view" className="notice_list_view">
             <div className="header">
-                <p className="id">신고자</p>
-                <p className="reportid">신고대상자</p>
-                <p className="reportdate">등록일</p>
+                <p className="no">No.</p>
+                <p className="hit">카테고리</p>
+                <p className="title">제목</p>
+                <p className="writer">작성자</p>
+                <p className="date">등록일</p>
             </div>
 
 
@@ -38,10 +39,10 @@ export const Posts = ({ posts, loading, noPosts }) => {
                     <List
                         key={post.no}
                         no={post.no}
-                        id={post.id}
-                        reportid={post.reportid}
-                        detail={post.detail}
+                        type={post.type}
+                        title={post.title}
                         date={post.date}
+                        qwriter={post.qwriter}
                     />
 
                     // <li key={post.id} className='list-group-item'>

@@ -71,7 +71,7 @@ public class AnswerController {
 		    return new ResponseEntity<>(resultMap, status);
 	  }
 	  @ApiOperation(value = "답변 수정", notes = "답변 수정", response = Map.class)
-	 @PutMapping("")
+	 @PutMapping("/modify/{no}")
 	  public ResponseEntity<String> updateAnswer(@RequestBody AnswerDto answer, HttpServletRequest req) throws SQLException, IOException {
 	    System.out.println(req);
 	    String conclusion = "SUCCESS";

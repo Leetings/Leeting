@@ -6,74 +6,76 @@ import { Editor } from '@toast-ui/react-editor';
 import moment from 'moment';
 import 'moment/locale/ko';
 
-import '../css/report.css'
-
-const Report = () => {
-    const [reportid, setReportId] = useState();
+const OtOWrite = () => {
+    const [title, setTitle] = useState();
     const [content, setContent] = useState();
     const editorRef = React.createRef();
     const sId = sessionStorage.getItem('id');
+    const [type, setType] = useState(1);
 
     useEffect(() => {
-        if (sId === "leetingadmin") {
-            console.log('test');
-            document.getElementById('adminLog').setAttribute("style", "display:inline-block");
-        }
-        else {
-            document.getElementById('adminLog').setAttribute("style", "display:none");
-        }
     })
 
-    const reportName = (e) => {
-        setReportId(e.target.value);
+    const otoTitle = (e) => {
+        setTitle(e.target.value);
     }
 
     const editorChange = (e) => {
         setContent(editorRef.current.getInstance().getHtml());
     }
 
-    const adminLog = (e) => {
-        window.location.assign('/report/list');
-    }
-
     const writeReport = (e) => { 
         e.preventDefault();
         const nowTime = moment();
         
-        axios.post("http://127.0.0.1:8080/myapp/report/writereport", {
-            id: sId,
-            reportid: reportid,
+        axios.post("http://127.0.0.1:8080/myapp/question/writequestion", {
+            qwriter: sId,
+            title: title,
             detail: content,
+            type:type,
             date: nowTime
         }).then(res => {
             if (res.data === "SUCCESS") {
                 console.log("성공");
-                alert("신고가 완료되었습니다.");
-                window.location.replace('/report');
+                alert("문의 완료되었습니다.");
+                window.location.replace('/sc/onetoone');
             }
             else {
                 console.log("실패");
-                alert("신고에 실패하셨습니다. 잠시후 다시 시도해주세요!");
+                alert("문의에 실패하셨습니다. 잠시후 다시 시도해주세요!");
                 // window.location.replace('/meeting/write');
             }
         })
     }
 
+    const typeChange = (e) => {
+        setType(e.target.value);
+    }
+
     return (
         <div id="main_content">
-            <div className="reportWrap">
-                <div id="reportImage">
-                    <button id="adminLog" onClick={adminLog}>신고목록 보기</button>
+            <div className="otoWrap">
+                <div className="otoTitle">
+                    <h1>1:1 문의하기</h1>
                 </div>
-                <div className = "reportInput">
+                <div className = "otoInput">
                     <table>
                         <thead>
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">신고자 아이디</th>
-                                <td colSpan="5">
-                                    <input type="text" onChange={reportName}></input>
+                                <th scope="row">제목</th>
+                                <td colSpan="2">
+                                    <input type="text" onChange={otoTitle}></input>
+                                </td>
+                                <th scope="row">문의 카테고리</th>
+                                <td colSpan="2">
+                                    <select id="type" value={type} onChange={typeChange}>
+                                        <option value="1" defaultValue>미  팅</option>
+                                        <option value="2">회  원</option>
+                                        <option value="3">페이지</option>
+                                        <option value="4">기  타</option>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -92,12 +94,12 @@ const Report = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="reportBtns">
-                    <button onClick={writeReport}>신고하기</button>
+                <div className="otoBtns">
+                    <button onClick={writeReport}>문의하기</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Report;
+export default OtOWrite;

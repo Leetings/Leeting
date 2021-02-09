@@ -21,11 +21,11 @@ const Study = () => {
     
     useEffect(() => {
         const fetchPosts = async () => {
-          setLoading(true);
+            setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/meeting/study');
             
-          setPosts(res.data);
-          setLoading(false);
+            setPosts(res.data);
+            setLoading(false);
         }
     
         if (sessionStorage.getItem("token") != null) {

@@ -128,7 +128,7 @@ public class QuestionController {
 	    if(question.getFile2()!=null)questionmap.put("file2", question.getFile2().getBytes());
 	    if(question.getFile3()!=null) questionmap.put("file3", question.getFile3().getBytes());
 	    if(questionService.update(question,questionmap)) {
-	    	conclusion = "SUCESS";
+	    	conclusion = "SUCCESS";
 	    }
 	    else {
 	    	conclusion = "FAIL";
@@ -138,7 +138,7 @@ public class QuestionController {
 	  
 	  //공지사항삭제
 	  @ApiOperation(value = "문의사항삭제", notes = "문의사항삭제", response = Map.class)
-	  @DeleteMapping("/{no}")
+	  @DeleteMapping("/delete/{no}")
 	  public ResponseEntity<Map<String, Object>> deletequestion(@PathVariable(value="no") int questionno, HttpServletRequest req) {
 	    System.out.println(req);
 	    Map<String, Object> resultMap = new HashMap<>();

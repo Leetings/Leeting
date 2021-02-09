@@ -15,7 +15,8 @@ const Notice = () => {
         const fetchPosts = async () => {
           setLoading(true);
           const res = await axios.get('http://127.0.0.1:8080/myapp/notice/listnotice');
-          setPosts(res.data);
+            console.log(res);
+            setPosts(res.data);
           setLoading(false);
         }
     
@@ -37,7 +38,6 @@ const Notice = () => {
       const indexOfFirstPost = indexOfLastPost - postsPerPage;
       const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
     
-      console.log(indexOfLastPost);
       //change page
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
