@@ -50,7 +50,7 @@ public class QuestionController {
 		    if(question.getFile2()!=null)questionmap.put("file2", question.getFile2().getBytes());
 		    if(question.getFile3()!=null) questionmap.put("file3", question.getFile3().getBytes());
 		    if(questionService.writeQuestion(question,questionmap)) {
-		    	conclusion = "SUCESS";
+		    	conclusion = "SUCCESS";
 		    }
 		    else {
 		    	conclusion = "FAIL";
