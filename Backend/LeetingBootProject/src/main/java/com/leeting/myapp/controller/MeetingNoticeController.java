@@ -44,6 +44,7 @@ public class MeetingNoticeController {
 		    HttpStatus status = HttpStatus.ACCEPTED;
 		    List<NoticeDto> list = new ArrayList<>();
 		    list = meetingService.meetingnoticelist(meetingno);
+		    System.out.println(list.get(0).toString());
 		    return new ResponseEntity<List<NoticeDto>>(list,status);
 	  }
 	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)

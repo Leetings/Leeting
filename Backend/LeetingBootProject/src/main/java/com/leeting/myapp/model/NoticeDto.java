@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class NoticeDto {
 
+	private int ROWNUM;
 	private int no;
 	private String title;
 	private String detail;
@@ -18,6 +19,12 @@ public class NoticeDto {
 	
 	
 	
+	public int getROWNUM() {
+		return ROWNUM;
+	}
+	public void setROWNUM(int rOWNUM) {
+		ROWNUM = rOWNUM;
+	}
 	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, MultipartFile file1,
 			MultipartFile file2, MultipartFile file3, int meetingno, boolean head) {
 		super();
@@ -124,9 +131,9 @@ public class NoticeDto {
 	
 	@Override
 	public String toString() {
-		return "NoticeDto [no=" + no + ", title=" + title + ", detail=" + detail + ", date=" + date + ", writer="
-				+ writer + ", hit=" + hit + ", file1=" + file1 + ", file2=" + file2 + ", file3=" + file3
-				+ ", meetingno=" + meetingno + ", head=" + head + "]";
+		return "NoticeDto [ROWNUM=" + ROWNUM + ", no=" + no + ", title=" + title + ", detail=" + detail + ", date="
+				+ date + ", writer=" + writer + ", hit=" + hit + ", file1=" + file1 + ", file2=" + file2 + ", file3="
+				+ file3 + ", meetingno=" + meetingno + ", head=" + head + "]";
 	}
 	public int getMeetingno() {
 		return meetingno;

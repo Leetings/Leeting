@@ -12,7 +12,9 @@
 	</update>
 	<!-- 공지사항 목록 -->
 	<select id="listNotice" resultType="notice">
-		SELECT * FROM notice WHERE meetingno=0 ORDER BY no DESC
+		select @ROWNUM := @ROWNUM + 1 AS ROWNUM, n.* 
+		from notice n,(select @ROWNUM:=0) tmp
+		WHERE meetingno=0 ORDER BY ROWNUM DESC
 	</select>
 	<!-- 공지사항 상세정보 -->
 	<select id="noticeinfo" parameterType="int" resultType="notice">
@@ -37,7 +39,9 @@
     FROM notice where no = 13;
 </select>
 	<select id="meetingnoticelist" parameterType="int" resultType="notice">
-		SELECT * FROM notice WHERE meetingno=#{meetingno} ORDER BY no DESC
+		select @ROWNUM := @ROWNUM + 1 AS ROWNUM, n.* 
+		from notice n,(select @ROWNUM:=0) tmp
+		WHERE meetingno=#{meetingno}  ORDER BY ROWNUM DESC
 	</select>
 	
 	<insert id="meetingnoticewrite" parameterType="notice">
