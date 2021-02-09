@@ -12,15 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.leeting.myapp.model.NoticeDto;
 import com.leeting.myapp.model.QuestionDto;
@@ -66,16 +58,16 @@ public class QuestionController {
 		    return new ResponseEntity<String>(conclusion, status);
 	 }
 	 @ApiOperation(value = "문의사항 목록", notes = "문의사항 목록", response = List.class)
-	  @GetMapping("/listnotice")
-	  public ResponseEntity<List<QuestionDto>> listquestion(HttpServletRequest req) throws SQLException {
+	  @GetMapping("/listquestion")
+	  public ResponseEntity<List<QuestionDto>> listquestion(@RequestParam("writer") String writer, HttpServletRequest req) throws SQLException {
 		   System.out.println(req);
 		    Map<String, Object> resultMap = new HashMap<>();
 		    HttpStatus status = HttpStatus.ACCEPTED;
-		    List<QuestionDto> list = new ArrayList<>();
-		    list = questionService.listQuestion();
+		    List<QuestionDto> list = questionService.listQuestion(writer);
 		    System.out.println("get to /questionlist done");
 		    System.out.println("문의사항 목록");
-		    System.out.println(list.get(0).toString());
+		 	for(QuestionDto questionDto : list)
+				System.out.println("questionDto.toString() = " + questionDto.toString());
 		    return new ResponseEntity<List<QuestionDto>>(list,status);
 	  }
 	  //문의사항 상세정보
