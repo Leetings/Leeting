@@ -55,7 +55,6 @@ const OtoDetail = (props) => {
                 if (sId === 'leetingadmin') {
                     document.getElementById('adminWrite').setAttribute('style', 'display:none');
                     document.getElementById('adminModify').setAttribute('style', 'display:inline-block');
-                    editorRef.current.getInstance().setHtml(answer);
                 } else {
                     document.getElementById('adminWrite').setAttribute('style', 'display:none');
                     document.getElementById('adminModify').setAttribute('style', 'display:none');
