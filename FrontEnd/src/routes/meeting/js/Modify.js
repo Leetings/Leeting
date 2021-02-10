@@ -68,6 +68,7 @@ class Modify extends React.Component {
             categoryno : location.state.categoryno,
             value : location.state.categoryno,
             file: location.state.file,
+            thumb : location.state.thumb
         })
 
         document.getElementById('category').value = location.state.categoryno;
@@ -236,7 +237,7 @@ class Modify extends React.Component {
             },
         }).then(res => {
             this.setState({
-                thumb: res.data
+                file: res.data
             })
             // console.log(this.state.thumb);
         }).catch(err => {
@@ -247,7 +248,7 @@ class Modify extends React.Component {
     writeClick = (e) => {
         e.preventDefault();
 
-        // console.log(document.getElementById("datepick").value);
+        console.log(this.state.file);
         this.setState({
             sDate:document.getElementById("startdatepick").value
         })
@@ -268,7 +269,7 @@ class Modify extends React.Component {
             date: document.getElementById("startdatepick").value,
             detail: this.state.detail,
             categoryno: this.state.categoryno,
-            file: this.state.thumb,
+            file: this.state.file,
             enddate : enddate,
         }).then(res => {
             if (res.data === "SUCCESS") {
@@ -414,49 +415,6 @@ class Modify extends React.Component {
                     <button id="delete" onClick={this.deleteClick}>삭제하기</button>
                 </div>
                 </div>
-                {/* <div className="writeInput category">
-                    <span>카테고리 </span>
-                    <select id="category" value={this.state.value} onChange={this.selectChange}>
-                        <option value="1" defaultValue>운  동</option>
-                        <option value="2">음  악</option>
-                        <option value="3">게  임</option>
-                        <option value="4">D.I.Y</option>
-                        <option value="5">Lan's Meeting</option>
-                        <option value="6">스터디</option>
-                    </select>
-                </div> 
-                <div className="writeInput">
-                    <span>제 목</span>
-                    <input id="mainTit" type="text" onChange={this.mainTitChange}></input>
-                </div>
-                <div className="writeInput">
-                    <span>부제목</span>
-                    <input id="subTit" type="text" onChange={this.subTitChange}></input>
-                </div>
-                <div className="writeInput">
-                    <span>썸네일</span>
-                    <input id="thumbfile" type="file" name="file" onChange={e => this.handleFileInput(e)}/>
-                    <button type="button" onClick={this.uploadImage}>업로드</button>
-                </div>
-                <div className="writeInput">
-                    <span>시작일</span>
-                    <App
-                        startDates={location.state.date}
-                    /> 
-                </div>
-                <div className="editor">
-                    <Editor
-                        id="editor"
-                    previewStyle="vertical"
-                    height="300px"
-                    initialEditType="wysiwyg"
-                    placeholder="글쓰기"
-                        ref={this.editorRef}
-                        onChange={this.editorChange}
-                        initialValue={location.state.detail}
-                    />
-                     <button onClick={this.handleClick}>저장</button> 
-                </div>*/}
                 </div>
                 </div>
         );
