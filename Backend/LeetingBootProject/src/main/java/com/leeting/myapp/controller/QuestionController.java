@@ -135,9 +135,8 @@ public class QuestionController {
 	  //공지사항삭제
 	  @ApiOperation(value = "문의사항삭제", notes = "문의사항삭제", response = Map.class)
 	  @DeleteMapping("/delete/{no}")
-	  public ResponseEntity<Map<String, Object>> deletequestion(@PathVariable(value="no") int questionno, HttpServletRequest req) {
+	  public ResponseEntity<String> deletequestion(@PathVariable(value="no") int questionno, HttpServletRequest req) {
 	    String conclusion = "SUCCESS";
-	    Map<String, Object> resultMap = new HashMap<>();
 	    HttpStatus status = HttpStatus.ACCEPTED;
 	    System.out.println("delete to /question done");
 	    System.out.println("문의사항삭제");
@@ -147,6 +146,6 @@ public class QuestionController {
 	    else {
 	    	conclusion = "FAIL";
 	    }
-	    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	    return new ResponseEntity<String>(conclusion, status);
 	  }
 }
