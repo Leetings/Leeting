@@ -5,6 +5,8 @@ import "../css/board.css"
 import Posts from "../../../components/board/Posts"
 import Pagination from '../../../components/common/Pagination'
 
+import { Link } from "react-router-dom";
+
 const Notice = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -19,7 +21,7 @@ const Notice = () => {
           setLoading(false);
         }
     
-        if (sessionStorage.getItem("nickname") === "관리자") {
+        if (sessionStorage.getItem("nickname") === "사무엘킴") {
             document.getElementById('writeBtn').setAttribute("style", "display:inline-block");
         }
         else {
@@ -59,7 +61,7 @@ const Notice = () => {
             />
 
         <div id="writeBtn" className="writeBtn">
-        <button>등록하기</button>
+        <button><Link to={{ pathname: `/board/write` }}>등록하기</Link></button>
         </div>
     </div>
     )
