@@ -10,6 +10,6 @@ public interface AnswerService {
 
 	boolean updateAnswer(AnswerDto answer);
 
-	void deleteAnswer(int answerno);
+	boolean deleteAnswer(int answerno);
 
 }

@@ -27,13 +27,13 @@ public class AnswerDaoImpl implements AnswerDao{
 	}
 
 	@Override
-	public void updateAnswer(AnswerDto answer) {
+	public void updateAnswer(AnswerDto answer) throws SQLException{
 		// TODO Auto-generated method stub
 		sqlSession.update("answer.updateAnswer",answer);
 	}
 
 	@Override
-	public void deleteAnswer(int answerno) {
+	public void deleteAnswer(int answerno)throws SQLException {
 		sqlSession.delete("answer.deleteAnswer",answerno);
 		
 	}

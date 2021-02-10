@@ -94,7 +94,13 @@ public class AnswerController {
 	    System.out.println(req);
 	    Map<String, Object> resultMap = new HashMap<>();
 	    HttpStatus status = HttpStatus.ACCEPTED;
-	    answerService.deleteAnswer(answerno);
+	    String conclusion = "";
+	    if(answerService.deleteAnswer(answerno)) {
+	    	conclusion = "SUCCESS";
+	    }
+	    else {
+	    	conclusion = "FAIL";
+	    }
 	    return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	  }
 }

@@ -35,14 +35,25 @@ public class AnswerServiceImpl implements AnswerService{
 
 	@Override
 	public boolean updateAnswer(AnswerDto answer) {
-		answerDao.updateAnswer(answer);
-		return true;
+		try {
+			answerDao.updateAnswer(answer);
+	            return true;
+	        } catch (SQLException throwables) {
+	            throwables.printStackTrace();
+	            return false;
+	        }
 	}
 
 	@Override
-	public void deleteAnswer(int answerno) {
-		answerDao.deleteAnswer(answerno);
-		
+	public boolean deleteAnswer(int answerno) {
+
+		 try {
+			 answerDao.deleteAnswer(answerno);
+	            return true;
+	        } catch (SQLException throwables) {
+	            throwables.printStackTrace();
+	            return false;
+	        }
 	}
 
 }

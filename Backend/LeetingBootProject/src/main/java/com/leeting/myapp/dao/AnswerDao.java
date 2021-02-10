@@ -10,8 +10,8 @@ public interface AnswerDao {
 
 	AnswerDto getAnswerInfo(int questionno);
 
-	void updateAnswer(AnswerDto answer);
+	void updateAnswer(AnswerDto answer) throws SQLException;
 
-	void deleteAnswer(int answerno);
+	void deleteAnswer(int answerno) throws SQLException;
 
 }
