@@ -4,12 +4,12 @@
 <mapper namespace="notice">
 	<!-- 공지사항 등록 -->
 	<insert id="writeNotice" parameterType="notice">
-		INSERT INTO notice ( title, detail, writer, hit)
-		VALUES ( #{title},  #{detail}, #{writer}, 0)
+		INSERT INTO notice ( title, detail, writer, file1,file2,file3,hit)
+		VALUES ( #{title},  #{detail}, #{writer}, #{file1},#{file2},#{file3},0)
 	</insert>
-	<update id="putImage" parameterType="map">
+<!-- 	<update id="putImage" parameterType="map">
 		UPDATE notice SET file1=#{file1},file2=#{file2},file3=#{file3} WHERE title=#{title}
-	</update>
+	</update> -->
 	<!-- 공지사항 목록 -->
 	<select id="listNotice" resultType="notice">
 		select @ROWNUM := @ROWNUM + 1 AS ROWNUM, n.* 
@@ -25,11 +25,11 @@
 	</update>
 	<!-- 공지사항 수정 -->
 	<update id="noticemodify" parameterType="notice">
-		UPDATE notice SET title=#{title},detail=#{detail},date=now() WHERE no=#{no};
+		UPDATE notice SET title=#{title},detail=#{detail},date=now() file1=#{file1},file2=#{file2},file3=#{file3} WHERE no=#{no};
 	</update>
-	<update id="noticefilemodify" parameterType="map">
+<!--  <update id="noticefilemodify" parameterType="map">
 		UPDATE notice SET file1=#{file1},file2=#{file2},file3=#{file3} WHERE no=#{no};
-	</update>
+	</update>-->	
 	<!-- 공지사항 삭제 -->
 	<delete id="noticeldelete" parameterType="int">
 		DELETE FROM notice WHERE no=#{noticeno} 

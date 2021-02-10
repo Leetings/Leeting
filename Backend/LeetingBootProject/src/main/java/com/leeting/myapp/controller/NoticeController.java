@@ -52,7 +52,7 @@ public class NoticeController {
 	}
 	
 	 @ApiOperation(value = "공지사항 등록", notes = "공지사항 등록", response = Map.class)
-	  @PostMapping(value = ("/writenotice"), headers = ("content-type=multipart/form-data"))
+	  @PostMapping(value = ("/writenotice"))
 	 public ResponseEntity<String> writeNotice(@RequestBody NoticeDto notice,HttpServletRequest req) throws IOException {
 		 String conclusion = "";
 		    HttpStatus status = HttpStatus.ACCEPTED;
@@ -67,9 +67,9 @@ public class NoticeController {
 //		     byte[] fileContent = Files.readAllBytes(file.toPath());
 //		    noticemap.put("file1", fileContent);
 		//    System.out.println(noticemap.get("file1"));
-		    if(notice.getFile1()!=null)noticemap.put("file1", notice.getFile1().getBytes());
-		    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
-		    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
+//		    if(notice.getFile1()!=null)noticemap.put("file1", notice.getFile1().getBytes());
+//		    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
+//		    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
 		    
 		    if(noticeService.writeNotice(notice,noticemap)) {
 		    	conclusion = "SUCCESS";
@@ -128,12 +128,12 @@ public class NoticeController {
 //	    notice.setDetail("test");
 //	    notice.setTitle("test");
 //	    notice.setWriter("test");
-	    if(notice.getFile1()!=null) noticemap.put("file1", notice.getFile1().getBytes());
-	    System.out.println(noticemap.get("file1"));
-	    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
-	    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
+//	    if(notice.getFile1()!=null) noticemap.put("file1", notice.getFile1().getBytes());
+//	    System.out.println(noticemap.get("file1"));
+//	    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
+//	    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
 	    if(noticeService.update(notice,noticemap)) {
-	    	conclusion = "SUCESS";
+	    	conclusion = "SUCCESS";
 	    }
 	    else {
 	    	conclusion = "FAIL";

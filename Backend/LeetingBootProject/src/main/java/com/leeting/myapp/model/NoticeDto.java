@@ -11,9 +11,9 @@ public class NoticeDto {
 	private String date;
 	private String writer;
 	private int hit;
-	private MultipartFile file1;
-	private MultipartFile file2;
-	private MultipartFile file3;
+	private String file1;
+	private String file2;
+	private String file3;
 	private int meetingno;
 	private boolean head;
 	
@@ -25,8 +25,8 @@ public class NoticeDto {
 	public void setROWNUM(int rOWNUM) {
 		ROWNUM = rOWNUM;
 	}
-	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, MultipartFile file1,
-			MultipartFile file2, MultipartFile file3, int meetingno, boolean head) {
+	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, String file1,
+			String file2, String file3, int meetingno, boolean head) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -43,8 +43,8 @@ public class NoticeDto {
 	public NoticeDto() {
 		super();
 	}
-	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, MultipartFile file1,
-			MultipartFile file2, MultipartFile file3) {
+	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, String file1,
+			String file2, String file3) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -60,8 +60,8 @@ public class NoticeDto {
 	
 	
 	
-	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, MultipartFile file1,
-			MultipartFile file2, MultipartFile file3, int meetingno) {
+	public NoticeDto(int no, String title, String detail, String date, String writer, int hit, String file1,
+			String file2, String file3, int meetingno) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -110,22 +110,22 @@ public class NoticeDto {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public MultipartFile getFile1() {
+	public String getFile1() {
 		return file1;
 	}
-	public void setFile1(MultipartFile file1) {
+	public void setFile1(String file1) {
 		this.file1 = file1;
 	}
-	public MultipartFile getFile2() {
+	public String getFile2() {
 		return file2;
 	}
-	public void setFile2(MultipartFile file2) {
+	public void setFile2(String file2) {
 		this.file2 = file2;
 	}
-	public MultipartFile getFile3() {
+	public String getFile3() {
 		return file3;
 	}
-	public void setFile3(MultipartFile file3) {
+	public void setFile3(String file3) {
 		this.file3 = file3;
 	}
 	
