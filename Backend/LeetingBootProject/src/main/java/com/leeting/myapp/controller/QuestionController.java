@@ -119,10 +119,6 @@ public class QuestionController {
 	    System.out.println("문의사항수정");
 	    System.out.println(question.toString());
 	    Map<String, Object> questionmap = new HashMap<String, Object>();
-//	    NoticeDto notice = new NoticeDto();
-//	    notice.setDetail("test");
-//	    notice.setTitle("test");
-//	    notice.setWriter("test");
 	    if(question.getFile1()!=null) questionmap.put("file1", question.getFile1().getBytes());
 	    System.out.println(questionmap.get("file1"));
 	    if(question.getFile2()!=null)questionmap.put("file2", question.getFile2().getBytes());
@@ -140,12 +136,17 @@ public class QuestionController {
 	  @ApiOperation(value = "문의사항삭제", notes = "문의사항삭제", response = Map.class)
 	  @DeleteMapping("/delete/{no}")
 	  public ResponseEntity<Map<String, Object>> deletequestion(@PathVariable(value="no") int questionno, HttpServletRequest req) {
-	    System.out.println(req);
+	    String conclusion = "SUCCESS";
 	    Map<String, Object> resultMap = new HashMap<>();
 	    HttpStatus status = HttpStatus.ACCEPTED;
 	    System.out.println("delete to /question done");
 	    System.out.println("문의사항삭제");
-	    questionService.delete(questionno);
+	    if(questionService.delete(questionno)) {
+	    	conclusion = "SUCCESS";
+	    }
+	    else {
+	    	conclusion = "FAIL";
+	    }
 	    return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	  }
 }

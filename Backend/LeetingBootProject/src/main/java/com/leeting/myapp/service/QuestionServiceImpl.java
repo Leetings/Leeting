@@ -50,9 +50,15 @@ public class QuestionServiceImpl implements QuestionService{
 		
 	}
 	@Override
-	public void delete(int questionno) {
-		questionDao.delete(questionno);
-		
+	public boolean delete(int questionno) {
+		  try {
+				System.out.println("확인");
+				questionDao.delete(questionno);
+	            return true;
+	        } catch (SQLException throwables) {
+	            throwables.printStackTrace();
+	            return false;
+	        }
 	}
 
 

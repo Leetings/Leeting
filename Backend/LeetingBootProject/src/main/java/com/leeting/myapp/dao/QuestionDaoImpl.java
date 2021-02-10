@@ -41,7 +41,7 @@ public class QuestionDaoImpl implements QuestionDao{
 	}
 
 	@Override
-	public void delete(int questionno) {
+	public void delete(int questionno) throws SQLException{
 		sqlSession.delete("question.nquestionldelete",questionno);
 		
 	}
