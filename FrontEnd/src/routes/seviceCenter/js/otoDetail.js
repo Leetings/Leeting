@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import propTypes from "prop-types";
 
+import { Link } from "react-router-dom";
 import { Editor } from '@toast-ui/react-editor';
 
 import moment from 'moment';
 import 'moment/locale/ko';
 
 const OtoDetail = (props) => {
-    const [no, setNo] = useState();
-    const [type, setType] = useState();
-    const [title, setTitle] = useState();
-    const [detail, setDetail] = useState();
-    const [qwriter, setQwriter] = useState();
-    const [date, setDate] = useState();
+    const [no, setNo] = useState(0);
+    const [type, setType] = useState(1);
+    const [title, setTitle] = useState("test");
+    const [detail, setDetail] = useState("test");
+    const [qwriter, setQwriter] = useState("Test");
+    const [date, setDate] = useState("t");
     const [answer, setAnswer] = useState();
     const [loading, setLoading] = useState(false);
     const [update, setUpdate] = useState();
     const [content, setContent] = useState();
-    const [editorRef, setEditorRef] = useState(React.createRef());
+    const editorRef = React.createRef();
     const { location } = props;
     const sId = sessionStorage.getItem('id');
 
@@ -37,8 +39,6 @@ const OtoDetail = (props) => {
         const showAnswer = async () => {
             const res = await axios.get('http://127.0.0.1:8080/myapp/answer/' + location.state.no);
             
-            console.log(res);
-
             setLoading(false);
             
             if (res.data.conclusion === "FAIL") {
@@ -55,7 +55,6 @@ const OtoDetail = (props) => {
                 if (sId === 'leetingadmin') {
                     document.getElementById('adminWrite').setAttribute('style', 'display:none');
                     document.getElementById('adminModify').setAttribute('style', 'display:inline-block');
-                    // console.log(answer);
                     editorRef.current.getInstance().setHtml(answer);
                 } else {
                     document.getElementById('adminWrite').setAttribute('style', 'display:none');
@@ -131,7 +130,6 @@ const OtoDetail = (props) => {
             detail: content,
             date:moment()
         }).then(res => {
-            console.log(res);
             if (res.data === "SUCCESS") {
                 alert('답글 수정에 성공하셨습니다!');
                 setUpdate(!update);
@@ -158,7 +156,6 @@ const OtoDetail = (props) => {
             questionno: no,
             no: no
         }).then(res => {
-            console.log(res);
             if (res.data === "SUCCESS") {
                 alert('문의사항 삭제에 성공하셨습니다!');
                 window.location.replace('/sc/onetoone');
@@ -211,7 +208,7 @@ const OtoDetail = (props) => {
                             <tr>
                                 <th scope="row">문의 내용</th>
                                     <td colSpan="5">
-                                    <div className="otoDetail" dangerouslySetInnerHTML={{ __html: detail} }></div>
+                                    <div className="otoDetail" id="otoDetail" dangerouslySetInnerHTML={{ __html: detail }}></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -223,7 +220,7 @@ const OtoDetail = (props) => {
                             <tr className="Answer">
                                 <th scope="row">답  글</th>
                                     <td colSpan="5">
-                                    <div className="otoDetail" dangerouslySetInnerHTML={{ __html: answer} }></div>
+                                    <div className="otoDetail" dangerouslySetInnerHTML={{ __html: answer }}></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -252,6 +249,14 @@ const OtoDetail = (props) => {
                         </tbody>
                     </table>
                     <div className="otoBtns">
+                        <GoModify
+                            no={no}
+                            type={type}
+                            title={title}
+                            detail={detail}
+                            qwriter={qwriter}
+                            date={date}
+                        />
                         <button className="Answer" id="adminWrite" onClick={adminWrite}>답글 달기</button>
                         <button className="Answer" id="adminWrited" onClick={adminWrited}>답글 등록</button>
                         <button className="Answer" id="writeCancle" onClick={writeCancle}>등록 취소</button>
@@ -265,5 +270,36 @@ const OtoDetail = (props) => {
         )
     }
 }
+
+function GoModify({ no, type, title, detail, qwriter, date }) {
+    return (
+        <div id="modifyBtn">
+            <Link
+                to={{
+                    pathname: `/sc/otomodify/${no}`,
+                    state: {
+                        no,
+                        type,
+                        title,
+                        detail,
+                        qwriter,
+                        date
+                    }
+                }}
+            >
+                <button className="Answer" id="userModify" >문의 수정</button>
+            </Link>
+        </div>
+    )
+}
+
+GoModify.propTypes = {
+    no : propTypes.number.isRequired,
+    type : propTypes.number.isRequired,
+    title : propTypes.string.isRequired,
+    detail : propTypes.string.isRequired,
+    qwriter : propTypes.string.isRequired,
+    date : propTypes.string.isRequired
+};    
 
 export default OtoDetail;

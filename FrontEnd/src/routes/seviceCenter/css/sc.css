@@ -209,20 +209,24 @@ input[id*="que"]:checked+div em {
     appearance: none;
 }
 
+#oneToOneNoPosts {
+    width: 1200px;
+    height: 300px;
+}
+
 .otoWrap {
     position: relative;
     width: 1200px;
     margin: 0 auto 70px;
 }
 
-.otoInput .otoTitle {
-    /* text-indent: -9999px; */
-    /* background: url(/static/media/reportDetail.9bfda12b.png); */
-    /* background-size: 1200px 300px;
-    width: 1200px; */
-    height: 150px;
+.otoWrap .otoTitle {
+    text-indent: -9999px;
+    background: url(../../../img/oneToone.png);
+    background-size: 1200px 300px;
+    width: 1200px;
+    height: 300px;
     margin: 0 auto;
-    padding-top: 50px;
 }
 
 .otoInput table tbody tr td div.otoDetail {
@@ -230,6 +234,11 @@ input[id*="que"]:checked+div em {
     overflow-y: scroll;
 }
 
+.otoDetailModify {
+    display: none;
+}
+
+.otoBtns #userModify,
 .otoBtns #adminWrite,
 .otoBtns #adminModify,
 .otoBtns #writeCancle,

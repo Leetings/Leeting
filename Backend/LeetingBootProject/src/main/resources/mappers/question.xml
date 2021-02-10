@@ -28,7 +28,7 @@
 	</select>
 	<!-- 문의사항 수정 -->
 	<update id="questionmodify" parameterType="question">
-		UPDATE questions SET title=#{title},detail=#{detail},date=now() WHERE no=#{no};
+		UPDATE questions SET title=#{title},type=#{type},detail=#{detail},date=now() WHERE no=#{no};
 	</update>
 	<update id="questionfilemodify" parameterType="map">
 		UPDATE questions SET file1=#{file1},file2=#{file2},file3=#{file3} WHERE no=#{no};
