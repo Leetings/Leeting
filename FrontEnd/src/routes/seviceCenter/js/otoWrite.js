@@ -14,6 +14,13 @@ const OtOWrite = () => {
     const [type, setType] = useState(1);
 
     useEffect(() => {
+        
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
     })
 
     const otoTitle = (e) => {
@@ -63,14 +70,31 @@ const OtOWrite = () => {
                         <thead>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr className="oto_PC">
                                 <th scope="row">제목</th>
                                 <td colSpan="2">
                                     <input type="text" onChange={otoTitle}></input>
                                 </td>
                                 <th scope="row">문의 카테고리</th>
                                 <td colSpan="2">
-                                    <select id="type" value={type} onChange={typeChange}>
+                                    <select id="pc_type" value={type} onChange={typeChange}>
+                                        <option value="1" defaultValue>미  팅</option>
+                                        <option value="2">회  원</option>
+                                        <option value="3">페이지</option>
+                                        <option value="4">기  타</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr className="oto_Mobile">
+                                <th scope="row">제목</th>
+                                <td colSpan="5">
+                                    <input type="text" onChange={otoTitle}></input>
+                                </td>
+                            </tr>
+                            <tr className="oto_Mobile">
+                                <th scope="row">문의 카테고리</th>
+                                <td colSpan="5">
+                                    <select id="mobile_type" value={type} onChange={typeChange}>
                                         <option value="1" defaultValue>미  팅</option>
                                         <option value="2">회  원</option>
                                         <option value="3">페이지</option>

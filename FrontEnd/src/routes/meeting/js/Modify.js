@@ -51,7 +51,14 @@ class Modify extends React.Component {
         if (location.state === undefined) {
             history.push("/");
         }
-        console.log(location.state.enddate);
+        // console.log(location.state.enddate);
+        
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
         if (location.state.enddate === undefined) {
             this.setState({
                 enddate: location.state.date
@@ -74,6 +81,8 @@ class Modify extends React.Component {
         document.getElementById('category').value = location.state.categoryno;
         document.getElementById('mainTit').value = location.state.maintitle;
         document.getElementById('subTit').value = subtit;
+        document.getElementById('m_mainTit').value = location.state.maintitle;
+        document.getElementById('m_subTit').value = subtit;
         // document.getElementById('startdatepick').value = location.state.date;
         // this.editorRef;
         //  = location.state.detail;
@@ -347,7 +356,7 @@ class Modify extends React.Component {
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr className="M_PC">
                                 <th scope="row">제목</th>
                                 <td colSpan="2">
                                     <input id="mainTit" type="text" onChange={this.mainTitChange}></input>
@@ -357,6 +366,18 @@ class Modify extends React.Component {
                                     <input id="subTit" type="text" onChange={this.subTitChange}></input>
                                 </td>
                             </tr>
+                            <tr className="M_Mobile">
+                                <th scope="row">제목</th>
+                                <td colSpan="5">
+                                    <input id="m_mainTit" type="text" onChange={this.mainTitChange}></input>
+                                </td>
+                            </tr> 
+                            <tr className="M_Mobile">
+                                <th scope="row">부제목</th>
+                                <td colSpan="5">
+                                    <input id="m_subTit" type="text" onChange={this.subTitChange}></input>
+                                </td>
+                            </tr>    
                             <tr>
                                 <th scope="row">썸네일</th>
                                 <td colSpan="5">
@@ -378,7 +399,7 @@ class Modify extends React.Component {
                                     <button id="Free" onClick={this.Free}>자유</button>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr className="M_PC">
                                 <th scope="row">시작일</th>
                                 <td colSpan="2">
                                     <StartDay
@@ -388,6 +409,23 @@ class Modify extends React.Component {
                                 <th scope="row">종료일</th>
                                 <td className="onModified" colSpan="2">
                                     <input id="enddate" className="displaynone" disabled></input>
+                                    <EndDay
+                                        startDates={location.state.enddate}
+                                    />
+                                </td>
+                            </tr>
+                            <tr className="M_Mobile">
+                                <th scope="row">시작일</th>
+                                <td colSpan="5">
+                                    <StartDay
+                                        startDates={location.state.date}
+                                    />
+                                </td>
+                            </tr>
+                            <tr className="M_Mobile">
+                                <th scope="row">종료일</th>
+                                <td className="onModified" colSpan="5">
+                                    <input id="m_enddate" className="displaynone" disabled></input>
                                     <EndDay
                                         startDates={location.state.enddate}
                                     />

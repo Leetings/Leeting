@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import propTypes  from "prop-types";
-import moment from 'moment';
-import 'moment/locale/ko';
+import propTypes from "prop-types";
  
 function List({ no, id, reportid, detail, date }) {
 
@@ -26,6 +24,9 @@ function List({ no, id, reportid, detail, date }) {
                     >
                         <span title="자세히 보기">{reportid+ " "}</span>
                     </Link>
+                    <div className="b-m-con">
+                        <span className="b-writer">{id}</span><span className="b-date">{dateformat}</span>
+                    </div>
                 </div>
             </div>
             <div className="reportdate">{dateformat}</div>

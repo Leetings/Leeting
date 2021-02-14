@@ -41,7 +41,7 @@ const List = () => {
         }
         
         fetchPosts();
-        
+        // eslint-disable-next-line
     }, []);
     
     // Get current posts

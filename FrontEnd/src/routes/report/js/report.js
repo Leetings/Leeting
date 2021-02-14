@@ -63,7 +63,7 @@ const Report = () => {
         <div id="main_content">
             <div className="reportWrap">
                 <div id="reportImage">
-                    <button id="adminLog" onClick={adminLog}>신고목록 보기</button>
+                    
                 </div>
                 <div className = "reportInput">
                     <table>
@@ -93,6 +93,7 @@ const Report = () => {
                     </table>
                 </div>
                 <div className="reportBtns">
+                    <button id="adminLog" onClick={adminLog}>신고목록 보기</button>
                     <button onClick={writeReport}>신고하기</button>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -23,6 +23,9 @@ import Detail from "./routes/meeting/js/Detail";
 
 import ListNotice from "./routes/board/js/notice";
 
+import Timeline from "./routes/timeline/js/timeline";
+import TimelineWrite from "./routes/timeline/js/write";
+
 import Report from "./routes/report/js/report"
 import ReportList from "./routes/report/js/list"
 import ReportDetail from "./routes/report/js/detail"
@@ -34,6 +37,7 @@ import OtoDetail from "./routes/seviceCenter/js/otoDetail";
 import OtoModify from "./routes/seviceCenter/js/otoModify"; 
 
 import NotFound from "./routes/NotFound";
+import NotFound404 from "./routes/NotFound";
 import "./App.css";
 import "./routes/css/default.css"
 import "./routes/css/responsive.css"
@@ -69,13 +73,17 @@ function App() {
           <Route path="/meeting/study" exact={true} component={StudyMeeting} />
           <Route path="/meeting/write" exact={true} component={WriteMeeting} />
           
-          <Route path="/notice" exact={true} component={ListNotice}/>
-
+          <Route path="/notice" exact={true} component={ListNotice} />
+          
+          <Route path="/timeline" exact={true} component={Timeline}/>
+          <Route path="/timeline/write" exact={true} component={TimelineWrite}/>
+          
           <Route path="/result/:keyword" exact={true} component={Result} />
           <Route path="/meeting/:id" exact={true} component={Detail} />
           <Route path="/meeting/modify/:id" exact={true} component={ModifyMeeting} />
           <Route path="/meeting/board/:id" exact={true} component={MeetingBoard}/>
           <Route path="/report/detail/:id" exact={true} component={ReportDetail}/>
+          <Route path="/404/" component={NotFound404}/>
 
           <Route component={NotFound}/>
         </Switch>

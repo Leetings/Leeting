@@ -55,6 +55,14 @@ class Detail extends React.Component {
             this.checkHost();
             // console.log(this.state.joinMember);
         }
+        
+
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
     }
 
     showDetail = async () => {
@@ -85,8 +93,8 @@ class Detail extends React.Component {
         if (location.state.hostid === sId) {
             document.getElementById('likebtn').disabled = true;
             document.getElementById('joinBtn').setAttribute("style", "display:none");
-            document.getElementById('boardMeeting').setAttribute("style","display:block");
-            document.getElementById('modifyBtn').setAttribute("style", "display:block");
+            document.getElementById('boardMeeting').setAttribute("style","display:inline-block");
+            document.getElementById('modifyBtn').setAttribute("style", "display:inline-block");
             document.getElementById('viewMember').setAttribute("style", "display:block");
         }
         
@@ -123,8 +131,6 @@ class Detail extends React.Component {
                     }
                 }
             }
-            // data = data.data;
-            // this.setState({ data, isLoading: false });    
         }
     }
 
@@ -176,7 +182,7 @@ class Detail extends React.Component {
 
             // console.log(this.state.checkJoin);
             if (this.state.checkJoin === true) {
-                document.getElementById('boardMeeting').setAttribute("style", "display:block");
+                document.getElementById('boardMeeting').setAttribute("style", "display:inline-block");
                 // document.getElementById('joinBtn').value="미팅 나가기";
                 // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
             } else{
@@ -193,6 +199,11 @@ class Detail extends React.Component {
         e.preventDefault();
         const { location } = this.props;
 
+        if (document.getElementById('likebtn').classList.contains('ilike') === true) {
+            document.getElementById('likebtn').classList.remove('ilike');
+        } else {
+            document.getElementById('likebtn').classList.add('ilike');
+        }
         let sId = sessionStorage.getItem('id');
 
         axios.put('http://127.0.0.1:8080/myapp/meeting/setlike', {
@@ -203,11 +214,6 @@ class Detail extends React.Component {
             this.setState({
                 likes: !(this.state.likes)
             })
-            if (document.getElementById('likebtn').classList.contains('ilike') === true) {
-                document.getElementById('likebtn').classList.remove('ilike');
-            } else {
-                document.getElementById('likebtn').classList.add('ilike');
-            }
         })
     }
 
@@ -229,16 +235,19 @@ class Detail extends React.Component {
                 console.log("미팅 참여");
                 this.setState({
                     btnText:"미팅 나가기",
+                    likestatus: false,
                     checkJoin:true
                 })
-                document.getElementById('boardMeeting').setAttribute("style","display:block");
+                document.getElementById('boardMeeting').setAttribute("style","display:inline-block");
                 // document.getElementById('joinBtn').setAttribute("style", "display:none");
                 // document.getElementById('joinOutBtn').setAttribute("style", "display:block");
                 document.getElementById('likebtn').disabled = false;
             } else {
                 console.log("미팅 나감");
+                document.getElementById('likebtn').classList.remove('ilike');
                 this.setState({
-                    btnText:"미팅 참가하기",
+                    btnText: "미팅 참가하기",
+                    likestatus:false,
                     checkJoin:false
                 })
                 document.getElementById('boardMeeting').setAttribute("style","display:none");
@@ -274,35 +283,15 @@ class Detail extends React.Component {
                             <p className="subtit">{location.state.subtitle}</p><br/>
                             <p className="ingDate">진행 기간 : {sday} ~ {location.state.enddate}</p>
                             <p className="member" id="viewMember">참여인원 : {this.state.joinMember}</p>
+                            <p id="jointab">로그인 하시면 미팅에 참여 및 리뷰가 가능합니다.</p>
                         </div>
                         <div className="like">
                             <button id="likebtn" className="likebtn" onClick={this.likeClick}></button>
                             {/* <p className="likecnt">1</p> */}
                             </div>
-                        <div className="joinMeeting" >
-                            <GoBoard
-                                id={location.state.id}
-                                hostid={location.state.hostid}
-                                />
-                            {/* <button id="boardMeeting" >미팅 게시판</button> */}
-                            <button id="joinBtn" onClick={ this.joinMeetingClick }>{this.state.btnText}</button>
-                            {/* <button id="joinOutBtn">미팅 나가기</button> */}
-                            <GoModify
-                                key={location.state.id}
-                                id={location.state.id}
-                                maintitle={location.state.maintitle}
-                                subtitle={location.state.subtitle}
-                                date={location.state.date}
-                                enddate={location.state.enddate}
-                                hostid={location.state.hostid}
-                                detail={location.state.detail}
-                                categoryno={location.state.categoryno}
-                                file={location.state.file}
-                            />
-                            <p id="jointab">로그인 하시면 미팅에 참여 및 리뷰가 가능합니다.</p>
-                        </div>
-                            <hr className="hosthr"/>
+                        
                         <div className="host">
+                            <hr className="hosthr"/>
                             <img className="hostProfile" onClick={this.profileClick} src="../img\noProfile.png" alt="프로필사진"></img>
                             <p className="hostNickname">{location.state.hostid} </p>
                         </div>
@@ -330,8 +319,32 @@ class Detail extends React.Component {
                     </form>
                 </div>
                 
+            </div>
+            
+            <div id="boardBtn">
+                <div className="joinMeeting" >
+                    <GoBoard
+                        id={location.state.id}
+                        hostid={location.state.hostid}
+                    />
+                    {/* <button id="boardMeeting" >미팅 게시판</button> */}
+                    <button id="joinBtn" onClick={ this.joinMeetingClick }>{this.state.btnText}</button>
+                    {/* <button id="joinOutBtn">미팅 나가기</button> */}
+                    <GoModify
+                        key={location.state.id}
+                        id={location.state.id}
+                        maintitle={location.state.maintitle}
+                        subtitle={location.state.subtitle}
+                        date={location.state.date}
+                        enddate={location.state.enddate}
+                        hostid={location.state.hostid}
+                        detail={location.state.detail}
+                        categoryno={location.state.categoryno}
+                        file={location.state.file}
+                    />
                 </div>
-                </div>
+            </div>   
+        </div>
             // 
         );            
     } else {
@@ -389,9 +402,10 @@ function GoBoard({ id, hostid }) {
                         hostid
                     }
                 }}
-            >미팅 게시판
-            </Link>
-        </div>
+            >
+                미팅 게시판
+            </Link>   
+        </div>  
     )
 }
     

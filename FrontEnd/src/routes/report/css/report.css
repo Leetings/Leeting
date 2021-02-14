@@ -77,6 +77,10 @@
     border: 1px solid;
 }
 
+.reportBtns button#adminLog {
+    right: 130px;
+}
+
 .board_list .titles #Admin {
     display: none;
 }

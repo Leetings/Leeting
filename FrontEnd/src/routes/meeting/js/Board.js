@@ -17,6 +17,7 @@ const Board = (props) => {
             const meetingno = location.state.id;
             setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/meetingnotice/'+meetingno);
+            console.log(res);
             
             setPosts(res.data);
             if (res.data.length === 0) {
@@ -27,6 +28,13 @@ const Board = (props) => {
                 setLoading(false);
         }
         
+
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
         if (sessionStorage.getItem("id") === location.state.hostid) {
             document.getElementById('writeBtn').setAttribute("style", "display:inline-block");
         }
@@ -35,7 +43,8 @@ const Board = (props) => {
         }
         
         fetchPosts();
-        
+        // console.log(noPosts);
+        // eslint-disable-next-line
     }, []);
     
     

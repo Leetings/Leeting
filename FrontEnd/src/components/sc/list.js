@@ -55,6 +55,9 @@ function List({ no, type, title, qwriter, date}) {
                         <div className="b-etc-box">
                             <sup className="b-new" id="b-new"><span>{newsign}</span></sup>
                         </div>
+                    <div className="b-m-con">
+                        <span className="b-writer">{qwriter}</span><span className="b-date">{dateformat}</span>
+                    </div>
                 </div>
             </div>
             <div className="writer">{qwriter}</div>

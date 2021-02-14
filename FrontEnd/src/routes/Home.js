@@ -10,11 +10,14 @@ import Posts from "../components/meeting/my"
 const Home = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [recoPosts, setRecoPosts] = useState([]);
+    const [recoLoading, setRecoLoading] = useState(false);
     const [noPosts, setVPost] = useState(false);
-    const sId = sessionStorage.getItem('id');
+    let sId = sessionStorage.getItem('id');
 
     useEffect(() => {
         const fetchPosts = async () => {
+            setLoading(true);
             let data = await axios.get('http://127.0.0.1:8080/myapp/member/usermeet', {
                 params: {
                     id : sId
@@ -22,25 +25,32 @@ const Home = () => {
             });
             data = data.data;
 
-            // document.getElementById('myleetingNo').setAttribute("style", "display:none");
-
-            console.log(data);
-            console.log(data.length);
             if (data.length === 0) {
                 setVPost(true);
                 setLoading(false);
-                // document.getElementById('myleetingList').setAttribute("style", "display:none");
-                // document.getElementById('myleetingNo').setAttribute("style", "display:block");
             } else {
                 setPosts(data);
                 setLoading(false);
-                // document.getElementById('myleetingList').setAttribute("style", "display:block");
-                // document.getElementById('myleetingNo').setAttribute("style", "display:none");
             }
-            console.log(loading+" : "+noPosts);
         }
 
-        let sId = sessionStorage.getItem('id');
+        const recoPosts = async () => {
+            setRecoLoading(true);
+            console.log(sId);
+            if (sId === null) {
+                // eslint-disable-next-line
+                sId = "";
+            }
+            let data = await axios.get('http://127.0.0.1:8080/myapp/recommend/reco', {
+                params: {
+                    id: sId
+                }
+            });
+            data = data.data;
+            console.log(data);
+            setRecoPosts(data);
+            setRecoLoading(false);
+        }
 
         if (sId !== null) {
             fetchPosts();
@@ -48,6 +58,7 @@ const Home = () => {
             document.getElementById('myleetingTit').setAttribute('style', 'display:none');
             document.getElementById('myleetingList').setAttribute('style', 'display:none');
         }
+        recoPosts();
         
     }, []);
 
@@ -153,40 +164,9 @@ const Home = () => {
                 </div>
                 <div id="myleetingList">
                     <Posts posts={posts} loading={loading} noPosts={noPosts} />
-                    {/* {isLoading ? (
-                        <div className="loading_view">
-                            <div className="loader loader-7">
-                                <div className="line line1"></div>
-                                <div className="line line2"></div>
-                                <div className="line line3"></div>
-                                <span className="loader_text">Loading...</span>
-                            </div>
-                        </div>
-                    ) : (
-                            <div className="list_view">
-                                {
-                                    data.map((leeting, idx) => (
-                                        <My
-                                            key={idx}
-                                            idx={idx}
-                                            id={leeting.meetingno}
-                                            maintitle={leeting.maintitle}
-                                            subtitle={leeting.subtitle}
-                                            date={leeting.date}
-                                            hostid={leeting.hostid}
-                                            detail={leeting.detail}
-                                            categoryno={leeting.categoryno}
-                                            file={leeting.file}
-                                            meetinglike={leeting.meetinglike}
-                                            enddate={leeting.enddate}
-                                            participants={leeting.participants}
-                                        />
-                                ))}
-                            </div>
-                    )} */}
                 </div>
                 <div className="quicktit">
-                    <h3>지금 가장 인기 있는 리팅 🥇</h3>
+                    <h3>추천하는 리팅 👍</h3>
                     <Link
                         className="all" 
                         to={{
@@ -197,54 +177,7 @@ const Home = () => {
                     </Link>
                 </div>
                 <div className="favoriteleet">
-                    
-                    <div className="favorite">
-                        <div className="favimg">
-                            <a href="/"><img src="img/favimg.png" alt="인기있는 리팅 이미지"></img></a>
-                        </div>
-                        <div className="favtit">
-                            <p className="subtit"><a href="/">#카테고리</a></p>
-                            <p className="maintit"><a href="/">테스트 제목1</a></p>
-                        </div>
-                    </div>
-                    <div className="favorite">
-                        <div className="favimg">
-                            <a href="/"><img src="img/favimg.png" alt="인기있는 리팅 이미지"></img></a>
-                        </div>
-                        <div className="favtit">
-                            <p className="subtit"><a href="/">#카테고리</a></p>
-                            <p className="maintit"><a href="/">테스트 제목1</a></p>
-                        </div>
-                    </div>
-                    <div className="favorite">
-                        <div className="favimg">
-                            <a href="/"><img src="img/favimg.png" alt="인기있는 리팅 이미지"></img></a>
-                        </div>
-                        <div className="favtit">
-                            <p className="subtit"><a href="/">#카테고리</a></p>
-                            <p className="maintit"><a href="/">테스트 제목1</a></p>
-                        </div>
-                    </div>
-                    <div className="favorite">
-                        <div className="favimg">
-                            <a href="/"><img src="img/favimg.png" alt="인기있는 리팅 이미지"></img></a>
-                        </div>
-                        <div className="favtit">
-                            <p className="subtit"><a href="/">#카테고리</a></p>
-                            <p className="maintit"><a href="/">테스트 제목1</a></p>
-                        </div>
-                    </div>
-                    <div className="favorite">
-                        <div className="favimg">
-                            <a href="/"><img src="img/favimg.png" alt="인기있는 리팅 이미지"></img></a>
-                        </div>
-                        <div className="favtit">
-                            <p className="subtit"><a href="/">#카테고리</a></p>
-                            <p className="maintit"><a href="/">테스트 제목1</a></p>
-                        </div>
-                    </div>
-
-
+                    <Posts posts={recoPosts} loading={recoLoading} noPosts={noPosts} />
                 </div>
             </div>
     )

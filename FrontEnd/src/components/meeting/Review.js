@@ -27,7 +27,7 @@ const Review = (props) => {
         review: "<p>test</p>↵",
         writer: "test"
     }];
-    const [editorRef, setEditorRef] = useState(React.createRef());
+    const editorRef = React.createRef();
     const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const Review = (props) => {
         }
         fetchPosts();
 
-        
+        // eslint-disable-next-line
     }, [props.checkJoin, reviewBool, noPosts]);
     
     

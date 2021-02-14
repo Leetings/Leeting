@@ -13,7 +13,7 @@ function List({ no,rownum, title, detail, date, writer, hit, file1, file2, file3
     if (t3 < 3) {
         newsign = "NEW";
     }
-    console.log(rownum);
+    // console.log(rownum);
 
     var sYear = date.substring(0,4);
     var sMonth = date.substring(5,7);
@@ -46,9 +46,12 @@ function List({ no,rownum, title, detail, date, writer, hit, file1, file2, file3
                     >
                         <span title="자세히 보기">{title+"  "}</span>
                     </Link>
-                        <div className="b-etc-box">
-                            <sup className="b-new" id="b-new"><span>{newsign}</span></sup>
-                        </div>
+                    <div className="b-etc-box">
+                        <sup className="b-new" id="b-new"><span>{newsign}</span></sup>
+                    </div>
+                    <div className="b-m-con">
+                        <span className="b-writer">{writer}</span><span className="b-date">{dateformat}</span>
+                    </div>
                 </div>
             </div>
             <div className="writer">{writer}</div>

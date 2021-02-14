@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class MeetingNoticeController {
 		    return new ResponseEntity<List<NoticeDto>>(list,status);
 	  }
 	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)
-	  @GetMapping(value = ("/{meetingno}"), headers = ("content-type=multipart/form-data"))
+	  @PostMapping(value = ("/{meetingno}"), headers = ("content-type=multipart/form-data"))
 	 public ResponseEntity<String> meetingnoticewrite(@PathVariable(value="meetingno") int meetingno,@RequestBody NoticeDto notice, HttpServletRequest req) throws IOException {
 		 String conclusion = "";
 		    HttpStatus status = HttpStatus.ACCEPTED;

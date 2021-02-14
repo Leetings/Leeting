@@ -140,6 +140,10 @@ input[id*="que"]:checked+div em {
     margin: 50px 0;
 }
 
+.otoInput {
+    margin: 0 auto;
+}
+
 .otoInput table {
     margin-top: 20px;
     width: 100%;
@@ -172,6 +176,10 @@ input[id*="que"]:checked+div em {
 
 .otoInput .tui-editor-contents {
     font-size: 16px;
+}
+
+.oto_Mobile {
+    display: none;
 }
 
 .otoBtns button {

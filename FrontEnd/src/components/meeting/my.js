@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const Posts = ({ posts, loading, noPosts }) => {
     if (loading) {
         return (
-            <div className="loading_view">
+            <div className="main_loading_view">
                 <div className="loader loader-7">
                     <div className="line line1"></div>
                     <div className="line line2"></div>
@@ -46,10 +46,6 @@ export const Posts = ({ posts, loading, noPosts }) => {
                         enddate={post.enddate}
                         participants={post.participants}
                     />
-
-                    // <li key={post.id} className='list-group-item'>
-                    //     {post.title}
-                    // </li>
                 ))}
             </ul>
         </div>

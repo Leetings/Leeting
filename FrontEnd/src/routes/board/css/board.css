@@ -77,10 +77,19 @@
     vertical-align: middle;
 }
 
+.title .b-title-box div.b-m-con {
+    display: none;
+}
+
+.reportid .b-title-box div.b-m-con {
+    display: none;
+}
+
 .pagination {
-    margin: 10px 0;
     text-align: center;
     display: block;
+    width: 100%;
+    margin: 10px auto;
 }
 
 .pagination li {

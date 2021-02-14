@@ -20,6 +20,7 @@ public class ContentsServiceImpl implements ContentsService {
     public boolean enrollContent(ContentsDto contentsDto) {
         try {
             System.out.println("등록");
+            System.out.println(contentsDto);
             contentsDao.enrollContents(contentsDto);
             return true;
         } catch (SQLException throwables) {
