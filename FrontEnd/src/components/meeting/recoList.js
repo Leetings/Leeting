@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import propTypes  from "prop-types";
  
-function RecoList({ idx, id, maintitle, subtitle, date, hostid, detail, categoryno, file, meetinglike, enddate, participants }) {
+function RecoList({ idx, id, maintitle, subtitle, date, hostid, categoryno, file, meetinglike, enddate, participants }) {
     var title = maintitle;
 
     if (title.length > 11) {
@@ -22,7 +22,6 @@ function RecoList({ idx, id, maintitle, subtitle, date, hostid, detail, category
                         subtitle,
                         date,
                         hostid,
-                        detail,
                         categoryno,
                         file,
                         meetinglike,
@@ -51,7 +50,6 @@ RecoList.propTypes  = {
     subtitle: propTypes.string.isRequired,
     date: propTypes.string.isRequired,
     hostid: propTypes.string.isRequired,
-    detail: propTypes.string.isRequired,
     categoryno: propTypes.number.isRequired,
     file: propTypes.string.isRequired,
     meetinglike: propTypes.number.isRequired,

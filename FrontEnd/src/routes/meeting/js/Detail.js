@@ -385,7 +385,6 @@ GoModify.propTypes = {
     subtitle: propTypes.string.isRequired,
     date: propTypes.string.isRequired,
     hostid: propTypes.string.isRequired,
-    detail: propTypes.string.isRequired,
     categoryno: propTypes.number.isRequired,
     file: propTypes.string,
     enddate: propTypes.string
