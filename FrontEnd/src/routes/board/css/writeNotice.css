@@ -475,7 +475,7 @@
     -moz-appearance: none;
     appearance: none;
     margin-top: 5px;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
 }
 
 .filebox .upload-hidden {
@@ -528,4 +528,16 @@
 
 .writeInputWrap .onModified .displaynone {
     display: none;
+}
+
+.nofile {
+    display: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.UserBtns {
+    margin-bottom: 20px;
 }

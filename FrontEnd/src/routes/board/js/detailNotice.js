@@ -2,7 +2,7 @@ import React from "react";
 import "../css/detailNotice.css"
 import axios from "axios";
 
-import { saveAs } from 'file-saver';
+import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 class DetailNotice extends React.Component {
@@ -23,7 +23,12 @@ class DetailNotice extends React.Component {
 
     componentDidMount() {
         const { location } = this.props;
-        
+        const sId = sessionStorage.getItem('id');
+        if (sId !== 'leetingadmin') {
+            document.getElementById('goModify').setAttribute('style', 'display:none');
+            document.getElementById('goDelete').setAttribute('style', 'display:none');
+        }
+
         axios.get(`http://127.0.0.1:8080/myapp/notice/${location.state.no}`, {
             meetingno: location.state.no
           }).then(res => {
@@ -48,7 +53,7 @@ class DetailNotice extends React.Component {
         var _fileExt = this.state.file1.substring(_lastDot, _fileLen).toLowerCase();
         
         var _lastSlash = this.state.file1.lastIndexOf('/');
-        var _fileName = this.state.file1.substring(_lastSlash+1, _lastDot - 1).toLowerCase();
+        var _fileName = this.state.file1.substring(_lastSlash+1, _lastDot).toLowerCase();
         
         var FileSaver = require('file-saver');
         FileSaver.saveAs(this.state.file1, _fileName+_fileExt);
@@ -60,7 +65,7 @@ class DetailNotice extends React.Component {
         var _fileExt = this.state.file2.substring(_lastDot, _fileLen).toLowerCase();
         
         var _lastSlash = this.state.file2.lastIndexOf('/');
-        var _fileName = this.state.file2.substring(_lastSlash+1, _lastDot - 1).toLowerCase();
+        var _fileName = this.state.file2.substring(_lastSlash+1, _lastDot).toLowerCase();
         
         var FileSaver = require('file-saver');
         FileSaver.saveAs(this.state.file1, _fileName+_fileExt);
@@ -72,7 +77,7 @@ class DetailNotice extends React.Component {
         var _fileExt = this.state.file3.substring(_lastDot, _fileLen).toLowerCase();
         
         var _lastSlash = this.state.file3.lastIndexOf('/');
-        var _fileName = this.state.file3.substring(_lastSlash+1, _lastDot - 1).toLowerCase();
+        var _fileName = this.state.file3.substring(_lastSlash+1, _lastDot).toLowerCase();
         
         var FileSaver = require('file-saver');
         FileSaver.saveAs(this.state.file3, _fileName+_fileExt);
@@ -82,7 +87,9 @@ class DetailNotice extends React.Component {
         axios.delete(`http://127.0.0.1:8080/myapp/notice/${this.state.no}`, {
             noticeno: this.state.no
           }).then(res => {
-              console.log(res)
+            //   console.log(res)
+              alert('삭제 완료되었습니다!');
+              window.location.replace('/notice');
           }).catch(err => {
               console.log(err)
           })
@@ -105,7 +112,7 @@ class DetailNotice extends React.Component {
         var _lastDot1 = this.state.file1.lastIndexOf('.');
         var _fileExt1 = this.state.file1.substring(_lastDot1, _fileLen1).toLowerCase();
         var _lastSlash1 = this.state.file1.lastIndexOf('/');
-        var _fileName1 = this.state.file1.substring(_lastSlash1+1, _lastDot1 - 1).toLowerCase();
+        var _fileName1 = this.state.file1.substring(_lastSlash1+1, _lastDot1).toLowerCase();
     }
     
     if (this.state.file2 !== null) {
@@ -113,14 +120,14 @@ class DetailNotice extends React.Component {
         var _lastDot2 = this.state.file2.lastIndexOf('.');
         var _fileExt2 = this.state.file2.substring(_lastDot2, _fileLen2).toLowerCase();
         var _lastSlash2 = this.state.file2.lastIndexOf('/');
-        var _fileName2 = this.state.file2.substring(_lastSlash2 + 1, _lastDot2 - 1).toLowerCase();
+        var _fileName2 = this.state.file2.substring(_lastSlash2 + 1, _lastDot2).toLowerCase();
     }
     if (this.state.file3 !== null) {
         var _fileLen3 = this.state.file3.length;
         var _lastDot3 = this.state.file3.lastIndexOf('.');
         var _fileExt3 = this.state.file3.substring(_lastDot3, _fileLen3).toLowerCase();
         var _lastSlash3 = this.state.file3.lastIndexOf('/');
-        var _fileName3 = this.state.file3.substring(_lastSlash3 + 1, _lastDot3 - 1).toLowerCase();
+        var _fileName3 = this.state.file3.substring(_lastSlash3 + 1, _lastDot3).toLowerCase();
     }
     if (location.state) {
         return (
@@ -144,25 +151,35 @@ class DetailNotice extends React.Component {
                     <div className="enclosed_files">
                         <p className="font-weight-bold">첨부파일</p>
                         {this.state.file1 ? (
-                            <p onClick={this.callFileDownload}>첨부파일 1 ({_fileName1}{_fileExt1})</p>
+                            <p className="pointer" onClick={this.callFileDownload}>첨부파일 1 ({_fileName1}{_fileExt1})</p>
                         ) : (
                             <p>첨부파일이 존재하지 않습니다.</p>
                         )}
                         <br />
                         {this.state.file2 ? (
-                            <p onClick={this.callFileDownload2}>첨부파일2 ({_fileName2}{_fileExt2})</p>
+                            <p className="pointer" onClick={this.callFileDownload2}>첨부파일2 ({_fileName2}{_fileExt2})</p>
                         ) : ( null )}
                         <br />
                         {this.state.file3 ? (
-                            <p onClick={this.callFileDownload3}>첨부파일3 ({_fileName3}{_fileExt3})</p>
+                            <p className="pointer" onClick={this.callFileDownload3}>첨부파일3 ({_fileName3}{_fileExt3})</p>
                         ) : ( null )}
                         
                     </div>
                     <hr />
-                    <div className="text-right">
-                        <button className="notice_button">
-                            <Link to={{ pathname: `/board/write` }}>수정하기</Link></button>
-                        <button className="notice_button" onClick={this.noticedelete}>삭제하기</button>
+                    <div className="text-right UserBtns">
+                        <button id="goModify" className="notice_button">
+                            <GoModify
+                                no={this.state.no}
+                                title= {this.state.title}
+                                writer= {this.state.writer}
+                                file1= {this.state.file1}
+                                file2= {this.state.file2}
+                                file3= {this.state.file3}
+                                detail= {this.state.detail}
+                                date = {this.state.date}
+                            />
+                        </button>
+                        <button id="goDelete" className="notice_button" onClick={this.noticedelete}>삭제하기</button>
                         <button className="notice_button">
                             <Link to={{ pathname: `/notice` }}>목록</Link>
                         </button>
@@ -176,41 +193,39 @@ class DetailNotice extends React.Component {
   }
 }
 
-// function GoModify({ id, maintitle, subtitle, date, hostid, detail, categoryno, enddate, file }) {
-//     return (
-//         <div id="modifyBtn">
-//             <Link
-//                 to={{
-//                     pathname: `/meeting/modify/${id}`,
-//                     state: {
-//                         id,
-//                         maintitle,
-//                         subtitle,
-//                         date,
-//                         hostid,
-//                         detail,
-//                         categoryno,
-//                         file,
-//                         enddate
-//                     }
-//                 }}
-//             >미팅 관리하기
-//                 {/* <button id="modifyBtn" ></button> */}
-//             </Link>
-//         </div>
-//     )
-// }
+function GoModify({ no, title, detail, date, writer, file1, file2, file3 }) {
+    return (
+        <div id="modifyBtn">
+            <Link
+                to={{
+                    pathname: `/board/modify/${no}`,
+                    state: {
+                        no,
+                        title,
+                        detail,
+                        date,
+                        writer,
+                        file1,
+                        file2,
+                        file3
+                    }
+                }}
+            > 수정하기
+                {/* <button id="modifyBtn" ></button> */}
+            </Link>
+        </div>
+    )
+}
 
-// GoModify.propTypes = {
-//     id: propTypes.number.isRequired,
-//     maintitle: propTypes.string.isRequired,
-//     subtitle: propTypes.string.isRequired,
-//     date: propTypes.string.isRequired,
-//     hostid: propTypes.string.isRequired,
-//     detail: propTypes.string.isRequired,
-//     categoryno: propTypes.number.isRequired,
-//     file: propTypes.string.isRequired,
-//     enddate: propTypes.string
-// };
+GoModify.propTypes = {
+    no: propTypes.number.isRequired,
+    title: propTypes.string.isRequired,
+    detail: propTypes.string.isRequired,
+    date: propTypes.string.isRequired,
+    writer: propTypes.string.isRequired,
+    file1: propTypes.string,
+    file2: propTypes.string,
+    file: propTypes.string,
+};
     
 export default DetailNotice;

@@ -25,13 +25,13 @@
 	</update>
 	<!-- 공지사항 수정 -->
 	<update id="noticemodify" parameterType="notice">
-		UPDATE notice SET title=#{title},detail=#{detail},date=now() file1=#{file1},file2=#{file2},file3=#{file3} WHERE no=#{no};
+		UPDATE notice SET title=#{title},detail=#{detail},date=now(), file1=#{file1},file2=#{file2},file3=#{file3} WHERE no=#{no};
 	</update>
 <!--  <update id="noticefilemodify" parameterType="map">
 		UPDATE notice SET file1=#{file1},file2=#{file2},file3=#{file3} WHERE no=#{no};
 	</update>-->	
 	<!-- 공지사항 삭제 -->
-	<delete id="noticeldelete" parameterType="int">
+	<delete id="noticedelete" parameterType="int">
 		DELETE FROM notice WHERE no=#{noticeno} 
 	</delete>
 	<select id="getByteImage" resultType="java.util.Map">

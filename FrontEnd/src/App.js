@@ -24,6 +24,7 @@ import Detail from "./routes/meeting/js/Detail";
 import ListNotice from "./routes/board/js/notice";
 import DetailNotice from "./routes/board/js/detailNotice";
 import WriteNotice from "./routes/board/js/writeNotice";
+import ModifyNotice from "./routes/board/js/modifyNotice";
 
 import Timeline from "./routes/timeline/js/timeline";
 import TimelineWrite from "./routes/timeline/js/write";
@@ -78,6 +79,7 @@ function App() {
           <Route path="/notice" exact={true} component={ListNotice}/>
           <Route path="/notice/write" exact={true} component={WriteNotice}/>
           <Route path="/board/:id" exact={true} component={DetailNotice}/>
+          <Route path="/board/modify/:no" exact={true} component={ModifyNotice}/>
           
           <Route path="/timeline" exact={true} component={Timeline}/>
           <Route path="/timeline/write" exact={true} component={TimelineWrite}/>
