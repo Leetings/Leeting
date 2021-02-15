@@ -5,12 +5,14 @@ import "../css/board.css"
 import Posts from "../../../components/board/Posts"
 import Pagination from '../../../components/common/Pagination'
 
+import { Link } from "react-router-dom";
+
 const Notice = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    
+
     useEffect(() => {
         const fetchPosts = async () => {
           setLoading(true);
@@ -46,7 +48,7 @@ const Notice = () => {
         
     return (
         
-      <div id="main_content">
+    <div id="main_content">
     <div className="board_list">
         <div className="titles">
             <h1 className="tit">공 지 사 항</h1>
@@ -61,12 +63,19 @@ const Notice = () => {
                 currentPage={currentPage}
                 loading={loading} 
             />
-
-        <div id="writeBtn" className="writeBtn">
-        <button>등록하기</button>
+            <div id="writeBtn" className="writeBtn">
+                <Link
+                    to={{
+                        pathname: `/notice/write`,
+                        state: {
+                        }
+                    }}
+                >
+                    <button >등록하기</button>
+                </Link>
+            </div>
         </div>
-            </div>
-            </div>
+        </div>
     )
 }
 

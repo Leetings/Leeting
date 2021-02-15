@@ -22,6 +22,8 @@ import MeetingBoard from "./routes/meeting/js/Board";
 import Detail from "./routes/meeting/js/Detail";
 
 import ListNotice from "./routes/board/js/notice";
+import DetailNotice from "./routes/board/js/detailNotice";
+import WriteNotice from "./routes/board/js/writeNotice";
 
 import Report from "./routes/report/js/report"
 import ReportList from "./routes/report/js/list"
@@ -70,6 +72,8 @@ function App() {
           <Route path="/meeting/write" exact={true} component={WriteMeeting} />
           
           <Route path="/notice" exact={true} component={ListNotice}/>
+          <Route path="/notice/write" exact={true} component={WriteNotice}/>
+          <Route path="/board/:id" exact={true} component={DetailNotice}/>
 
           <Route path="/result/:keyword" exact={true} component={Result} />
           <Route path="/meeting/:id" exact={true} component={Detail} />

@@ -219,7 +219,7 @@ class write extends React.Component {
             this.setState({
                 thumb: res.data
             })
-            // console.log(this.state.thumb);
+            console.log(this.state.thumb);
         }).catch(err => {
             // console.log(err);
         })
