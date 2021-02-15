@@ -6,6 +6,8 @@ import axios from "axios";
 
 function List({ id, writer, date, detail, file }) {
 
+    var codes = detail;
+
     const etcid = id + 'etc';
     const ellipsisid = id + 'ellip';
     const bottom_wrapid = 'bottom_wrap' + id;
@@ -99,7 +101,7 @@ function List({ id, writer, date, detail, file }) {
             </div>
             <img className="timelineThumb" src={file} alt={id}></img>
             <div className="detailView">
-                <p id={ellipsisid}className="detailhide">{detail}</p>
+                <p id={ellipsisid} className="detailhide" dangerouslySetInnerHTML={{ __html: codes }}></p>
                 <button id={etcid} className="etc" onClick={ellip}>더보기</button>
             </div>
             <button id={likeId} onClick={timeline_like} className="likeBtn"></button>

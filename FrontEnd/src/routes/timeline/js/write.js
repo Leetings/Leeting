@@ -64,7 +64,7 @@ class write extends React.Component {
         var formData = new FormData();
         formData.append('data', file);
         formData.append('hostid', sessionStorage.getItem('id'));
-        formData.append('dirNum', 3);
+        formData.append('dirNum', 0);
         axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
             headers: {
                 'content-type': 'multipart/form-data',
@@ -81,7 +81,7 @@ class write extends React.Component {
 
     writeClick = (e) => {
         e.preventDefault();
-        let sId = sessionStorage.getItem('nickname');
+        let sId = sessionStorage.getItem('id');
 
         let date = moment().format('YYYY-MM-DD HH:mm:ss');
         axios.post("http://127.0.0.1:8080/myapp/contents/", {

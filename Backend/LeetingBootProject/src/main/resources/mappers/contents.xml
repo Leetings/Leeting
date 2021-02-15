@@ -9,6 +9,7 @@
     <select id="list" resultType="contents">
         SELECT no as contentsno, writer, date, detail, file, category as categoryno
         FROM contents
+         ORDER BY no DESC
     </select>
     <select id="no" resultType="contents">
         SELECT no as contentsno, writer, date, detail, file, category as categoryno

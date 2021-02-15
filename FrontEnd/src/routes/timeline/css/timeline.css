@@ -23,6 +23,8 @@
     transition: opacity 200ms ease-in-out 0s;
     min-width: 0px;
     min-height: 1px;
+    max-width: 768px;
+    margin: 0 auto;
 }
 
 .timeline_list_view ul {
