@@ -6,16 +6,13 @@
        INSERT INTO contents (writer, date, detail, file, category)
        VALUES (#{writer}, #{date}, #{detail}, #{file}, #{categoryno});
     </insert>
-    <select id="list" resultType="contents">
-        SELECT no as contentsno, writer, date, detail, file, category as categoryno
-        FROM contents
-         ORDER BY no DESC
-    </select>
-    <select id="no" resultType="contents">
-        SELECT no as contentsno, writer, date, detail, file, category as categoryno
-        FROM contents
-        WHERE writer like CONCAT('%', #{keyword}, '%') or
-		detail like CONCAT('%', #{keyword}, '%')
+    <select id="list" parameterType="String" resultType="map">
+        SELECT no, writer, date, detail, file, category, contentslike,
+            CASE
+                WHEN c.no in (select contentsno FROM contents_info WHERE userid = #{id}) then true
+                ELSE false END
+            AS likestatus
+        FROM contents as c;
     </select>
     <delete id="delete" parameterType="int">
         DELETE FROM contents_info WHERE contentsno = #{contentsno};

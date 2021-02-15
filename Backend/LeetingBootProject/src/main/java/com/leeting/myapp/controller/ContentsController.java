@@ -7,11 +7,13 @@ import com.leeting.myapp.service.ContentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -71,28 +73,23 @@ public class ContentsController {
         return new ResponseEntity<>(conclusion, status);
     }
 
-    @ApiOperation(value="컨텐츠 조회", notes="컨텐츠 키워드 조회", response = Map.class)
-    @GetMapping("/{keyword}") // 특정 컨텐츠 조회에 필요한 파라미터 추가 필요!
-    public ResponseEntity<List<ContentsDto>> listcontents(@PathVariable(value = "keyword") String keyword, HttpServletRequest req) {
-        HttpStatus httpStatus = HttpStatus.ACCEPTED;
-        System.out.println("get / : 컨텐츠 키워드 조회");
-        List<ContentsDto> contentsDtos = contentsService.listContents(keyword);
-        for(ContentsDto contentsDto : contentsDtos) {
-            System.out.println("contentsDto = " + contentsDto);
-        }
-        return new ResponseEntity<>(contentsDtos, httpStatus);
-    }
-
     @ApiOperation(value="컨텐츠 조회", notes="컨텐츠 전체 조회", response = Map.class)
     @GetMapping("/")
-    public ResponseEntity<List<ContentsDto>> listcontents(HttpServletRequest req) {
+    public ResponseEntity<Map<String, Object>> listcontents(@RequestParam("userid") String id, HttpServletRequest req) {
         HttpStatus httpStatus = HttpStatus.ACCEPTED;
         System.out.println("get / : 컨텐츠 조회");
-        List<ContentsDto> contentsDtos = contentsService.listContents();
-        for(ContentsDto contentsDto : contentsDtos) {
-            System.out.println("contentsDto = " + contentsDto);
+        List<HashMap<String, Object>>  hashMapList = contentsService.listContents(id);
+        for(HashMap<String, Object> hashMap : hashMapList) {
+            for (String key : hashMap.keySet()) {
+                Object value = hashMap.get(key);
+                System.out.println("key/value = " + key + "/" + value);
+                break;
+            }
         }
-        return new ResponseEntity<>(contentsDtos, httpStatus);
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("size", hashMapList.size());
+        resultMap.put("contentsList", hashMapList);
+        return new ResponseEntity<Map<String, Object>>(resultMap, httpStatus);
     }
 
     @ApiOperation(value="컨텐츠 삭제", notes="컨텐츠 삭제", response = Map.class)

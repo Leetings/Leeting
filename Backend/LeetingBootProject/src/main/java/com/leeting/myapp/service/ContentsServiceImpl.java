@@ -6,6 +6,7 @@ import com.leeting.myapp.model.ContentsInfoDto;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,27 +32,15 @@ public class ContentsServiceImpl implements ContentsService {
     }
 
     @Override
-    public List<ContentsDto> listContents(String keyword) {
-        List<ContentsDto> contentsDtos = null;
+    public List<HashMap<String, Object>> listContents(String id) {
+        List<HashMap<String, Object>> hashMap = null;
         try {
             System.out.println("조회");
-            contentsDtos = contentsDao.listContents(keyword);
+            hashMap = contentsDao.listContents(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return contentsDtos;
-    }
-
-    @Override
-    public List<ContentsDto> listContents() {
-        List<ContentsDto> contentsDtos = null;
-        try {
-            System.out.println("조회");
-            contentsDtos = contentsDao.listContents();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return contentsDtos;
+        return hashMap;
     }
 
     @Override

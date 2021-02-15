@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +23,8 @@ public class ContentsDaoImpl implements ContentsDao {
     }
 
     @Override
-    public List<ContentsDto> listContents(String keyword) throws SQLException {
-        return sqlSession.selectList("contents.listbykeyword", keyword);
-    }
-
-    @Override
-    public List<ContentsDto> listContents() throws SQLException {
-        return sqlSession.selectList("contents.list");
+    public List<HashMap<String, Object>> listContents(String id) throws SQLException {
+        return sqlSession.selectList("contents.list", id);
     }
 
     @Override
