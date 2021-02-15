@@ -57,6 +57,7 @@ const Timeline = () => {
                 </div>
                 <Posts posts={currentPosts} loading={loading} />
 
+            </div>
                 <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={posts.length}
@@ -64,7 +65,7 @@ const Timeline = () => {
                     currentPage={currentPage}
                     loading={loading}
                 />
-                <div id="writeBtn" className="writeBtn">
+                <div id="timelineWriteBtn" className="writeBtn">
                     <Link
                         to={{
                             pathname: `/timeline/write`
@@ -73,7 +74,6 @@ const Timeline = () => {
                         <button >등록하기</button>
                     </Link>
                 </div>
-            </div>
         </div>
     )
 }

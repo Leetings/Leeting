@@ -158,6 +158,10 @@
     #pos5:checked~ul {
         margin-left: -400%;
     }
+
+    .timeline {
+        max-width: 770px;
+    }
 }
 
 @media only screen and (max-width:1130px) {
@@ -452,6 +456,22 @@
         font-size: 13px;
     }
 
+    .timeline {
+        max-width: 630px;
+    }
+
+    .timelineListView {
+        max-width: 590px;
+        margin: 0 auto;
+        border-left: none;
+        border-right: none;
+    }
+
+    .timelineListView img.timelineThumb {
+        width: 590px;
+        height: 590px;
+    }
+
 }
 
 
@@ -714,6 +734,10 @@
     .M_Mobile {
         display: table-row;
     }
+
+    div[id *="bottom_wrap"] #Btns {
+        width: 500px;
+    }
 }
 
 
@@ -797,6 +821,31 @@
         font-size: 16px;
         line-height: 30px;
         background-size: cover;
+    }
+
+    .timeline {
+        max-width: 100%;
+    }
+
+    .timelineListView {
+        max-width: 100%;
+        margin: 0 auto;
+        border-left: none;
+        border-right: none;
+    }
+
+    .timelineListView img.timelineThumb {
+        width: 100%;
+        height: auto;
+    }
+
+    #timelineWriteBtn {
+        right: 10px;
+        z-index: 999;
+    }
+
+    div[id *="bottom_wrap"] #Btns {
+        width: 350px;
     }
 
 }

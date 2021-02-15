@@ -30,7 +30,6 @@ export const Posts = ({ posts, loading }) => {
                         subtitle={post.subtitle}
                         date={post.date}
                         hostid={post.hostid}
-                        detail={post.detail}
                         categoryno={post.categoryno}
                         file={post.file}
                         meetinglike={post.meetinglike}

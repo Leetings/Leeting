@@ -53,7 +53,7 @@ public class MeetingNoticeController {
 		    	resultMap.put("list",null);
 		 		resultMap.put("conclusion", "FAIL");
 		    }
-		    System.out.println(list.get(0).toString());
+//		    System.out.println(list.get(0).toString());
 		    return new ResponseEntity<>(resultMap,status);
 	  }
 	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)

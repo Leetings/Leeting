@@ -195,3 +195,21 @@ div[id *="bottom_wrap"] #Btns button:first-child {
     display: none;
     z-index: 1000;
 }
+
+#timelineWriteBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+#timelineWriteBtn button {
+    text-indent: -9999px;
+    border-radius: 50%;
+    /* background-color: #9deeff; */
+    box-shadow: 3px 3px 3px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: #9deeff url(../../../img/plus.svg) 50% no-repeat;
+    background-size: 25px 25px;
+}
