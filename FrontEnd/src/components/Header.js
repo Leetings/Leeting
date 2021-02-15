@@ -139,7 +139,7 @@ class Header extends Component {
                                     <li className="lnb3">
                                         <Link
                                             to={{
-                                                pathname: `/`
+                                                pathname: `/timeline`
                                             }}
                                         >
                                             TIMELINES
@@ -287,7 +287,7 @@ class Header extends Component {
                         <li>
                             <Link
                                 to={{
-                                    pathname: `/`
+                                    pathname: `/timeline`
                                 }}
                             >
                                 TIMELINES

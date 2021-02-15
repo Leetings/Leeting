@@ -11,7 +11,14 @@ const Board = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const { location } = props;
-    
+    const nullpost = [{
+        no : 0,
+        id:"test",
+        reportid:"test",
+        detail:"<p>test</p>",
+        date: "2021-01-01 00:00:00"
+    }];
+
     useEffect(() => {
         const fetchPosts = async () => {
             const meetingno = location.state.id;
@@ -19,13 +26,14 @@ const Board = (props) => {
             const res = await axios.get('http://127.0.0.1:8080/myapp/meetingnotice/'+meetingno);
             console.log(res);
             
-            setPosts(res.data);
-            if (res.data.length === 0) {
+            if (res.data.conclusion === "FAIL") {
                 setVPost(true);
-                setLoading(false);
+                setPosts([nullpost]);
             }
-            else
-                setLoading(false);
+            else {
+                setPosts(res.data.list);
+            }
+            setLoading(false);
         }
         
 
