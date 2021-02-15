@@ -2,10 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="contents">
-    <insert id="enrollcontents" parameterType="contents">
+    <insert id="enroll" parameterType="contents">
        INSERT INTO contents (writer, date, detail, file, category)
-       VALUES (#{writer}, #{date}, #{detail}, #{file}, #{categoryno});
-       INSERT INTO contents_info (memberid, date, detail, file, category)
        VALUES (#{writer}, #{date}, #{detail}, #{file}, #{categoryno});
     </insert>
     <select id="list" resultType="contents">
@@ -30,4 +28,17 @@
             category = #{categoryno}
         WHERE no = #{contentsno}
     </update>
+    <update id="setcontentslike" parameterType="contents">
+		UPDATE contents
+		SET contentslike = contentslike + #{contentslike}
+		where no = cast(#{contentsno} as signed Integer)
+	</update>
+    <insert id="setlike" parameterType="contents">
+        INSERT contents_info
+        (userid, contentsno, likestatus) VALUES(#{writer}, #{contentsno}, 1)
+    </insert>
+    <delete id="dellike" parameterType="contents">
+        DELETE FROM contents_info
+        WHERE contentsno = #{contentsno} and userid = #{writer}
+    </delete>
 </mapper>

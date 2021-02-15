@@ -1,9 +1,11 @@
 package com.leeting.myapp.service;
 
 import com.leeting.myapp.model.ContentsDto;
-import org.springframework.stereotype.Service;
+import com.leeting.myapp.model.ContentsInfoDto;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface ContentsService {
     boolean enrollContent(ContentsDto contentsDto);
@@ -11,4 +13,5 @@ public interface ContentsService {
     List<ContentsDto> listContents(); // 컨텐츠 전체 리스트
     boolean deleteContent(int contentno);
     boolean updateContent(ContentsDto contentsDto);
+    void setcontentslike(ContentsDto contentsDto) throws SQLException;
 }

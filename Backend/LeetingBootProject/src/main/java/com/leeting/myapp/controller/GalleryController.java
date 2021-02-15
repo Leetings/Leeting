@@ -31,6 +31,8 @@ public class GalleryController {
             dirName = "meeting";
         }else if(dirNum == 2){
             dirName = "member";
+        }else if(dirNum == 3){
+            dirName = "contents";
         }
         return galleryService.upload(dirName, id, multipartFile);
     }

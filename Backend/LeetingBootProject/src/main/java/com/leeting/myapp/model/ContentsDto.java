@@ -13,14 +13,17 @@ public class ContentsDto {
 
     private int categoryno;
 
+    private int contentslike;
+
     public ContentsDto() {}
 
-    public ContentsDto(int contentsno, String writer, String date, String detail, String file, int categoryno) {
+    public ContentsDto(int contentsno, String writer, String date, String detail, String file, int categoryno, int contentslike) {
         this.contentsno = contentsno;
         this.writer = writer;
         this.date = date;
         this.detail = detail;
         this.categoryno = categoryno;
+        this.contentslike = contentslike;
     }
 
     public ContentsDto(String writer, String date, String detail, String file, int categoryno) {
@@ -79,6 +82,14 @@ public class ContentsDto {
         this.categoryno = categoryno;
     }
 
+    public int getContentslike() {
+        return contentslike;
+    }
+
+    public void setContentslike(int contentslike) {
+        this.contentslike = contentslike;
+    }
+
     @Override
     public String toString() {
         return "ContentsDto{" +
@@ -88,6 +99,7 @@ public class ContentsDto {
                 ", detail='" + detail + '\'' +
                 ", file='" + file + '\'' +
                 ", categoryno=" + categoryno +
+                ", contentslike=" + contentslike +
                 '}';
     }
 }

@@ -20,7 +20,8 @@ public class WebConfig implements WebMvcConfigurer {
             "/question/**",
             "/report/**",
             "/meetingnotice/**",
-            "/answer/**"
+            "/answer/**",
+            "/contentsinfo/**"
     };
 
     @Autowired

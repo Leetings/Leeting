@@ -1,15 +1,17 @@
 package com.leeting.myapp.dao;
 
 import com.leeting.myapp.model.ContentsDto;
+import com.leeting.myapp.model.ContentsInfoDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Repository
-public class ContentsDaoImpl implements ContentsDao{
+public class ContentsDaoImpl implements ContentsDao {
 
     @Autowired
     private SqlSession sqlSession;
@@ -38,4 +40,21 @@ public class ContentsDaoImpl implements ContentsDao{
     public void updateContents(ContentsDto contentsDto) throws SQLException {
         sqlSession.update("contents.update", contentsDto);
     }
+
+    @Override
+    public void setcontentslike(ContentsDto contentsDto) {
+        sqlSession.update("contents.setcontentslike", contentsDto);
+    }
+
+    @Override
+    public void setlike(ContentsDto contentsDto) {
+        sqlSession.insert("contents.setlike", contentsDto);
+    }
+
+    @Override
+    public void dellike(ContentsDto contentsDto) {
+        sqlSession.delete("contents.dellike", contentsDto);
+    }
+
+
 }

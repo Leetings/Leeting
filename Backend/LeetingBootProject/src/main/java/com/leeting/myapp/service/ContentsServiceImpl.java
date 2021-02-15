@@ -2,11 +2,12 @@ package com.leeting.myapp.service;
 
 import com.leeting.myapp.dao.ContentsDao;
 import com.leeting.myapp.model.ContentsDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.leeting.myapp.model.ContentsInfoDto;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContentsServiceImpl implements ContentsService {
@@ -75,5 +76,14 @@ public class ContentsServiceImpl implements ContentsService {
             throwables.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public void setcontentslike(ContentsDto contentsDto) throws SQLException {
+        contentsDao.setcontentslike(contentsDto);
+        if(contentsDto.getContentslike()==1)
+            contentsDao.setlike(contentsDto);
+        else
+            contentsDao.dellike(contentsDto);
     }
 }

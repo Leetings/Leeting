@@ -1,6 +1,7 @@
 package com.leeting.myapp.controller;
 
 import com.leeting.myapp.model.ContentsDto;
+import com.leeting.myapp.model.ContentsInfoDto;
 import com.leeting.myapp.service.ContentsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +43,32 @@ public class ContentsController {
             conclusion = "FAIL";
         }
         return new ResponseEntity<>(conclusion, httpStatus);
+    }
+
+    @ApiOperation(value = "좋아요", notes = "좋아요", response = Map.class)
+    @PutMapping("/setlike")
+    public ResponseEntity<String> setLikeStatus(@RequestBody ContentsInfoDto contentsInfoDto, HttpServletRequest req) throws SQLException {
+        HttpStatus status = HttpStatus.ACCEPTED;
+        String conclusion;
+        Map<String, Object> resultMap = new HashMap<>();
+        ContentsDto contentsDto = new ContentsDto();
+        contentsDto.setContentsno(contentsInfoDto.getContentsno());
+        contentsDto.setWriter(contentsInfoDto.getUserid());
+        System.out.println("contentsInfoDto = " + contentsInfoDto);
+        try {
+            if (contentsInfoDto.isLikestatus()) { // no, contentsno, userid, likestatus
+                contentsDto.setContentslike(1);
+                contentsService.setcontentslike(contentsDto);
+            } else {
+                contentsDto.setContentslike(-1);
+                contentsService.setcontentslike(contentsDto);
+            }
+            conclusion = "SUCCESS";
+        } catch (SQLException throwables){
+            conclusion = "FAIL";
+        }
+        System.out.println("conclusion = " + conclusion);
+        return new ResponseEntity<>(conclusion, status);
     }
 
     @ApiOperation(value="컨텐츠 조회", notes="컨텐츠 키워드 조회", response = Map.class)

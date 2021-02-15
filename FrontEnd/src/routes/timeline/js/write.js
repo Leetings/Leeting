@@ -64,7 +64,7 @@ class write extends React.Component {
         var formData = new FormData();
         formData.append('data', file);
         formData.append('hostid', sessionStorage.getItem('id'));
-        formData.append('dirNum', 1);
+        formData.append('dirNum', 3);
         axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
             headers: {
                 'content-type': 'multipart/form-data',
@@ -83,16 +83,15 @@ class write extends React.Component {
         e.preventDefault();
         let sId = sessionStorage.getItem('nickname');
 
-        let date = moment();
-
+        let date = moment().format('YYYY-MM-DD HH:mm:ss');
         axios.post("http://127.0.0.1:8080/myapp/contents/", {
             writer: sId,
             date: date,
             detail: this.state.content,
             file: this.state.thumb,
-            category:1
-        }).then(res => {
-            if (res.data === "SUCESS") {
+            categoryno:1
+        }).then(res => { 
+            if (res.data === "SUCCESS") {
                 console.log("성공");
                 console.log(this.state.categoryno);
                 alert("글 작성이 완료되었습니다.");
