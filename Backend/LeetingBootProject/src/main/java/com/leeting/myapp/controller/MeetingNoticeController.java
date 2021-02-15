@@ -40,13 +40,21 @@ public class MeetingNoticeController {
 	  }
 	  @ApiOperation(value = "미팅게시판 목록", notes = "공지사항 목록", response = List.class)
 	  @GetMapping("/{meetingno}")
-	  public ResponseEntity<List<NoticeDto>> meetingnoticelist(@PathVariable(value="meetingno") int meetingno, HttpServletRequest req) throws SQLException {
+	  public ResponseEntity<Map<String, Object>> meetingnoticelist(@PathVariable(value="meetingno") int meetingno, HttpServletRequest req) throws SQLException {
 		    Map<String, Object> resultMap = new HashMap<>();
 		    HttpStatus status = HttpStatus.ACCEPTED;
 		    List<NoticeDto> list = new ArrayList<>();
 		    list = meetingService.meetingnoticelist(meetingno);
+		    if(list.size()>0) {
+		    	resultMap.put("list", list);
+		    	resultMap.put("conclusion", "SUCCESS");
+		    }
+		    else {
+		    	resultMap.put("list",null);
+		 		resultMap.put("conclusion", "FAIL");
+		    }
 		    System.out.println(list.get(0).toString());
-		    return new ResponseEntity<List<NoticeDto>>(list,status);
+		    return new ResponseEntity<>(resultMap,status);
 	  }
 	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)
 	  @PostMapping(value = ("/{meetingno}"), headers = ("content-type=multipart/form-data"))
