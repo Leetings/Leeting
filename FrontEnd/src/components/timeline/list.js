@@ -1,12 +1,17 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import propTypes  from "prop-types";
 import moment from 'moment';
 import 'moment/locale/ko';
 import axios from "axios";
 
-function List({ id, writer, date, detail, file }) {
+function List({ id, writer, date, detail, file, contentslike, likestatus }) {
 
     var codes = detail;
+
+    const [likeCnt, setLikeCnt] = useState(0);
+    const [likeState, setLikeState] = useState(true);
+    const [first, setFirst] = useState(true);
+    const [reviewBool, setReviewBool] = useState(false);
 
     const etcid = id + 'etc';
     const ellipsisid = id + 'ellip';
@@ -14,6 +19,7 @@ function List({ id, writer, date, detail, file }) {
     const forUserId = id + 'forUser';
     const forAllId = id + 'forAll';
     const likeId = id + 'likeBtn';
+    const contentslikeId = id + 'contentslikeId';
 
     var t1 = moment(date);
     var t2 = moment();
@@ -34,6 +40,24 @@ function List({ id, writer, date, detail, file }) {
     else {
         dateformat = sYear + '년 ' + sMonth + '월 ' + sDate+'일';
     }
+
+    useEffect(() => {
+        const fetchContentsLike = async () => {
+            console.log(likeCnt);
+        }
+
+        if (first === true) {
+            setLikeCnt(contentslike);
+            if (likestatus === 1) {
+                document.getElementById(likeId).classList.toggle('like');
+                setLikeState(false);
+            }
+            setFirst(false);
+        }
+
+        fetchContentsLike();
+         // eslint-disable-next-line
+    },[reviewBool])
 
     const ellip = (e) => {
         e.preventDefault();
@@ -88,14 +112,22 @@ function List({ id, writer, date, detail, file }) {
 
     const timeline_like = (e) => {
         e.preventDefault();
-        const likestatus = document.getElementById(likeId).classList.contains("like"); // 체크X false
-        const userid = sessionStorage.getItem('id');
-        axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
-            'contentsno': id,
-            'userid': userid,
-            'likestatus': !likestatus
-        })
+        const sId = sessionStorage.getItem('id');
+        if (likeState === true) {
+            setLikeCnt(likeCnt + 1);
+        } else {
+            setLikeCnt(likeCnt - 1);
+        }
+        setLikeState(!setLikeState);
+        setReviewBool(!reviewBool);
+        
         document.getElementById(likeId).classList.toggle('like');
+        axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
+            contentsno : id,
+            userid: sId,
+            likestatus: likeState
+        })
+        // window.location.replace('/timeline');
     }
 
     return (
@@ -111,7 +143,7 @@ function List({ id, writer, date, detail, file }) {
                 <button id={etcid} className="etc" onClick={ellip}>더보기</button>
             </div>
             <button id={likeId} onClick={timeline_like} className="likeBtn"></button>
-            <span>1</span>
+            <span id={contentslikeId} >{likeCnt}</span>
             
             <div id={bottom_wrapid}>
                 <div id="Btns">

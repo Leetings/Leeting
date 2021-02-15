@@ -26,12 +26,14 @@ export const Posts = ({ posts, loading, noPosts }) => {
             <ul>
                 {posts.map(post => (
                     <List
-                        key={post.contentsno}
-                        id={post.contentsno}
+                        key={post.no}
+                        id={post.no}
                         writer={post.writer}
                         date={post.date}
                         detail={post.detail}
                         file={post.file}
+                        contentslike={post.contentslike}
+                        likestatus={post.likestatus}
                     />
 
                     // <li key={post.id} className='list-group-item'>

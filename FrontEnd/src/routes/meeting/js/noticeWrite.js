@@ -1,5 +1,4 @@
 import React from "react";
-import "../css/writeNotice.css"
 
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -15,15 +14,18 @@ class WriteNotice extends React.Component {
     dateRef = React.createRef();
 
     componentDidMount() {
+        const { location } = this.props;
         const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
         this.setState({
-            Date: nowTime
+            Date: nowTime,
+            meetingno:location.state.id
         })
     }
 
     constructor() {
         super();
         this.state = {
+            meetingno:"",
             detail: "",
             writer: "",
             title: "",
@@ -36,6 +38,7 @@ class WriteNotice extends React.Component {
         };
     }    
     state = {
+        meetingno:"",
         detail: "",
         writer: "",
         title: "",
@@ -185,7 +188,7 @@ class WriteNotice extends React.Component {
         e.preventDefault();
         let sId = sessionStorage.getItem('nickname');
 
-        var url = "/notice";
+        var url = "/meeting/board/"+this.state.meetingno;
 
         if (this.state.file2 !== null) {
             if (this.state.file1 === null) {
@@ -221,7 +224,8 @@ class WriteNotice extends React.Component {
             return (alert('안돼 돌아가 내용'));
         }
 
-        axios.post("http://127.0.0.1:8080/myapp/notice/writenotice", {
+        axios.post("http://127.0.0.1:8080/myapp/meetingnotice/"+this.state.meetingno, {
+            meetingno:this.state.meetingno,
             detail: this.state.detail,
             writer: sId,
             title: this.state.title,
@@ -261,7 +265,7 @@ class WriteNotice extends React.Component {
                             <tr>
                                 <th scope="row">제목</th>
                                 <td colSpan="5">
-                                    <input id="noticeTit" type="text" onChange={this.titChange}></input>
+                                    <input type="text" onChange={this.titChange}></input>
                                 </td>
                             </tr>
                             <tr>

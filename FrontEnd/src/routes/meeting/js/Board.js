@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import Posts from "../../../components/board/Posts"
 import Pagination from '../../../components/common/Pagination'
+import propTypes from "prop-types";
 
 const Board = (props) => {
     const [posts, setPosts] = useState([]);
@@ -85,13 +87,36 @@ const Board = (props) => {
                 />
     
                 <div id="writeBtn" className="writeBtn">
-                    <button>등록하기</button>
+                    <GoWrite
+                        id={location.state.id}
+                    />
                 </div>
             </div>
         </div>
     )
-    
-    
+
 }
+
+function GoWrite({ id }) {
+    return (
+        <div id="modifyBtn">
+            <Link
+                to={{
+                    pathname: `/meeting/board/write`,
+                    state: {
+                        id
+                    }
+                }}
+            ><button>등록하기</button>
+                {/* <button id="modifyBtn" ></button> */}
+            </Link>
+        </div>
+    )
+}
+
+GoWrite.propTypes = {
+    id: propTypes.number.isRequired
+};
+
 
 export default Board;

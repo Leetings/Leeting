@@ -89,6 +89,7 @@ public class ContentsController {
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("size", hashMapList.size());
         resultMap.put("contentsList", hashMapList);
+//        System.out.println(resultMap);
         return new ResponseEntity<Map<String, Object>>(resultMap, httpStatus);
     }
 

@@ -12,7 +12,8 @@
                 WHEN c.no in (select contentsno FROM contents_info WHERE userid = #{id}) then true
                 ELSE false END
             AS likestatus
-        FROM contents as c;
+        FROM contents as c
+        ORDER BY no DESC;
     </select>
     <delete id="delete" parameterType="int">
         DELETE FROM contents_info WHERE contentsno = #{contentsno};

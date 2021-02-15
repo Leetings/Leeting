@@ -475,7 +475,7 @@
 }
 
 .writeInputWrap input {
-    border: 1px solid;
+    border: 1px solid #e5e5e5;
     width: 200px;
     height: 40px;
     padding-left: 10px;

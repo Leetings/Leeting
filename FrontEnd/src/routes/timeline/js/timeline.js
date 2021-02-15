@@ -25,8 +25,8 @@ const Timeline = () => {
                     "userid": id
                 }
             });
-            console.log(res.data);
-            setPosts(res.data);
+            console.log(res.data.contentsList);
+            setPosts(res.data.contentsList);
             setLoading(false);
         }
         

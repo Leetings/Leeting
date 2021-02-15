@@ -56,7 +56,6 @@ function List({ no,rownum, title, detail, date, writer, hit, file1, file2, file3
             </div>
             <div className="writer">{writer}</div>
             <div className="date">{dateformat}</div>
-            <div className="hit">{hit}</div>
         </div>
             
     );

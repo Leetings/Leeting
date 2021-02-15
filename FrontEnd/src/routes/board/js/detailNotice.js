@@ -95,6 +95,13 @@ class DetailNotice extends React.Component {
           })
     }
 
+    goBack = (e) => {
+        e.preventDefault();
+        const { history } = this.props;
+        
+        history.goBack();
+    }
+
   render() {
     const { location } = this.props;
     let codes = location.state.detail;
@@ -180,8 +187,8 @@ class DetailNotice extends React.Component {
                             />
                         </button>
                         <button id="goDelete" className="notice_button" onClick={this.noticedelete}>삭제하기</button>
-                        <button className="notice_button">
-                            <Link to={{ pathname: `/notice` }}>목록</Link>
+                        <button className="notice_button" onClick={this.goBack}>
+                            목록
                         </button>
                     </div>
                 </div>

@@ -30,7 +30,6 @@ export const Posts = ({ posts, loading, noPosts }) => {
                 <p className="title">제목</p>
                 <p className="writer">작성자</p>
                 <p className="date">등록일</p>
-                <p className="hit">조회</p>
             </div>
 
 
