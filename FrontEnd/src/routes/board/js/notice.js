@@ -5,6 +5,8 @@ import "../css/board.css"
 import Posts from "../../../components/board/Posts"
 import Pagination from '../../../components/common/Pagination'
 
+import { Link } from "react-router-dom";
+
 const Notice = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -62,9 +64,17 @@ const Notice = () => {
                 loading={loading} 
             />
 
-        <div id="writeBtn" className="writeBtn">
-        <button>등록하기</button>
-        </div>
+            <div id="writeBtn" className="writeBtn">
+                <Link
+                    to={{
+                        pathname: `/notice/write`,
+                        state: {
+                        }
+                    }}
+                >
+                    <button >등록하기</button>
+                </Link>
+            </div>
             </div>
             </div>
     )
