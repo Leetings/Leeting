@@ -18,9 +18,8 @@
 		detail like CONCAT('%', #{keyword}, '%')
     </select>
     <delete id="delete" parameterType="int">
-        DELETE
-        FROM contents
-        WHERE no = #{contentsno}
+        DELETE FROM contents_info WHERE contentsno = #{contentsno};
+        DELETE FROM contents WHERE no = #{contentsno};
     </delete>
     <update id="update" parameterType="contents">
         UPDATE contents
