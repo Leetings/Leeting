@@ -53,7 +53,7 @@ public class MeetingNoticeController {
 		    	resultMap.put("list",null);
 		 		resultMap.put("conclusion", "FAIL");
 		    }
-//		    System.out.println(list.get(0).toString());
+
 		    return new ResponseEntity<>(resultMap,status);
 	  }
 	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)
@@ -63,13 +63,6 @@ public class MeetingNoticeController {
 		    HttpStatus status = HttpStatus.ACCEPTED;
 		    Map<String, Object> noticemap = new HashMap<String, Object>();
 		    notice.setMeetingno(meetingno);
-//		    File file = new File("C:/Users/multicampus/Desktop/AKR20201201068200005_01_i_P2.jpg");
-//		     byte[] fileContent = Files.readAllBytes(file.toPath());
-//		    noticemap.put("file1", fileContent);
-		    if(notice.getFile1()!=null)noticemap.put("file1", notice.getFile1().getBytes());
-		    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
-		    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
-		    
 		    if(meetingService.meetingnoticewrite(notice,noticemap)) {
 		    	conclusion = "SUCCESS";
 		    }
@@ -84,14 +77,6 @@ public class MeetingNoticeController {
 	  public ResponseEntity<NoticeDto> getNoticeInfo(@PathVariable(value="no") int meetingnoticeno, HttpServletRequest req) throws SQLException, IOException {
 		  NoticeDto noticetmp = meetingService.getNoticeInfo(meetingnoticeno);
 		    HttpStatus status = HttpStatus.ACCEPTED;
-//		    Map<String, Object> map = noticeService.getByteImage();
-//		       byte[] imageContent = (byte[]) map.get("file1");
-//	    		byte[] encodeBase64 = Base64.encodeBase64(imageContent);
-//	    		String base64DataString = new String(encodeBase64 , "UTF-8");
-//		    System.out.println(imageContent);
-//		    System.out.println(base64DataString);
-//		    final HttpHeaders headers = new HttpHeaders();
-//		       headers.setContentType(MediaType.IMAGE_PNG);
 		    return new ResponseEntity<NoticeDto>(noticetmp, HttpStatus.OK);
 	  }
 	  //미팅게시판정보수정
@@ -101,9 +86,6 @@ public class MeetingNoticeController {
 	    String conclusion = "SUCCESS";
 	    HttpStatus status = HttpStatus.ACCEPTED;
 	    Map<String, Object> noticemap = new HashMap<String, Object>();
-	    if(notice.getFile1()!=null) noticemap.put("file1", notice.getFile1().getBytes());
-	    if(notice.getFile2()!=null)noticemap.put("file2", notice.getFile2().getBytes());
-	    if(notice.getFile3()!=null) noticemap.put("file3", notice.getFile3().getBytes());
 	    if(meetingService.updatenotice(notice,noticemap)) {
 	    	conclusion = "SUCCESS";
 	    }
