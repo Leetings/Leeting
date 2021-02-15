@@ -100,24 +100,28 @@ class DetailNotice extends React.Component {
 
     var sday = sYear + '-' + sMonth + '-' + sDate;
       
-    var _fileLen1 = this.state.file1.length;
-    var _lastDot1 = this.state.file1.lastIndexOf('.');
-    var _fileExt1 = this.state.file1.substring(_lastDot1, _fileLen1).toLowerCase();
-    var _lastSlash1 = this.state.file1.lastIndexOf('/');
-    var _fileName1 = this.state.file1.substring(_lastSlash1+1, _lastDot1 - 1).toLowerCase();
+    if (this.state.file1 !== null) {    
+        var _fileLen1 = this.state.file1.length;
+        var _lastDot1 = this.state.file1.lastIndexOf('.');
+        var _fileExt1 = this.state.file1.substring(_lastDot1, _fileLen1).toLowerCase();
+        var _lastSlash1 = this.state.file1.lastIndexOf('/');
+        var _fileName1 = this.state.file1.substring(_lastSlash1+1, _lastDot1 - 1).toLowerCase();
+    }
     
-    var _fileLen2 = this.state.file2.length;
-    var _lastDot2 = this.state.file2.lastIndexOf('.');
-    var _fileExt2 = this.state.file2.substring(_lastDot2, _fileLen2).toLowerCase();
-    var _lastSlash2 = this.state.file2.lastIndexOf('/');
-    var _fileName2 = this.state.file2.substring(_lastSlash2+1, _lastDot2 - 1).toLowerCase();
-    
-    var _fileLen3 = this.state.file3.length;
-    var _lastDot3 = this.state.file3.lastIndexOf('.');
-    var _fileExt3 = this.state.file3.substring(_lastDot3, _fileLen3).toLowerCase();
-    var _lastSlash3 = this.state.file3.lastIndexOf('/');
-    var _fileName3 = this.state.file3.substring(_lastSlash3+1, _lastDot3 - 1).toLowerCase();
-        
+    if (this.state.file2 !== null) {
+        var _fileLen2 = this.state.file2.length;
+        var _lastDot2 = this.state.file2.lastIndexOf('.');
+        var _fileExt2 = this.state.file2.substring(_lastDot2, _fileLen2).toLowerCase();
+        var _lastSlash2 = this.state.file2.lastIndexOf('/');
+        var _fileName2 = this.state.file2.substring(_lastSlash2 + 1, _lastDot2 - 1).toLowerCase();
+    }
+    if (this.state.file3 !== null) {
+        var _fileLen3 = this.state.file3.length;
+        var _lastDot3 = this.state.file3.lastIndexOf('.');
+        var _fileExt3 = this.state.file3.substring(_lastDot3, _fileLen3).toLowerCase();
+        var _lastSlash3 = this.state.file3.lastIndexOf('/');
+        var _fileName3 = this.state.file3.substring(_lastSlash3 + 1, _lastDot3 - 1).toLowerCase();
+    }
     if (location.state) {
         return (
             <div id="notice_detail">
