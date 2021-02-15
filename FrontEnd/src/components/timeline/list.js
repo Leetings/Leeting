@@ -88,7 +88,12 @@ function List({ id, writer, date, detail, file }) {
 
     const timeline_like = (e) => {
         e.preventDefault();
-
+        const likestatus = document.getElementById(likeId).classList.contains("like"); // 체크X false
+        axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
+            'contentsno': id,
+            'userid': writer,
+            'likestatus': !likestatus
+        })
         document.getElementById(likeId).classList.toggle('like');
     }
 
