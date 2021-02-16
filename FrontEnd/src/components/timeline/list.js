@@ -6,6 +6,8 @@ import axios from "axios";
 
 function List({ id, writer, date, detail, file, contentslike, likestatus }) {
 
+    const uid = sessionStorage.length === 0 ? "" : sessionStorage.getItem("id");
+    
     var codes = detail;
 
     const [likeCnt, setLikeCnt] = useState(0);
@@ -54,6 +56,11 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
             }
             setFirst(false);
         }
+
+        
+        // if (uid === "") {
+        //     document.getElementById(likeId).disabled = true;
+        // }
 
         fetchContentsLike();
          // eslint-disable-next-line
@@ -112,21 +119,29 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
 
     const timeline_like = (e) => {
         e.preventDefault();
-        const sId = sessionStorage.getItem('id');
-        if (likeState === true) {
-            setLikeCnt(likeCnt + 1);
-        } else {
-            setLikeCnt(likeCnt - 1);
+
+        if (uid === "") {
+            alert('로그인 하시면 좋아요를 사용하실 수 있습니다!');
+            window.location.assign('/login');
         }
-        setLikeState(!setLikeState);
-        setReviewBool(!reviewBool);
+        else {
+            const sId = sessionStorage.getItem('id');
+            if (likeState === true) {
+                setLikeCnt(likeCnt + 1);
+            } else {
+                setLikeCnt(likeCnt - 1);
+            }
+            setLikeState(!setLikeState);
+            setReviewBool(!reviewBool);
+            
+            document.getElementById(likeId).classList.toggle('like');
+            axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
+                contentsno : id,
+                userid: sId,
+                likestatus: likeState
+            })
+        }
         
-        document.getElementById(likeId).classList.toggle('like');
-        axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
-            contentsno : id,
-            userid: sId,
-            likestatus: likeState
-        })
         // window.location.replace('/timeline');
     }
 
