@@ -49,6 +49,17 @@
     margin-bottom: 20px;
 }
 
+.contentTit .writerProfile {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    margin-right: 10px;
+}
+
+.contentTit .writerDateWrap {
+    display: inline-block;
+}
+
 .contentTit .bottomOpen {
     position: absolute;
     right: 10px;
@@ -144,6 +155,10 @@ div[id *="bottom_wrap"] #Btns button {
     height: 50px;
     margin: 25px 0;
     font-size: 18px;
+    color: white;
+}
+
+div[id *="bottom_wrap"] #Btns button div a {
     color: white;
 }
 

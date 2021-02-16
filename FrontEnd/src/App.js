@@ -30,6 +30,7 @@ import ModifyNotice from "./routes/board/js/modifyNotice";
 
 import Timeline from "./routes/timeline/js/timeline";
 import TimelineWrite from "./routes/timeline/js/write";
+import TimelineModify from "./routes/timeline/js/modify";
 
 import Report from "./routes/report/js/report"
 import ReportList from "./routes/report/js/list"
@@ -87,6 +88,7 @@ function App() {
           
           <Route path="/timeline" exact={true} component={Timeline}/>
           <Route path="/timeline/write" exact={true} component={TimelineWrite}/>
+          <Route path="/timeline/modify/:id" exact={true} component={TimelineModify} />
           
           <Route path="/result/:keyword" exact={true} component={Result} />
           <Route path="/meeting/:id" exact={true} component={Detail} />

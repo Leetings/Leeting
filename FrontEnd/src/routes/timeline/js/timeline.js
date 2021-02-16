@@ -5,7 +5,6 @@ import "../css/timeline.css"
 
 import { Link } from "react-router-dom";
 
-
 import Posts from "../../../components/timeline/Post"
 
 import Pagination from '../../../components/common/Pagination'
@@ -25,7 +24,6 @@ const Timeline = () => {
                     "userid": id
                 }
             });
-            console.log(res.data.contentsList);
             setPosts(res.data.contentsList);
             setLoading(false);
         }
@@ -38,7 +36,6 @@ const Timeline = () => {
         }
         
         fetchPosts();
-        console.log(posts);
         // eslint-disable-next-line
     }, []);
 

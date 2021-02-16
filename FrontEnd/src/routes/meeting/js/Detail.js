@@ -27,7 +27,8 @@ class Detail extends React.Component {
             categoryno:"",
             file: "",
             enddate: "",
-            participants:""
+            participants: "",
+            photo:""
         }
     }
 
@@ -37,6 +38,7 @@ class Detail extends React.Component {
         // console.log(location.state.enddate);
         
         this.showDetail();
+        this.getWriterInfo();
 
         if (location.state === undefined) {
             history.push("/");
@@ -64,6 +66,19 @@ class Detail extends React.Component {
             document.getElementById('bg').setAttribute('style', 'display:none');
         }
     }
+
+    getWriterInfo = async () => {
+        const { location } = this.props;
+        const writerId = location.state.hostid;
+        // e.preventDefault();
+        axios.get(`http://127.0.0.1:8080/myapp/member/`+writerId, {
+          id: writerId
+        }).then(res => {
+          this.setState({
+            photo: res.data.photo
+          })
+        });
+      };
 
     showDetail = async () => {
         const { location } = this.props;
@@ -291,8 +306,11 @@ class Detail extends React.Component {
                             </div>
                         
                         <div className="host">
-                            <hr className="hosthr"/>
-                            <img className="hostProfile" onClick={this.profileClick} src="../img\noProfile.png" alt="프로필사진"></img>
+                            <hr className="hosthr" />
+                            {this.state.photo ? (
+                              <img className="hostProfile" src={this.state.photo} alt="프로필사진"></img>
+                          ) : (<img className="hostProfile" src="../img\noProfile.png" alt="프로필사진"></img>)}
+                            {/* <img className="hostProfile" onClick={this.profileClick} src="../img\noProfile.png" alt="프로필사진"></img> */}
                             <p className="hostNickname">{location.state.hostid} </p>
                         </div>
                     </div>

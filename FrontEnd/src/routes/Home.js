@@ -177,7 +177,7 @@ const Home = () => {
                     </Link>
                 </div>
                 <div className="favoriteleet">
-                    <Posts posts={recoPosts} loading={recoLoading} noPosts={noPosts} />
+                    <Posts posts={recoPosts} loading={recoLoading}/>
                 </div>
             </div>
     )
