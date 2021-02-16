@@ -12,6 +12,18 @@ class write extends React.Component {
 
     componentDidMount() {
         const { location } = this.props;
+
+        if (sessionStorage.getItem('id') !== null) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
+
+        if (sessionStorage.getItem('id') !== location.state.id) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+          }
+        
+
         this.setState({
             id : location.state.id,
             writer : location.state.writer,

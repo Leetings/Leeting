@@ -73,16 +73,29 @@ class Mypage extends React.Component {
     componentDidMount() {
       let sId = sessionStorage.getItem('id');
 
+      if (sessionStorage.getItem('id') === null) {
+        document.getElementById('root').setAttribute('style', 'display:none');
+        window.location.replace("/404");
+      }
+      if (document.getElementById('side_wrap').classList.contains('open')) {
+        document.getElementById('side_wrap').classList.remove('open');
+        document.getElementById('side_wrap').classList.add('close');
+        document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+        document.getElementById('bg').setAttribute('style', 'display:none');
+    }
+
       if (sId !== null) {
           
         this.getLeeting();
         this.getUserInfo();
         this.tabZero();
 
-      } else {
+      }
+      else {
           document.getElementById('myleetingTit').setAttribute('style', 'display:none');
           document.getElementById('myleetingList').setAttribute('style', 'display:none');
       }
+      
     }
 
     tabZero = (e) => {

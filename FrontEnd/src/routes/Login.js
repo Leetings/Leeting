@@ -83,7 +83,7 @@ class Login extends React.Component {
             })
         }
         if (sessionStorage.getItem('id') !== null) {
-            alert('잘못된 접근입니다!!');
+            document.getElementById('root').setAttribute('style', 'display:none');
             window.location.replace("/404");
         }
         if (document.getElementById('side_wrap').classList.contains('open')) {

@@ -14,7 +14,10 @@ const OtOWrite = () => {
     const [type, setType] = useState(1);
 
     useEffect(() => {
-        
+        if (sessionStorage.getItem('id') === null) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
         if (document.getElementById('side_wrap').classList.contains('open')) {
             document.getElementById('side_wrap').classList.remove('open');
             document.getElementById('side_wrap').classList.add('close');

@@ -21,6 +21,11 @@ class WriteNotice extends React.Component {
             file2: location.state.file2,
             file3: location.state.file3
         })
+
+        if (sessionStorage.getItem('id') === null || sessionStorage.getItem('id') !== location.state.writer) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
         document.getElementById('title').value = location.state.title;
 
         if (location.state.file1 === null) {
@@ -43,6 +48,12 @@ class WriteNotice extends React.Component {
         } else {
             document.getElementById('none3').setAttribute('style', 'display:none');
             document.getElementById('already3').setAttribute('style', 'display:table-row');   
+        }
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
         }
     }
 

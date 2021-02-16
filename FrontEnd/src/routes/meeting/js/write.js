@@ -22,6 +22,10 @@ class write extends React.Component {
     dateRef = React.createRef();
 
     componentDidMount() {
+        if (sessionStorage.getItem('id') === null) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
         if (document.getElementById('side_wrap').classList.contains('open')) {
             document.getElementById('side_wrap').classList.remove('open');
             document.getElementById('side_wrap').classList.add('close');

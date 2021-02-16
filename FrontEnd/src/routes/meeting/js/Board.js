@@ -27,6 +27,11 @@ const Board = (props) => {
             setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/meetingnotice/'+meetingno);
             console.log(res);
+
+            if (sessionStorage.getItem('id') === null) {
+                document.getElementById('root').setAttribute('style', 'display:none');
+                window.location.replace("/404");
+            }
             
             if (res.data.conclusion === "FAIL") {
                 setVPost(true);

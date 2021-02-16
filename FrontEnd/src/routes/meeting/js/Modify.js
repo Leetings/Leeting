@@ -52,6 +52,11 @@ class Modify extends React.Component {
             history.push("/");
         }
         // console.log(location.state.enddate);
+
+        if (sessionStorage.getItem('id') === null || sessionStorage.getItem('id')!==location.state.hostid) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
         
         if (document.getElementById('side_wrap').classList.contains('open')) {
             document.getElementById('side_wrap').classList.remove('open');

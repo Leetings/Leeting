@@ -29,6 +29,19 @@ class Join extends React.Component {
     auth: "",
     photo:"",
   }
+
+  componentDidMount() {
+    if (sessionStorage.getItem('id') !== null) {
+      document.getElementById('root').setAttribute('style', 'display:none');
+      window.location.replace("/404");
+    }
+    if (document.getElementById('side_wrap').classList.contains('open')) {
+      document.getElementById('side_wrap').classList.remove('open');
+      document.getElementById('side_wrap').classList.add('close');
+      document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+      document.getElementById('bg').setAttribute('style', 'display:none');
+  }
+  }
   
   handleChange = (event) => {
     if (event.target.value !== '직접입력') {

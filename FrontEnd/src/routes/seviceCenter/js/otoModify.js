@@ -4,14 +4,29 @@ import axios from "axios";
 import { Editor } from '@toast-ui/react-editor';
 
 const OtOModify = (props) => {
-    const location = props.location.state;
-    const no = location.no;
-    const [title, setTitle] = useState(location.title);
-    const [content, setContent] = useState(location.detail);
+    const [no, setNo] = useState();
+    const [title, setTitle] = useState();
+    const [content, setContent] = useState();
     const editorRef = React.createRef();
-    const [type, setType] = useState(location.type);
-
+    const [type, setType] = useState();
+// eslint-disable-next-line
     useEffect(() => {
+        const location = props.location.state;
+        console.log(location.qwriter);
+
+        setNo(location.no);
+        setTitle(location.title);
+        setContent(location.detail);
+        setType(location.type);
+        if (sessionStorage.getItem('id') === null) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
+        if (sessionStorage.getItem('id') !== location.qwriter) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/404");
+        }
+
         document.getElementById('title').value = title;
         document.getElementById('type').value = type;
         document.getElementById('mobile_title').value = title;
