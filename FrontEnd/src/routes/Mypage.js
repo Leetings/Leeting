@@ -74,6 +74,7 @@ class Mypage extends React.Component {
           
         this.getLeeting();
         this.getUserInfo();
+        this.tabZero();
 
       } else {
           document.getElementById('myleetingTit').setAttribute('style', 'display:none');
@@ -83,14 +84,23 @@ class Mypage extends React.Component {
 
     tabZero = (e) => {
       this.getLeeting();
-      this.setState({
-        tab: 0,
-      })
+      this.setState({ tab: 0, })
+      document.getElementById('tabZero').setAttribute("style", "background-color:#0275d8; color:white;");
+      document.getElementById('tabOne').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabTwo').setAttribute("style", "background-color:white; color:black;");
     }
-    tabOne = (e) => { this.setState({tab: 1,}) }
+    tabOne = (e) => {
+      this.setState({tab: 1,})
+      document.getElementById('tabZero').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabOne').setAttribute("style", "background-color:#0275d8; color:white;");
+      document.getElementById('tabTwo').setAttribute("style", "background-color:white; color:black;");
+    }
     tabTwo = (e) => { 
       this.backupUserInfo();
-      this.setState({tab: 2,}) 
+      this.setState({tab: 2,})
+      document.getElementById('tabZero').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabOne').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabTwo').setAttribute("style", "background-color:#0275d8; color:white;");
     }
 
     pwReconfirm = (e) => {
@@ -342,7 +352,6 @@ class Mypage extends React.Component {
     };
 
     // Join End
-
     returnUserInfo = (e) => {
       this.setState({
         pw: this.state.backuppw,
@@ -353,9 +362,14 @@ class Mypage extends React.Component {
       this.tabZero();
     };
 
+    leaveLeeting = (e) => {
+
+    }
+
+    
+
   render() {
     const { isLoading, data, reconfirm } = this.state
-    // let emailDomain = this.state.email ? this.state.email.split('@') : null 
 
     return (
       <div id="main_content">
@@ -365,9 +379,9 @@ class Mypage extends React.Component {
         <div className="d-flex">
             <div className="tabcenter col-4">
                 <div className="list-group">
-                    <p className="list-group-item list-group-item-action" onClick={this.tabZero}>프로필</p> {/*aria-current="true"*/}
-                    <p className="list-group-item list-group-item-action" onClick={this.tabOne}>일정</p>
-                    <p className="list-group-item list-group-item-action" onClick={this.tabTwo}>계정 설정</p>
+                    <p className="list-group-item list-group-item-action" id="tabZero" onClick={this.tabZero}>프로필</p>
+                    <p className="list-group-item list-group-item-action" id="tabOne" onClick={this.tabOne}>계정 설정</p>
+                    <p className="list-group-item list-group-item-action" id="tabTwo" onClick={this.tabTwo}>회원탈퇴</p>
                 </div>
             </div>
             <div className="formcenter col-8">
@@ -381,6 +395,11 @@ class Mypage extends React.Component {
                             <p>{this.state.id}</p>
                             </div>
                     </div>
+                    <form className="filebox bs3-primary"  encType="multipart/form-data">
+                                    <input className="upload-name" id="upload-name"placeholder="파일선택" disabled="disabled"/>
+                                    <label htmlFor="ex_filename">업로드</label> 
+                                    <input type="file" accept="image/*"id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
+                                </form>
                     <hr />
                     <div className="form-group">
                         <div className="col-9">
@@ -440,11 +459,6 @@ class Mypage extends React.Component {
                     </Fragment>)}
                   {this.state.tab === 1 && (
                     <Fragment>
-                      <p>달력을 넣고 싶다</p>
-                    </Fragment>
-                  )}
-                  {this.state.tab === 2 && (
-                    <Fragment>
                       {!reconfirm ? (
                         <Fragment>
                           <div className="col-9">
@@ -501,10 +515,30 @@ class Mypage extends React.Component {
                             <br />
                             <div className="row form-group">
                               <div className="col-12 text-center">
-                                <button type="button" id="cancelbtn" className="btn" onClick={this.returnUserInfo}>수정취소</button>
+                                <button type="button" id="cancelbtn" className="btn border-1px" onClick={this.returnUserInfo}>수정취소</button>
                                 <button type="submit" id="joinbtn" className="btn btn-primary" onClick={this.handleClick}>수정완료</button>
                               </div>
                             </div>
+                        </div>
+                      )}
+                    </Fragment>
+                  )}
+                  {this.state.tab === 2 && (
+                    <Fragment>
+                      {!reconfirm ? (
+                        <Fragment>
+                          <div className="col-9">
+                            <label id="labelReconfirmPw" className="font-weight-bold" htmlFor="reconfirmPw">비밀번호 확인</label>
+                            <input type="password" id="reconfirmPw" className="form-control mb-2" placeholder="비밀번호를 입력해주세요"></input>
+                            <button id="checkPw" className="btn btn-primary mt-2 mr-2" onClick={this.pwReconfirm}>확인</button>
+                            <label id="checkPwBeforeEditProfile"></label><br/>
+                          </div>
+                        </Fragment>
+                      ) : (
+                        <div>
+                          <p>정말 탈퇴하시겠습니까?</p>
+                          <p>지금까지 사용한 사이트의 모든 기록이 삭제됩니다.</p>
+                          <button id="leaveLeeting" className="btn btn-warning mt-2" onClick={this.leaveLeeting}>탈퇴</button>
                         </div>
                       )}
                     </Fragment>
