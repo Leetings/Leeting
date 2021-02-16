@@ -26,6 +26,7 @@ class Mypage extends React.Component {
       email: "",
       domain: "",
       mobile: "",
+      photo: "",
       token:"",
       auth:"",
       isLoading: true,
@@ -36,6 +37,7 @@ class Mypage extends React.Component {
       backupnickname: "",
       backuppw: "",
       backupmobile: "",
+      selectedFile: null,
     }
 
     getUserInfo = (e) => {
@@ -51,6 +53,7 @@ class Mypage extends React.Component {
           nickname: res.data.nickname,
           email: res.data.email,
           mobile: res.data.mobile,
+          photo: res.data.photo,
         })
       });
     };
@@ -90,13 +93,13 @@ class Mypage extends React.Component {
       document.getElementById('tabTwo').setAttribute("style", "background-color:white; color:black;");
     }
     tabOne = (e) => {
+      this.backupUserInfo();
       this.setState({tab: 1,})
       document.getElementById('tabZero').setAttribute("style", "background-color:white; color:black;");
       document.getElementById('tabOne').setAttribute("style", "background-color:#0275d8; color:white;");
       document.getElementById('tabTwo').setAttribute("style", "background-color:white; color:black;");
     }
     tabTwo = (e) => { 
-      this.backupUserInfo();
       this.setState({tab: 2,})
       document.getElementById('tabZero').setAttribute("style", "background-color:white; color:black;");
       document.getElementById('tabOne').setAttribute("style", "background-color:white; color:black;");
@@ -331,7 +334,8 @@ class Mypage extends React.Component {
           nickname: this.state.nickname,
           name: this.state.name,
           email: this.state.email,
-          mobile : this.state.mobile
+          mobile : this.state.mobile,
+          photo: this.state.photo,
         }).then(res => {
           if (res.data === "SUCCESS") {
             alert("회원정보 수정이 완료되었습니다.");
@@ -362,10 +366,56 @@ class Mypage extends React.Component {
       this.tabZero();
     };
 
-    leaveLeeting = (e) => {
-
+    handlePhotoInput(e) {
+      this.setState({
+          selectedFile : e.target.files[0],
+      })      
+      var file = e.target.files[0];
+      var formData = new FormData();
+      formData.append('data', file);
+      formData.append('hostid', sessionStorage.getItem('id'));
+      formData.append('dirNum', 2);
+      axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
+          headers: {
+              'content-type': 'multipart/form-data',
+          },
+      }).then(res => {
+        console.log(res)
+        this.setState({
+          photo: res.data
+        })        
+        axios.put('http://127.0.0.1:8080/myapp/member/{}', {
+          id: this.state.id,
+          pw: this.state.backuppw,
+          nickname: this.state.backupnickname,
+          name: this.state.backupname,
+          email: this.state.email,
+          mobile : this.state.backupmobile,
+          photo: this.state.photo,
+        }).then(res => {
+            if (res.data === "SUCCESS") {
+              alert("사진이 변경되었습니다.");
+              console.log("프로필 사진 변경 완료");
+            }
+        }).catch(err => {
+            console.log(err);
+          })
+      })
     }
 
+    leaveLeeting = (e) => {
+      axios.delete(`http://127.0.0.1:8080/myapp/member/${sessionStorage.getItem("id")}`, {
+        id: this.state.id,
+      }).then(res => {
+        console.log(res)
+        if (res.data === "SUCCESS") {
+          alert("회원탈퇴가 완료되었습니다.");
+          console.log("회원탈퇴 완료");
+          sessionStorage.clear();
+          window.location.replace("/Login");
+        }
+      })
+    }
     
 
   render() {
@@ -389,17 +439,15 @@ class Mypage extends React.Component {
                   {!this.state.tab && (
                     <Fragment>
                     <div className="user row align-items-end">
-                            <img onClick={this.profileClick} src="../img\noProfile.png" alt="프로필사진"></img>
+                          {this.state.photo ? (
+                              <img src={this.state.photo} alt="프로필사진"></img>
+                          ) : (<img src="../img\noProfile.png" alt="프로필사진"></img>)}
+                            
                             <div>
                             <p className="userNickname"> {this.state.nickname} </p>
                             <p>{this.state.id}</p>
                             </div>
                     </div>
-                    <form className="filebox bs3-primary"  encType="multipart/form-data">
-                                    <input className="upload-name" id="upload-name"placeholder="파일선택" disabled="disabled"/>
-                                    <label htmlFor="ex_filename">업로드</label> 
-                                    <input type="file" accept="image/*"id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
-                                </form>
                     <hr />
                     <div className="form-group">
                         <div className="col-9">
@@ -473,11 +521,26 @@ class Mypage extends React.Component {
                           <div className="form-group">
                             <div className="form-group">
                               <div className="col-9">
+                                <form className="user row align-items-end filebox"  encType="multipart/form-data">
+                                  <div className="user row align-items-end">
+                                    {this.state.photo ? (
+                                        <img src={this.state.photo} alt="프로필사진"></img>
+                                    ) : (<img src="../img\noProfile.png" alt="프로필사진"></img>)}                      
+                                    </div>
+                                  <label htmlFor="ex_filename">사진 변경</label> 
+                                  <input type="file" accept="image/*"id="ex_filename" className="upload-hidden" onChange={e => this.handlePhotoInput(e)}/> 
+                                </form>
+                              </div>
+                              <label id="validateName"></label>
+                            </div>
+                            <div className="form-group">
+                              <div className="col-9">
                                 <label className="font-weight-bold" id="labelName" htmlFor="inputName">성명</label>
                                 <input type="text" id="inputName" className="form-control margin-bottom-20" placeholder="한글 이름을 입력해주세요" onChange ={this.nameChange} defaultValue={this.state.name}></input>
                               </div>
                               <label id="validateName"></label>
                             </div>
+                            
                             <div className="form-group">
                               <div className="col-12">
                                 <label className="font-weight-bold" id="labelNickName" htmlFor="inputNickName">닉네임</label>
