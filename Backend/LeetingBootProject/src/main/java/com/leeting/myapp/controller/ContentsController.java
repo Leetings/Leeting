@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -78,12 +79,20 @@ public class ContentsController {
     public ResponseEntity<Map<String, Object>> listcontents(@RequestParam("userid") String id, HttpServletRequest req) {
         HttpStatus httpStatus = HttpStatus.ACCEPTED;
         System.out.println("get / : 컨텐츠 조회");
+        
         List<HashMap<String, Object>>  hashMapList = contentsService.listContents(id);
-        for(HashMap<String, Object> hashMap : hashMapList) {
-            for (String key : hashMap.keySet()) {
-                Object value = hashMap.get(key);
-                System.out.println("key/value = " + key + "/" + value);
-                break;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        for(int i=0; i<hashMapList.size(); i++){
+            for (String key : hashMapList.get(i).keySet()) {
+                if(key.equals("date")) {
+                    Object value = hashMapList.get(i).get(key);
+                    HashMap<String, Object> hashMap = hashMapList.get(i);
+                    hashMap.put(key, sdf.format(value));
+                    hashMapList.set(i, hashMap);
+                    System.out.println("key/value = " + key + "/" + (hashMapList.get(i)).get(key));
+                    break;
+                }
             }
         }
         HashMap<String, Object> resultMap = new HashMap<>();
