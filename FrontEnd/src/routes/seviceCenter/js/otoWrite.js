@@ -14,7 +14,11 @@ const OtOWrite = () => {
     const [type, setType] = useState(1);
 
     useEffect(() => {
-        
+        if (sessionStorage.getItem('id') === null) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            alert('test');
+            window.location.replace("/WrongPage");
+        }
         if (document.getElementById('side_wrap').classList.contains('open')) {
             document.getElementById('side_wrap').classList.remove('open');
             document.getElementById('side_wrap').classList.add('close');
@@ -43,12 +47,12 @@ const OtOWrite = () => {
             date: nowTime
         }).then(res => {
             if (res.data === "SUCCESS") {
-                console.log("성공");
+                // console.log("성공");
                 alert("문의 완료되었습니다.");
                 window.location.replace('/sc/onetoone');
             }
             else {
-                console.log("실패");
+                // console.log("실패");
                 alert("문의에 실패하셨습니다. 잠시후 다시 시도해주세요!");
                 // window.location.replace('/meeting/write');
             }

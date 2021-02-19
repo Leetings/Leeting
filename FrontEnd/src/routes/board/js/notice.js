@@ -17,7 +17,7 @@ const Notice = () => {
         const fetchPosts = async () => {
           setLoading(true);
           const res = await axios.get('http://127.0.0.1:8080/myapp/notice/listnotice');
-            console.log(res);
+            // console.log(res);
             setPosts(res.data);
           setLoading(false);
         }
@@ -30,10 +30,16 @@ const Notice = () => {
         }
     
         fetchPosts();
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
 
     }, []);
     
-    // console.log(posts);
+    // // console.log(posts);
     
       // Get current posts
       const indexOfLastPost = currentPage * postsPerPage;

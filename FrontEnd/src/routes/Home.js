@@ -16,6 +16,12 @@ const Home = () => {
     let sId = sessionStorage.getItem('id');
 
     useEffect(() => {
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
         const fetchPosts = async () => {
             setLoading(true);
             let data = await axios.get('http://127.0.0.1:8080/myapp/member/usermeet', {
@@ -36,7 +42,7 @@ const Home = () => {
 
         const recoPosts = async () => {
             setRecoLoading(true);
-            console.log(sId);
+            // console.log(sId);
             if (sId === null) {
                 // eslint-disable-next-line
                 sId = "";
@@ -47,7 +53,7 @@ const Home = () => {
                 }
             });
             data = data.data;
-            console.log(data);
+            // console.log(data);
             setRecoPosts(data);
             setRecoLoading(false);
         }
@@ -177,7 +183,7 @@ const Home = () => {
                     </Link>
                 </div>
                 <div className="favoriteleet">
-                    <Posts posts={recoPosts} loading={recoLoading} noPosts={noPosts} />
+                    <Posts posts={recoPosts} loading={recoLoading}/>
                 </div>
             </div>
     )

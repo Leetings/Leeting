@@ -57,7 +57,7 @@ public class MeetingNoticeController {
 		    return new ResponseEntity<>(resultMap,status);
 	  }
 	  @ApiOperation(value = "미팅게시판 등록", notes = "미팅게시판 등록", response = Map.class)
-	  @PostMapping(value = ("/{meetingno}"), headers = ("content-type=multipart/form-data"))
+	  @PostMapping(value = ("/{meetingno}"))
 	 public ResponseEntity<String> meetingnoticewrite(@PathVariable(value="meetingno") int meetingno,@RequestBody NoticeDto notice, HttpServletRequest req) throws IOException {
 		 String conclusion = "";
 		    HttpStatus status = HttpStatus.ACCEPTED;

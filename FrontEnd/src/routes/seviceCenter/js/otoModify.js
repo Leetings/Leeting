@@ -4,14 +4,31 @@ import axios from "axios";
 import { Editor } from '@toast-ui/react-editor';
 
 const OtOModify = (props) => {
-    const location = props.location.state;
-    const no = location.no;
-    const [title, setTitle] = useState(location.title);
-    const [content, setContent] = useState(location.detail);
+    const [no, setNo] = useState();
+    const [title, setTitle] = useState();
+    const [content, setContent] = useState();
     const editorRef = React.createRef();
-    const [type, setType] = useState(location.type);
-
+    const [type, setType] = useState();
+// eslint-disable-next-line
     useEffect(() => {
+        const location = props.location.state;
+        // console.log(location.qwriter);
+
+        setNo(location.no);
+        setTitle(location.title);
+        setContent(location.detail);
+        setType(location.type);
+        if (sessionStorage.getItem('id') === null) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            alert('test');
+            window.location.replace("/WrongPage");
+        }
+        if (sessionStorage.getItem('id') !== location.qwriter) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            alert('test');
+            window.location.replace("/WrongPage");
+        }
+
         document.getElementById('title').value = title;
         document.getElementById('type').value = type;
         document.getElementById('mobile_title').value = title;
@@ -31,7 +48,7 @@ const OtOModify = (props) => {
 
     const editorChange = (e) => {
         setContent(editorRef.current.getInstance().getHtml());
-        // console.log(content);
+        // // console.log(content);
     }
 
     const updateReport = (e) => { 
@@ -43,12 +60,12 @@ const OtOModify = (props) => {
             type: type
         }).then(res => {
             if (res.data === "SUCCESS") {
-                console.log("성공");
+                // console.log("성공");
                 alert("문의 완료되었습니다.");
                 window.location.replace('/sc/onetoone/');
             }
             else {
-                console.log("실패");
+                // console.log("실패");
                 alert("문의에 실패하셨습니다. 잠시후 다시 시도해주세요!");
                 // window.location.replace('/meeting/write');
             }

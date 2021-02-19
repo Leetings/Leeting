@@ -24,10 +24,21 @@ const OtoDetail = (props) => {
     const sId = sessionStorage.getItem('id');
 
     useEffect(() => {
+        
         const showDetail = async () => {
             setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/question/' + location.state.no);
-            
+            if (sessionStorage.getItem('id') === null) {
+                document.getElementById('root').setAttribute('style', 'display:none');
+                window.location.replace("/WrongPage");
+            }
+            // console.log(res.data.qwriter);
+            if (sessionStorage.getItem('id') !== res.data.qwriter) {
+                if (sessionStorage.getItem('id') !== 'leetingadmin') {
+                    document.getElementById('root').setAttribute('style', 'display:none');
+                    window.location.replace("/WrongPage");   
+                }
+            }
             setNo(res.data.no);
             setType(res.data.type);
             setTitle(res.data.title);
@@ -103,7 +114,7 @@ const OtoDetail = (props) => {
             if (res.data === "SUCCESS") {
                 alert('답글 등록에 성공하셨습니다!');
                 setUpdate(!update);
-                editorRef.current.getInstance().setHtml(content);
+                // editorRef.current.getInstance().setHtml(content);
             } else {
                 alert('답글 등록에 실패하셨습니다. 다시 시도해주세요!');
                 editorRef.current.getInstance().setHtml("");

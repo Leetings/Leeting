@@ -20,6 +20,10 @@ const List = () => {
     }];
     
     useEffect(() => {
+        if (sessionStorage.getItem('id') !== 'leetingadmin') {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            window.location.replace("/WrongPage");
+        }
         const fetchPosts = async () => {
             setLoading(true);
             const res = await axios.get('http://127.0.0.1:8080/myapp/report/listreport');
@@ -29,7 +33,7 @@ const List = () => {
                 setPosts([nullpost]);
             }
             else {
-                console.log(res.data.list);
+                // console.log(res.data.list);
                 setPosts(res.data.list);
                 setLoading(false);
             }
@@ -41,6 +45,12 @@ const List = () => {
         }
         
         fetchPosts();
+        if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
         // eslint-disable-next-line
     }, []);
     

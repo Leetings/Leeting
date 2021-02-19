@@ -1,23 +1,47 @@
 import React from "react";
+
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 
-
 import axios from "axios";
-import moment from 'moment';
-import 'moment/locale/ko';
 
 class write extends React.Component {
     editorRef = React.createRef();
     dateRef = React.createRef();
 
     componentDidMount() {
+        const { location } = this.props;
+
         if (sessionStorage.getItem('id') === null) {
             document.getElementById('root').setAttribute('style', 'display:none');
             alert('test');
             window.location.replace("/WrongPage");
+        }
+        
+        if (sessionStorage.getItem('id') !== location.state.writer) {
+            document.getElementById('root').setAttribute('style', 'display:none');
+            alert('test');
+            window.location.replace("/WrongPage");
           }
+        
+
+        this.setState({
+            id : location.state.id,
+            writer : location.state.writer,
+            date: location.state.date,
+            detail : location.state.detail,
+            file : location.state.file
+        })
+
+        if (location.state.file === null) {
+            document.getElementById('none1').setAttribute('style', 'display:table-row');
+            document.getElementById('already1').setAttribute('style', 'display:none');
+        } else {
+            document.getElementById('none1').setAttribute('style', 'display:none');
+            document.getElementById('already1').setAttribute('style', 'display:table-row');
+        }
+
         if (document.getElementById('side_wrap').classList.contains('open')) {
             document.getElementById('side_wrap').classList.remove('open');
             document.getElementById('side_wrap').classList.add('close');
@@ -29,11 +53,11 @@ class write extends React.Component {
     constructor() {
         super();
         this.state = {
-            thumb: "https://leeting.s3.ap-northeast-2.amazonaws.com/static/noimage.png",
+            // thumb: "https://leeting.s3.ap-northeast-2.amazonaws.com/static/noimage.png",
         };
     }    
     state = {
-        thumb: "https://leeting.s3.ap-northeast-2.amazonaws.com/static/noimage.png",
+        // thumb: "https://leeting.s3.ap-northeast-2.amazonaws.com/static/noimage.png",
         content: "",
         
         selectedFile: null, //썸네일 파일 첨부
@@ -41,7 +65,7 @@ class write extends React.Component {
 
     editorChange = (e) => { 
         this.setState({
-            content: this.editorRef.current.getInstance().getHtml(),
+            detail: this.editorRef.current.getInstance().getHtml(),
             checkcontent:true
         })
         // // console.log(this.state.content);
@@ -76,25 +100,32 @@ class write extends React.Component {
             },
         }).then(res => {
             this.setState({
-                thumb: res.data
+                file: res.data
             })
-            // // console.log(this.state.thumb);
+            // console.log(this.state.file);
         }).catch(err => {
             alert('이미지 용량이 초과하였습니다! \n1MB용량 이하의 이미지를 선택해주세요.');
         })
     }
 
+    deleteFile1 = (e) => {
+        e.preventDefault();
+        
+        this.setState({
+            file:null
+        })
+        document.getElementById('already1').setAttribute('style', 'display:none');
+        document.getElementById('none1').setAttribute('style', 'display:table-row');
+    }
+
     writeClick = (e) => {
         e.preventDefault();
-        let sId = sessionStorage.getItem('id');
 
-        let date = moment().format('YYYY-MM-DD HH:mm:ss');
-        axios.post("http://127.0.0.1:8080/myapp/contents/", {
-            writer: sId,
-            date: date,
-            detail: this.state.content,
-            file: this.state.thumb,
-            categoryno:1
+        axios.put("http://127.0.0.1:8080/myapp/contents/", {
+            detail: this.state.detail,
+            file: this.state.file,
+            categoryno: 1,
+            contentsno:this.state.id,
         }).then(res => { 
             if (res.data === "SUCCESS") {
                 // console.log("성공");
@@ -114,12 +145,19 @@ class write extends React.Component {
 
     
     render() {
+        const { location } = this.props;        
+        if (location.state.file !== null) {    
+            var _fileLen1 = location.state.file.length;
+            var _lastSlash1 = location.state.file.lastIndexOf('/');
+            var _fileName1 = location.state.file.substring(_lastSlash1 + 1, _fileLen1).toLowerCase();
+        }
+
         return (
             
       <div id="main_content">
             <div className="writeWrap">
                 <div className="titleset">
-                    <p className="mainTit">Timeline 등록</p>
+                    <p className="mainTit">Timeline 수정</p>
                     <p className="subTit">일상을 공유해보세요!</p>
                 </div>
                 <div className="writeInputWrap">
@@ -130,7 +168,12 @@ class write extends React.Component {
                             <tr>
                                 <th scope="row">썸네일</th>
                                 <td colSpan="5">
-                                <form className="filebox bs3-primary"  encType="multipart/form-data">
+                                <form className="filebox bs3-primary" id="already1"  encType="multipart/form-data">
+                                    <input className="upload-file" placeholder={_fileName1} disabled="disabled"/>
+                                    <label onClick={this.deleteFile1}>삭제</label> 
+                                    {/* <input type="file" accept="*"id="ex_file1name" className="upload-hidden" onChange={e => this.file1Change(e)}/>  */}
+                                </form>  
+                                <form className="filebox bs3-primary" id="none1"  encType="multipart/form-data">
                                     <input className="upload-name" id="upload-name"placeholder="파일선택" disabled="disabled"/>
                                     <label htmlFor="ex_filename">업로드</label> 
                                     <input type="file" accept="image/*"id="ex_filename" className="upload-hidden" onChange={e => this.handleFileInput(e)}/> 
@@ -149,6 +192,7 @@ class write extends React.Component {
                                         initialEditType="wysiwyg"
                                         ref={this.editorRef}
                                         onChange={this.editorChange}
+                                        initialValue={location.state.detail}
                                     />
                                 </td>
                             </tr>

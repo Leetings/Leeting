@@ -32,7 +32,7 @@ class DetailNotice extends React.Component {
         axios.get(`http://127.0.0.1:8080/myapp/notice/${location.state.no}`, {
             meetingno: location.state.no
           }).then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             this.setState({
                 no: location.state.no,
                 title: res.data.title,
@@ -45,6 +45,12 @@ class DetailNotice extends React.Component {
                 date: res.data.date,
             })
           });
+          if (document.getElementById('side_wrap').classList.contains('open')) {
+            document.getElementById('side_wrap').classList.remove('open');
+            document.getElementById('side_wrap').classList.add('close');
+            document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+            document.getElementById('bg').setAttribute('style', 'display:none');
+        }
     }
 
     callFileDownload = () => {
@@ -87,11 +93,11 @@ class DetailNotice extends React.Component {
         axios.delete(`http://127.0.0.1:8080/myapp/notice/${this.state.no}`, {
             noticeno: this.state.no
           }).then(res => {
-            //   console.log(res)
+            //   // console.log(res)
               alert('삭제 완료되었습니다!');
               window.location.replace('/notice');
           }).catch(err => {
-              console.log(err)
+              // console.log(err)
           })
     }
 

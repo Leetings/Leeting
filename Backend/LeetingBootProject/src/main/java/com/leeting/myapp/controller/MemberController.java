@@ -185,7 +185,7 @@ public class MemberController {
 		System.out.println("post to /member done");
 		System.out.println("회원가입");
 		if (memberService.join(memberbody)) {
-			conclusion = "SUCESS";
+			conclusion = "SUCCESS";
 		} else {
 			conclusion = "FAIL";
 		}

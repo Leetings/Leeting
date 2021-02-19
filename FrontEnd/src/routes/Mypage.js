@@ -10,7 +10,7 @@ class Mypage extends React.Component {
       super(props);
       this.state = {
         value: '선택하세요',
-        checkPw: false,
+        checkPw: true,
         checkName: true,
         checkNickname: true,
         checkEmail: true,
@@ -26,6 +26,7 @@ class Mypage extends React.Component {
       email: "",
       domain: "",
       mobile: "",
+      photo: "",
       token:"",
       auth:"",
       isLoading: true,
@@ -36,6 +37,7 @@ class Mypage extends React.Component {
       backupnickname: "",
       backuppw: "",
       backupmobile: "",
+      selectedFile: null,
     }
 
     getUserInfo = (e) => {
@@ -43,7 +45,8 @@ class Mypage extends React.Component {
       axios.get(`http://127.0.0.1:8080/myapp/member/${sessionStorage.getItem("id")}`, {
         id: sessionStorage.getItem("id")
       }).then(res => {
-        console.log(res);
+        // console.log(res);
+        // document.getElementById('checkNickName').disabled = true;
         this.setState({
           id: res.data.id,
           pw: res.data.pw,
@@ -51,6 +54,7 @@ class Mypage extends React.Component {
           nickname: res.data.nickname,
           email: res.data.email,
           mobile: res.data.mobile,
+          photo: res.data.photo,
         })
       });
     };
@@ -69,28 +73,51 @@ class Mypage extends React.Component {
     
     componentDidMount() {
       let sId = sessionStorage.getItem('id');
+      
+      if (sessionStorage.getItem('id') === null) {
+        document.getElementById('root').setAttribute('style', 'display:none');
+        window.location.replace("/WrongPage");
+      }
+      if (document.getElementById('side_wrap').classList.contains('open')) {
+        document.getElementById('side_wrap').classList.remove('open');
+        document.getElementById('side_wrap').classList.add('close');
+        document.getElementById('side_wrap').setAttribute('style', 'right:-400px');
+        document.getElementById('bg').setAttribute('style', 'display:none');
+    }
 
       if (sId !== null) {
           
         this.getLeeting();
         this.getUserInfo();
+        this.tabZero();
 
-      } else {
+      }
+      else {
           document.getElementById('myleetingTit').setAttribute('style', 'display:none');
           document.getElementById('myleetingList').setAttribute('style', 'display:none');
       }
+      
     }
 
     tabZero = (e) => {
       this.getLeeting();
-      this.setState({
-        tab: 0,
-      })
+      this.setState({ tab: 0, })
+      document.getElementById('tabZero').setAttribute("style", "background-color:#0275d8; color:white;");
+      document.getElementById('tabOne').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabTwo').setAttribute("style", "background-color:white; color:black;");
     }
-    tabOne = (e) => { this.setState({tab: 1,}) }
-    tabTwo = (e) => { 
+    tabOne = (e) => {
       this.backupUserInfo();
-      this.setState({tab: 2,}) 
+      this.setState({tab: 1,})
+      document.getElementById('tabZero').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabOne').setAttribute("style", "background-color:#0275d8; color:white;");
+      document.getElementById('tabTwo').setAttribute("style", "background-color:white; color:black;");
+    }
+    tabTwo = (e) => { 
+      this.setState({tab: 2,})
+      document.getElementById('tabZero').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabOne').setAttribute("style", "background-color:white; color:black;");
+      document.getElementById('tabTwo').setAttribute("style", "background-color:#0275d8; color:white;");
     }
 
     pwReconfirm = (e) => {
@@ -149,7 +176,14 @@ class Mypage extends React.Component {
         document.getElementById('validateCPw').textContent = "확인되었습니다.";
         document.getElementById('validateCPw').setAttribute('style', 'color:blue');
       }
-    };
+  };
+
+  handleKeyPress = (e) => {
+
+    if (e.key === "Enter") {
+      this.pwReconfirm();
+    }
+  };
 
     cpwChange = (e) => {
       if (e.target.value === '') {
@@ -194,15 +228,23 @@ class Mypage extends React.Component {
     };
 
     nicknameChange = (e) => {
-      var nickNameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,10}$/g;
+      var nickNameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/S]{2,10}$/g;
+
       if (!nickNameReg.test(e.target.value)) {
-        
         this.setState({
           checkNickname: false
         });
+        document.getElementById('checkNickName').disabled = true;
         document.getElementById('validateNickName').textContent = "닉네임은 2~10자 사이의 한국어, 영어, 숫자로 이루어져 있습니다.";
       }
       else {
+        if (this.state.nickname === this.state.backupnickname) {
+          this.setState({
+            checkNickname: true
+          });
+          // document.getElementById('validateNickName').textContent = "이전과 다른 닉네임을 선택해주세요";
+        }
+        document.getElementById('checkNickName').disabled = false;
         document.getElementById('validateNickName').textContent = "";
         this.setState({
           nickname: e.target.value,
@@ -245,46 +287,54 @@ class Mypage extends React.Component {
       };
     };
 
-    sameNickClick = (e) => {
-      e.preventDefault();
-      
-      var nickNameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,10}$/g;
-      console.log(e.target.value)
-      if (e.target.value !== this.backupnickname) {
-        document.getElementById('validateNickName').textContent = "사용가능한 닉네임입니다.";
-        document.getElementById('validateNickName').setAttribute('style', 'color:blue');
-      }
-      else if (!nickNameReg.test(e.target.value)) {
-        axios.post('http://127.0.0.1:8080/myapp/member/samenick', {
-          nickname: this.state.nickname
-        }).then(res => {
-          if (res.data === "SUCESS") {
-            this.setState({
-              checkNickname: true
-            });
-            document.getElementById('validateNickName').textContent = "사용가능한 닉네임입니다.";
-            document.getElementById('validateNickName').setAttribute('style', 'color:blue');
-          }
-          else {
-            this.setState({
-              checkNickname: false
-            });
-            document.getElementById('validateNickName').textContent = "이미 존재하는 닉네임입니다.";
-            document.getElementById('validateNickName').setAttribute('style', 'color: #ff3535');
-          }
-        });
-      }
+  sameNickClick = (e) => {
+    e.preventDefault();
+    
+    // console.log('test');
+    var nickNameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\S]{2,10}$/g;
+    
+    if (this.state.nickname === this.state.backupnickname) {
+      this.setState({
+        checkNickname: true
+      });
+      document.getElementById('validateNickName').textContent = "이전과 다른 닉네임을 선택해주세요";
+    }
+    
+    else if (!nickNameReg.test(e.target.value)) {
+      axios.post('http://127.0.0.1:8080/myapp/member/samenick', {
+        nickname: this.state.nickname
+      }).then(res => {
+        // console.log(res.data);
+        if (res.data === "SUCESS") {
+          this.setState({
+            checkNickname: true
+          });
+          document.getElementById('validateNickName').textContent = "사용가능한 닉네임입니다.";
+          document.getElementById('validateNickName').setAttribute('style', 'color:blue');
+          // if (this.state.checkId === true && this.state.checkEmail === true && this.state.checkMobile === true && this.state.checkName === true && this.state.checkNickname === true && this.state.checkPw === true) {
+          //   document.getElementById('joinbtn').disabled = false;
+          // }
+        }
+        else {
+          this.setState({
+            checkNickname: false
+          });
+          document.getElementById('validateNickName').textContent = "이미 존재하는 닉네임입니다.";
+          document.getElementById('validateNickName').setAttribute('style', 'color: #ff3535');
+        }
+      });
+    }
     };
 
     authCheck = (e) => {
       e.preventDefault();
-      console.log(this.state.email + "@" + this.state.domain);
+      // console.log(this.state.email + "@" + this.state.domain);
       axios.post('http://127.0.0.1:8080/myapp/member/email', {
         samecheck:"",
           email: this.state.email + "@" + this.state.domain,
         }).then(res => {
-          console.log(res);
-          console.log(res.data);
+          // console.log(res);
+          // console.log(res.data);
           this.setState({
             token: res.data
           })
@@ -313,7 +363,7 @@ class Mypage extends React.Component {
 
     handleClick = (e) => {
       e.preventDefault();
-      console.log(this.state);
+      // console.log(this.state);
       if (this.state.checkMobile === true && this.state.checkName === true && this.state.checkNickname === true && this.state.checkPw === true) {
         axios.put('http://127.0.0.1:8080/myapp/member', {
           id: this.state.id,
@@ -321,28 +371,28 @@ class Mypage extends React.Component {
           nickname: this.state.nickname,
           name: this.state.name,
           email: this.state.email,
-          mobile : this.state.mobile
+          mobile : this.state.mobile,
+          photo: this.state.photo,
         }).then(res => {
           if (res.data === "SUCCESS") {
-            alert("회원정보 수정이 완료되었습니다.");
-            console.log("회원정보수정 완료<br/>재 로그인 해주세요!");
+            alert("회원정보 수정이 완료되었습니다.\n원활한 이용을 위해 재 로그인 해주세요!");
+            // ("회원정보수정 완료<br/>");
             this.logout();
           }
           else {
-            console.log(res.data)
+            // console.log(res.data)
             alert("회원정보 수정에 실패하였습니다.");
-            console.log("회원가입 실패");
+            // console.log("회원가입 실패");
           }
         })
       }
       else {
         alert("입력 정보를 확인해주세요!");
-        console.log("미입력여부");
+        // console.log("미입력여부");
       }
     };
 
     // Join End
-
     returnUserInfo = (e) => {
       this.setState({
         pw: this.state.backuppw,
@@ -353,9 +403,39 @@ class Mypage extends React.Component {
       this.tabZero();
     };
 
+    handlePhotoInput(e) {
+      this.setState({
+          selectedFile : e.target.files[0],
+      })      
+      var file = e.target.files[0];
+      var formData = new FormData();
+      formData.append('data', file);
+      formData.append('hostid', sessionStorage.getItem('id'));
+      formData.append('dirNum', 2);
+      axios.post('http://127.0.0.1:8080/myapp/gallery/upload', formData,{
+          headers: {
+              'content-type': 'multipart/form-data',
+          },
+      }).then(res => {
+        // console.log(res)
+        this.setState({
+          photo: res.data
+        })
+      })
+    }
+
+    leaveLeeting = (e) => {
+      axios.delete(`http://127.0.0.1:8080/myapp/member/${sessionStorage.getItem("id")}`, {
+        id: this.state.id,
+      }).then(res => {
+        alert("회원탈퇴가 완료되었습니다.");
+        this.logout();
+      })
+    }
+    
+
   render() {
     const { isLoading, data, reconfirm } = this.state
-    // let emailDomain = this.state.email ? this.state.email.split('@') : null 
 
     return (
       <div id="main_content">
@@ -365,9 +445,9 @@ class Mypage extends React.Component {
         <div className="d-flex">
             <div className="tabcenter col-4">
                 <div className="list-group">
-                    <p className="list-group-item list-group-item-action" onClick={this.tabZero}>프로필</p> {/*aria-current="true"*/}
-                    <p className="list-group-item list-group-item-action" onClick={this.tabOne}>일정</p>
-                    <p className="list-group-item list-group-item-action" onClick={this.tabTwo}>계정 설정</p>
+                    <p className="list-group-item list-group-item-action" id="tabZero" onClick={this.tabZero}>프로필</p>
+                    <p className="list-group-item list-group-item-action" id="tabOne" onClick={this.tabOne}>계정 설정</p>
+                    <p className="list-group-item list-group-item-action" id="tabTwo" onClick={this.tabTwo}>회원탈퇴</p>
                 </div>
             </div>
             <div className="formcenter col-8">
@@ -375,7 +455,10 @@ class Mypage extends React.Component {
                   {!this.state.tab && (
                     <Fragment>
                     <div className="user row align-items-end">
-                            <img onClick={this.profileClick} src="../img\noProfile.png" alt="프로필사진"></img>
+                          {this.state.photo ? (
+                              <img src={this.state.photo} alt="프로필사진"></img>
+                          ) : (<img src="../img\noProfile.png" alt="프로필사진"></img>)}
+                            
                             <div>
                             <p className="userNickname"> {this.state.nickname} </p>
                             <p>{this.state.id}</p>
@@ -415,7 +498,7 @@ class Mypage extends React.Component {
                               </div>
                             </div>
                           ) : (
-                            <div className="list_view">
+                            <div className="myPage_list_view">
                                 {data.map((leeting, idx) => (
                                   <My
                                     key={idx}
@@ -440,16 +523,11 @@ class Mypage extends React.Component {
                     </Fragment>)}
                   {this.state.tab === 1 && (
                     <Fragment>
-                      <p>달력을 넣고 싶다</p>
-                    </Fragment>
-                  )}
-                  {this.state.tab === 2 && (
-                    <Fragment>
                       {!reconfirm ? (
                         <Fragment>
                           <div className="col-9">
                             <label id="labelReconfirmPw" className="font-weight-bold" htmlFor="reconfirmPw">비밀번호 확인</label>
-                            <input type="password" id="reconfirmPw" className="form-control mb-2" placeholder="비밀번호를 입력해주세요"></input>
+                            <input type="password" id="reconfirmPw" className="form-control mb-2" placeholder="비밀번호를 입력해주세요" onKeyPress={this.handleKeyPress}></input>
                             <button id="checkPw" className="btn btn-primary mt-2 mr-2" onClick={this.pwReconfirm}>확인</button>
                             <label id="checkPwBeforeEditProfile"></label><br/>
                           </div>
@@ -459,11 +537,26 @@ class Mypage extends React.Component {
                           <div className="form-group">
                             <div className="form-group">
                               <div className="col-9">
+                                <form className="user row align-items-end filebox"  encType="multipart/form-data">
+                                  <div className="user row align-items-end">
+                                    {this.state.photo ? (
+                                        <img src={this.state.photo} alt="프로필사진"></img>
+                                    ) : (<img src="../img\noProfile.png" alt="프로필사진"></img>)}                      
+                                    </div>
+                                  <label className="forProfile" htmlFor="ex_filename">사진 변경</label> 
+                                  <input type="file" accept="image/*"id="ex_filename" className="upload-hidden" onChange={e => this.handlePhotoInput(e)}/> 
+                                </form>
+                              </div>
+                              <label id="validateName"></label>
+                            </div>
+                            <div className="form-group">
+                              <div className="col-9">
                                 <label className="font-weight-bold" id="labelName" htmlFor="inputName">성명</label>
                                 <input type="text" id="inputName" className="form-control margin-bottom-20" placeholder="한글 이름을 입력해주세요" onChange ={this.nameChange} defaultValue={this.state.name}></input>
                               </div>
                               <label id="validateName"></label>
                             </div>
+                            
                             <div className="form-group">
                               <div className="col-12">
                                 <label className="font-weight-bold" id="labelNickName" htmlFor="inputNickName">닉네임</label>
@@ -501,10 +594,30 @@ class Mypage extends React.Component {
                             <br />
                             <div className="row form-group">
                               <div className="col-12 text-center">
-                                <button type="button" id="cancelbtn" className="btn" onClick={this.returnUserInfo}>수정취소</button>
+                                <button type="button" id="cancelbtn" className="btn border-1px" onClick={this.returnUserInfo}>수정취소</button>
                                 <button type="submit" id="joinbtn" className="btn btn-primary" onClick={this.handleClick}>수정완료</button>
                               </div>
                             </div>
+                        </div>
+                      )}
+                    </Fragment>
+                  )}
+                  {this.state.tab === 2 && (
+                    <Fragment>
+                      {!reconfirm ? (
+                        <Fragment>
+                          <div className="col-9">
+                            <label id="labelReconfirmPw" className="font-weight-bold" htmlFor="reconfirmPw">비밀번호 확인</label>
+                            <input type="password" id="reconfirmPw" className="form-control mb-2" placeholder="비밀번호를 입력해주세요"></input>
+                            <button id="checkPw" className="btn btn-primary mt-2 mr-2" onClick={this.pwReconfirm}>확인</button>
+                            <label id="checkPwBeforeEditProfile"></label><br/>
+                          </div>
+                        </Fragment>
+                      ) : (
+                        <div>
+                          <p>정말 탈퇴하시겠습니까?</p>
+                          <p>지금까지 사용한 사이트의 모든 기록이 삭제됩니다.</p>
+                          <button id="leaveLeeting" className="btn btn-warning mt-2" onClick={this.leaveLeeting}>탈퇴</button>
                         </div>
                       )}
                     </Fragment>

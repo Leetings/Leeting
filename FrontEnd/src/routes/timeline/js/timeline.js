@@ -5,7 +5,6 @@ import "../css/timeline.css"
 
 import { Link } from "react-router-dom";
 
-
 import Posts from "../../../components/timeline/Post"
 
 import Pagination from '../../../components/common/Pagination'
@@ -19,13 +18,12 @@ const Timeline = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             setLoading(true);
-            const id = sessionStorage.getItem("id");
+            const id = sessionStorage.length === 0 ? "":sessionStorage.getItem("id");
             const res = await axios.get('http://127.0.0.1:8080/myapp/contents/', {
                 params:{
                     "userid": id
                 }
             });
-            console.log(res.data.contentsList);
             setPosts(res.data.contentsList);
             setLoading(false);
         }
@@ -38,7 +36,6 @@ const Timeline = () => {
         }
         
         fetchPosts();
-        console.log(posts);
         // eslint-disable-next-line
     }, []);
 

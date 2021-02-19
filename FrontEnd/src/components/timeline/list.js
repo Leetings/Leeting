@@ -3,15 +3,20 @@ import propTypes  from "prop-types";
 import moment from 'moment';
 import 'moment/locale/ko';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function List({ id, writer, date, detail, file, contentslike, likestatus }) {
 
+    const uid = sessionStorage.length === 0 ? "" : sessionStorage.getItem("id");
+    
     var codes = detail;
 
     const [likeCnt, setLikeCnt] = useState(0);
     const [likeState, setLikeState] = useState(true);
     const [first, setFirst] = useState(true);
     const [reviewBool, setReviewBool] = useState(false);
+    const [photo, setPhoto] = useState("../img/noProfile.png");
+    const [nickname, setNickname] = useState();
 
     const etcid = id + 'etc';
     const ellipsisid = id + 'ellip';
@@ -21,7 +26,8 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
     const likeId = id + 'likeBtn';
     const contentslikeId = id + 'contentslikeId';
 
-    var t1 = moment(date);
+    // // console.log(date);
+    var t1 = moment(date).subtract(9,'h');
     var t2 = moment();
     var t3 = moment.duration(t2.diff(t1)).asHours();
     var min = moment.duration(t2.diff(t1)).asMinutes();
@@ -42,9 +48,17 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
     }
 
     useEffect(() => {
-        const fetchContentsLike = async () => {
-            console.log(likeCnt);
-        }
+        const getWriterInfo = async () => {
+            // e.preventDefault();
+            axios.get(`http://127.0.0.1:8080/myapp/member/`+writer, {
+              id: writer
+            }).then(res => {
+                if (res.data.photo !== null) {
+                    setPhoto(res.data.photo);
+                }
+                setNickname(res.data.nickname);
+            });
+          };
 
         if (first === true) {
             setLikeCnt(contentslike);
@@ -55,9 +69,12 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
             setFirst(false);
         }
 
-        fetchContentsLike();
+        getWriterInfo();
          // eslint-disable-next-line
     },[reviewBool])
+
+
+    
 
     const ellip = (e) => {
         e.preventDefault();
@@ -72,7 +89,7 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
 
         const sNN = sessionStorage.getItem('nickname');
         
-        if (sNN === writer) {
+        if (sNN === nickname) {
             document.getElementById('bg2').setAttribute('style', 'display:block');
             document.getElementById(bottom_wrapid).setAttribute('style','bottom:0px');
             document.getElementById(bottom_wrapid).classList.remove('bottomclose');
@@ -112,29 +129,40 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
 
     const timeline_like = (e) => {
         e.preventDefault();
-        const sId = sessionStorage.getItem('id');
-        if (likeState === true) {
-            setLikeCnt(likeCnt + 1);
-        } else {
-            setLikeCnt(likeCnt - 1);
+
+        if (uid === "") {
+            alert('로그인 하시면 좋아요를 사용하실 수 있습니다!');
+            window.location.assign('/login');
         }
-        setLikeState(!setLikeState);
-        setReviewBool(!reviewBool);
+        else {
+            const sId = sessionStorage.getItem('id');
+            if (likeState === true) {
+                setLikeCnt(likeCnt + 1);
+            } else {
+                setLikeCnt(likeCnt - 1);
+            }
+            setLikeState(!setLikeState);
+            setReviewBool(!reviewBool);
+            
+            document.getElementById(likeId).classList.toggle('like');
+            axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
+                contentsno : id,
+                userid: sId,
+                likestatus: likeState
+            })
+        }
         
-        document.getElementById(likeId).classList.toggle('like');
-        axios.put('http://127.0.0.1:8080/myapp/contents/setlike', {
-            contentsno : id,
-            userid: sId,
-            likestatus: likeState
-        })
         // window.location.replace('/timeline');
     }
 
     return (
         <div className="timelineListView">
             <div className="contentTit">
-                <p className="writer">{writer}</p>
-                <p className="date">{dateformat}</p>
+                <img className="writerProfile" src={photo} alt="프로필사진"></img>
+                <div className="writerDateWrap">
+                    <p className="writer">{nickname}</p>
+                    <p className="date">{dateformat}</p>
+                </div>
                 <img className="bottomOpen" onClick={bottomOpen} alt="관리 오픈" src="../../img/timelineBtn.svg"/>
             </div>
             <img className="timelineThumb" src={file} alt={id}></img>
@@ -147,7 +175,15 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
             
             <div id={bottom_wrapid}>
                 <div id="Btns">
-                    <button id={forUserId}className="user">수정하기</button>
+                    <button id={forUserId} className="user">
+                        <GoModify
+                            id={id}
+                            writer={writer}
+                            date={date}
+                            detail={detail}
+                            file={file}
+                        />
+                    </button>
                     <button id={forAllId} className="admin" onClick={deleteTimeline}>삭제하기</button>
                 </div>
             </div>
@@ -156,6 +192,36 @@ function List({ id, writer, date, detail, file, contentslike, likestatus }) {
         </div>
     );
 }
+
+
+function GoModify({id, writer, date, detail, file }) {
+    return (
+        <div id="modifyBtn">
+            <Link
+                to={{
+                    pathname: `/timeline/modify/${id}`,
+                    state: {
+                        id,
+                        writer,
+                        date,
+                        detail,
+                        file
+                    }
+                }}
+            > 수정하기
+                {/* <button id="modifyBtn" ></button> */}
+            </Link>
+        </div>
+    )
+}
+
+GoModify.propTypes = {
+    id: propTypes.number.isRequired,
+    writer: propTypes.string.isRequired,
+    date: propTypes.string.isRequired,
+    detail: propTypes.string.isRequired,
+    file: propTypes.string.isRequired
+};
 
 List.propTypes = {
     id: propTypes.number.isRequired,
