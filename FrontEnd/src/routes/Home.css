@@ -1,0 +1,99 @@
+#main_content {
+    padding-top: 101px;
+    min-height: calc(100vh - 170px);
+    margin-bottom: 30px;
+    overflow-x: hidden;
+}
+
+.shortcut {
+    width: 1200px;
+    margin: 20px auto;
+}
+
+.shortcut>ul {
+    text-align: center;
+}
+
+.shortcut>ul>li {
+    display: inline-block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+.shortcut>ul>li>a>img {
+    width: 150px;
+    height: 150px;
+}
+
+.quicktit {
+    position: relative;
+    width: 1200px;
+    margin: 20px auto;
+}
+
+.quicktit>h2 {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: default;
+}
+
+.quicktit .all {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#myleetingNo {
+    display: block;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.favoriteleet {
+    width: 1200px;
+    margin: 20px auto;
+}
+
+.favorite {
+    display: inline-block;
+    margin: 0 25px;
+}
+
+.favorite:first-child {
+    margin-left: 0px;
+}
+
+.favorite:last-child {
+    margin-right: 0px;
+}
+
+.favorite .favimg>a>img {
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+}
+
+.favorite .favtit .subtit {
+    font-size: 16px;
+    color: gray;
+}
+
+.favorite .favtit .maintit {
+    font-size: 22px;
+    color: black;
+    font-weight: bold;
+}
+
+.main_loading_view {
+    height: 319px;
+    padding-bottom: 100px;
+    width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main_loading_view .loader {
+    height: 150px;
+}

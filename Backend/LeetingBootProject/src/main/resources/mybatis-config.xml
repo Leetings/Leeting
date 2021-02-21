@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ 	<typeAliases>
+ 		<typeAlias type="com.leeting.myapp.model.MemberDto" alias="member"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.MeetingDto" alias="meeting"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.ContentsDto" alias="contents"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.GalleryDto" alias="gallery"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.ParticipationDto" alias="participation"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.NoticeDto" alias="notice"></typeAlias>
+ 		<typeAlias type="com.leeting.myapp.model.QuestionDto" alias="question"></typeAlias>
+		<typeAlias type="com.leeting.myapp.model.ReviewDto" alias="review"></typeAlias>
+		<typeAlias type="com.leeting.myapp.model.ReportDto" alias="report"></typeAlias>
+		<typeAlias type="com.leeting.myapp.model.AnswerDto" alias="answer"></typeAlias>
+		<typeAlias type="com.leeting.myapp.model.ContentsInfoDto" alias="contentsinfo"></typeAlias>
+ 	</typeAliases>
+ </configuration>
